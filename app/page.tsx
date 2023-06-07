@@ -5,10 +5,8 @@ import ImportCost from "../public/import-cost.png";
 import NetworkWaterfall from "../public/network-waterfall.png";
 import Browser from "./browser";
 import Logo from "./logo";
-import { runtime } from "./(posts)/what-are-react-server-components/page";
 
 export const runtime = "edge";
-export const isStatic = true;
 
 const topics = [
 	{
