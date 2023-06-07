@@ -4,6 +4,9 @@ import Browser from "../../browser";
 import Image from "next/image";
 import Link from "next/link";
 
+export const runtime = "edge";
+export const isStatic = true;
+
 export default function RSCsPage() {
 	return <RSCs />;
 }
