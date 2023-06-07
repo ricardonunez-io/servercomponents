@@ -1,6 +1,6 @@
 "use client";
 
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, delay, domAnimation, m } from "framer-motion";
 
 export default function SubtitleTransition() {
 	return (
@@ -8,7 +8,7 @@ export default function SubtitleTransition() {
 			<m.div
 				initial={{ height: "fitContent", opacity: 1 }}
 				animate={{ height: 0, opacity: 0 }}
-				transition={{ duration: 0.75, ease: "easeInOut" }}
+				transition={{ duration: 0.75, ease: "easeInOut", delay: 2 }}
 			>
 				<p className="text-2xl sm:text-3xl md:text-4xl font-bold">
 					... are complicated.
