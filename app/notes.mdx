@@ -1,0 +1,266 @@
+# React Server Components
+
+## What are React Server Components?
+
+React components that run only on the server.
+
+This is different to server side rendering, which is when you pre-run React apps on the server and hydrate it on the client.
+
+Because it's run only on the server, you can access private services, direct databases, etc.
+
+You can write async/await and pass data down to client components or other server components.
+
+Use a server for what it's good for, use a client for reactivity, and get rid of using effects and storing server data in state.
+
+Lets you build fullstack React applications.
+
+Instead of writing the backend and frontend in two different ways, the whole thing is a component tree.
+
+You can directly access databases, interact with a database access layer, etc. and map the request to an output, and show it to the user.
+
+With traditional server-side technologies like PHP or Rails, a mutation or data request results in a hard reload, whereas with RSC, you can retain state even with data requests or mutations.
+
+Client side apps (SPAs) allows you to do client side routing and retain state/only change the part of the page that needs to be changed, but you have to write the backend in a different way.
+
+You would have to think about server-side data as state, how to trigger fetches, loading indications, etc. a lot more, because on the client side, you don't have as much flexibility to do those things safely without exposing sensitive data, services, or keys on the client.
+
+With RSC, you don't have to have publicly consumable APIs but are still able to retain state and do client side routing.
+
+Worth noting, however, is that RSC don't necessarily rely on a "server", but are moreso a specification for the component running ahead of time.
+
+On Next.js, this means at build time, which allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could be client components and interactive.
+
+All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like getServerSideProps, Remix loaders, or Astro islands with a first-class solution.
+
+## If there was already a good DX and existing solutions to data fetching, why RSC?
+
+You couldn't do _everything_ natively. One good example is componentizing build logic or server logic.
+
+Let's say you have a markdown renderer component in a static site like a blog.
+
+If you have a markdown renderer on NPM that imports a markdown parser and turns it into HTML, then the only way to consume it is at runtime previous to RSC.
+
+That means that at runtime, the client will have this markdown parser delivered to their browser, which means a bigger Javascript bundle, which doesn't make sense for a static blog.
+
+It wasn't possible to publish a component on NPM that runs only a build time. Now, we could put some logic on a Remix loader for example, but what if there are multiple places to do this, or what if we have code snippets that need to be highlighted and need to be parsed? We would have to write a loader for each of those, _or_ we could use React Server Components to compnentize it.
+
+Now, let's say you have a dashboard component on a private NPM registry that calls a microservice, reads from your database layer, but since it's isolated, you can specify how to load data for it but still compose it.
+
+The main complaints from using React today are complaining about things like data-fetching in `useEffect()` for example.
+
+How to add loading indicators, how to avoid network waterfalls, and how to compose everything together.
+
+Why can't we just async/await and return a bunch of UI?
+
+`<Suspense>` was the solution for how to show loading state.
+
+But what if your component is awaiting for something, but the parent component updates state so synchronicity is necessary, i.e. typing into an input.
+
+How do we deal with this where the UI is stuck waiting for an output?
+
+> Spread apart component tree into parts that run on client that synchronously respond to inputs and parts that run on server or during build because they're only triggered on first load or re-fetch/navigation.
+
+## A big benefit is getting rid of unnecessary client-side bundles, but it seems to be a side benefit. However, the primary purpose seems to be the data flow from server to client.
+
+In React, we want to be able to re-use code that includes build/server logic.
+
+However, in solutions like Astro, if you want to introduce an "island" of interactivity, you'd have to switch your intitial component to either client React, or re-write it to be a standard React component.
+
+In Django, there's an admin template that gives you a view of your database, routes, entries, etc., but that couldn't be compnentized previously in React-land, because there's server-only code associated with it.
+
+Mental model is powerful to take data, await it, and return the response.
+
+However, traditional use-cases like live-response typing areas, drag and drop areas, complex forms, are still great use cases for traditional client components since state is geared towards that.
+
+Data should feel stateless so that it's easy to write/wait for, and we should keep using state for stateful components (i.e. user does something and we need to remember it), and we need to bind these two things seamlessly.
+
+It should be easy to publish packages and compose server only logic as well so that it's seamless with existing client logic as well.
+
+Targeted components for specific use-cases:
+
+-   How to not ship markdown parser to client
+-   Nested routing
+-   Easier data fetching
+
+Routing and data fetching is related, extra code downloading is related to data fetching, so having a unified solution is simpler than having individual solutions for each of these problems.
+
+## Data trickles down tree in React as props to child components that could be client components
+
+Classical React data fetching example is a piece of state that's filled in by `useEffect()`.
+
+However, state is something that the UI needs to remember like a toggle button, that's stateful because the user did something to change the _state_ of the button. Button has its own memory.
+
+A comments widget has state, because it's initially empty. Then, you can make the component appear which causes it to go to the server to fetch the comment and return the widget.
+
+What if we just think as that comment widget as passing props from the server (top-down data flow), but props are filled in by the server, not by the client and `useEffect()`.
+
+Server rendering (rendering to HTML) is beneficial for the first load, but server components are different.
+
+In traditional server rendered solutions like Next.js pre-13, Remix, Gatsby, server rendering (rendering React tree to HTML) only happens once on initial page load, but the only thing that re-executes on the server thereafter are the pages during navigation or upon re-fetching.
+
+So in Next.js, that means only things like `getServerSideProps()` or in Remix, only things like `loader`s will be re-called, so only components depending on those functions will be able to re-execute to get new data.
+
+However, with server components, we can re-execute the entire tree if the comments widget for example has new comments that are returned from the server since that fetch happens at one the root layouts.
+
+Now, we're adding the server to the unidirectional data flow. Now, new comments can flow down after the re-fetch and refresh, so the comments will just trickle down without extra work to sync state.
+
+This means client-side state is maintained and reconciliation keeps the new data being flowed into the app from losing a user's state, i.e. a toggle that has a default state of being disabled is enabled, new comments flow in, and the toggle remains enabled, but new comments appear in the UI.
+
+## We can do async/await technically on the client according to browser/Node compatibility on async/await. Why can't we have client components called asynchronously.
+
+Synchronicity is different on client vs. server, because on server components, you can await a fetch, but on client side components, you can't. Why?
+
+Async/await does work in the browser, but that's only part of the problem, but what do you show while a component is awaiting its data.
+
+In the past, there were promises that were null until resolved, but now, you need `<Suspense>` to make that possible, but there are internal reasons as well that relate to not accidentally building bad UX.
+
+Also an answer to why can you put a server component inside a client component, because you cannot import a server component from a client file.
+
+i.e. This is not allowed.
+
+```tsx
+import { ServerComponent } from "./server-component";
+import React from "react";
+
+export default function ClientComponent() {
+	return <ServerComponent />;
+}
+```
+
+Let's say everything is on the client, and there are no such thing as server components, but async/await support is added in client components.
+
+This kind of pattern encourages inefficient UIs and loading.
+
+While it may be status quo because of `useEffect()`, there are typically only 2-3 fetches, but there aren't fetches on every level of the component tree.
+
+Right away, there's going to be introduced latency, because on each level of the tree, there has to be a segment of fetches being kicked off to the server, returned to the client to resolve the promise, then continued rendering to go deeper in the tree, and then it starts again until the entire tree is rendered.
+
+### How do you avoid that waterfall?
+
+The server has to know that once it finishes one query, it has to then execute other queries, so it has to know ahead of time which functions are going to be executed in what order, which components depend on which props which depend on which fetches, etc., which is essentially just RSC.
+
+Waterfalls can't always be avoided, because often, there are queries that depend on the returned value of another.
+
+However, where the waterfall happens is important.
+
+On the server, you can minimize the waterfall by making sure all build/server logic is run ahead of time so that every component knows what props it needs.
+
+Let's say you're cooking dinner, and have your friend go shop for you. In a client-component world with async/await supported, this would mean something like this:
+
+> You ask your friend to go to the shop and look for the fruit.
+
+> Your friend comes back and says that they have apples and oranges.
+
+> You tell your friend that the oranges would work, and since they have oranges, also look for spices.
+
+> Your friend goes back to the shop, comes back with oranges, and says that they have cinnamon and nutmeg.
+
+> You tell your friend to get...
+
+As you can see, there's a lot of back and forth between the server (you) and the client (your friend), because the client needs to make sure each promise is resolved (your friend needs to make sure each ingredient is purchased before moving on to the next thing).
+
+With the server component mental model, instead of having this constant back and forth between server and client in a blocking way with async/await, the interaction with your friend looks more like:
+
+> You ask your friend to go to the shop and look for fruit. If they have oranges, look for cinnamon and nutmeg. If they don't have nutmeg, get more cinnamon. If they don't have oranges, just get apples and the same spices. Finally, just look for flour and butter. If they don't have butter, just get vegetable oil.
+
+Now, although the original request (kicked off by the client to the server) takes longer (there are more things to look for), there's no more back and forth, so your friend (the client) can make a single request and it'll have all the information it needs to get the right ingredients (props), without having to render bits and pieces of the UI while the next fetch and then the next fetch all block the rest of the page loading.
+
+### Why can't you just put a server component in the middle of your tree of client components?
+
+Imagine that you could nest a server component with an async function in the middle of your tree.
+
+If you have this component, and the state of your application updates but you add an animation, a form, theme toggle, etc. above that component.
+
+The naive solution to what would happen to that async function is to re-run it everytime, and it would get stuck on every re-render.
+
+If that component just does prop plumbing, the prop may not change, but that re-render causes a re-fetch of the same data.
+
+On the client, that's where you need to know what the state of the application is (i.e. state of every checkbox that's toggled or untoggled).
+
+On the client, if state updates with the current RSC architecture, it doesn't affect server fetches, because that session data remains.
+
+Two parallel data flows is one of the big gotchas.
+
+## Data Flows
+
+There are two different data flows in a single component tree.
+
+Because of this, adoption strategy is going to look different than what's expected.
+
+Most existing React apps today are fully client, but you can't swap out a leaf component at the bottom of a tree, because what if the server components doesn't know what props are being passed to it ahead of time, but could possibly stem from state?
+
+Therefore, adoption for React Server Components is more of an issue for outside-in incrementation, where the root of your application begins as a server component that wraps around your client app as a shell, and then you can go deeper and deeper into things like creating a fully server component based profile page that returns a profile picture, profile details, banner, timeline, etc. that don't rely on state.
+
+However, having a mixed/matched architecture is the point of RSC, where there is no "optimal" solution.
+
+Server components make client-server waterfalls a compile error. Used to accidentally introducing waterfalls through `useEffect()`, but now it's a more clear mental model.
+
+## Writing Client Components
+
+Imagine a tab component that has separate tabs that all render a child React component.
+
+The tab component is interactive, because it keeps track of which tab is selected and therefore which component is rendered on the client, without having to persist that state in the URL.
+
+However, while this component is interactive on the client side, the children can be server components and the rendered output of the server components are passed down as children to those tabs.
+
+React children will give a lot of flexibility to have a lot of server components with sprinkles of interactivity.
+
+This pattern is often called a donut pattern. The tab container component (while it looks like a block on the screen and so therefore it seems as though it's all interactive inside the component), but there's a hole (i.e. slots, an outlet, children, etc.), that allows you to have a non-interactive server component inside a client component in the UI while not necessarily being nested or imported inside the client component in the code.
+
+Worth noting is that because the tab component isn't importing the server components, no rules are broken, because instead, the root server component that's housing both the tab component as well as importing a server component to fill that tab component's children slots.
+
+## Mutations
+
+This ability to mutate data server-side is going to be through server-actions.
+
+You should be able to pass a function from the server to the client, annotated with a `"use server"` directive, otherwise it would be unsafe to call it arbitrarily.
+
+This concept is similar to RPC (remote procedural call) which means you call a function on the client as if it exists there, but behind the scenes, a server API endpoint is generated automatically to call the function on the server in the application as a "middleware" layer.
+
+## Separation of Concerns
+
+Developers should have the option and always have had the option in server-centric frameworks to either directly access and map data to UI or build a an API directly.
+
+RSC gives devs the ability to either have a strong separation of concerns and build an API for their backend requirements and build a UI on top of that API, or build a UI right away to get data directly from their database.
+
+On the framework layer, you can add more opinionated approaches for data structuring, frontend/backend separation, etc., but React is a primitive that allows you to choose how to do those things or not do those things on your own.
+
+## Specification vs. Implementation
+
+Some implementation pieces already exist on the React side, but not all exist.
+
+The renderer that executes server components exists on the React side, which produces a protocol that streams a React tree from server to client (which runs and serializes server components).
+
+If you render a tab container that has a profile tab inside, as the response is serialized inside the protocol, the client component (tab) tells the client how to download it through the `<script>` tab.
+
+Next, the props are serialized, which means executing server components as necessary if they are necessary as props for other components.
+
+Also, deserialization happens through React's own implementation tools that can read the protocol and construct the React tree.
+
+What React doesn't provide is the bundler, which is needed on a deep level.
+
+A next generation bundler is needed, and what's wanted from a bundler is on the same level of advancement as code splitting was back when it was introduced.
+
+The moment that a `"use client"` entry point is introduced, the server components halt and the component tree transitions to purely client components.
+
+The bundler should know about the server module graph as well to detect client component breakpoints as well as have the server module graph and client graph talk with each other.
+
+Turbopack is the only bundler to natively handle this as of now, but there are plugins for other bundlers like Vite.
+
+## Why the need to have client and server components in separate files?
+
+It's harder to mess up for developers to ensure that nothing is exposed to the client that shouldn't be.
+
+If you start with a standard function in a server component file, you won't have any issues.
+
+However, let's say you add useState() to this function. Because the file isn't marked with `"use client"`, you'll get immediate feedback similar to type errors in Typescript.
+
+If you have logic or sensitive information that shouldn't ever get into a client bundle, you can import "server-only" from NPM.
+
+It's worth noting that the `"use client"` directive is where the module graph cuts off from server and transitions to the client module graph, not necessarily something that defines what is a client component or not.
+
+## React Native
+
+One of the things that is very limiting for React Native is that it doesn't let you drive the view logic from the server, but there's already an existing solution that does.
+
+Not being worked on right now, but they'd like to have compatibility with React Native.

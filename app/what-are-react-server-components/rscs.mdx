@@ -1,0 +1,29 @@
+# What are React Server Components (RSCs)?
+
+React server components are React components that run only on the server.
+
+This is different to server side rendering (SSR), which is when you pre-run your React component tree for the page you're loading on the server, and then hydrate it on the client. The difference here is that instead of hydrating, you're essentially shipping a static React component that doesn't have interactivity, but since it's running on the server, you have access to things like data fetching, file system access, etc.
+
+You can write async/await and pass data down to client components or other server components, and while you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
+
+With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect()` for data fetching and storing server data in state.
+
+Because of this, now you can build truly fullstack applications in a much more framework agnostic way using only the primitives that React gives you.
+
+This way, instead of writing the backend and frontend components and services in two different ways, the entire stack can be represented in a component tree.
+
+You can directly access your database, interact with a database access layer, etc. and map the response from a request to an output (UI) to show to the user.
+
+With traditional server-side technologies like PHP or Rails, a mutation or data request resulted in a hard reload where the entire page updates to show the updated data, which isn't ideal for cases where you need to preserve state, whereas with RSCs, you can retain state even with data requests or mutations occuring on a page.
+
+Traditionally, client side apps (single-page-applications) allowed you to do client side routing and retain state while only updating the UI that needed to be changed, but you had to write the backend completely separately and map it to the UI while using some fairly inefficient models like `useEffect()` which often created network waterfalls and large Javascript bundles.
+
+You would have to think about server-side data as state, think about how to trigger fetches, loading indications, and a lot more, because on the client side, you don't have as much flexibility to do those things safely without exposing sensitive data, services, or keys on the client.
+
+With RSCs, you don't necessarily have to create publicly consumable APIs to map data to UI and update backend data, but you're still able to retain state and do client side routing while being able to effectively have dynamic, data driven applications.
+
+Worth noting, however, is that RSCs don't necessarily rely on a "server", but are moreso a specification for the component running ahead of time.
+
+On Next.js, this means at build time, which allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
+
+All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like getServerSideProps, Remix loaders, or Astro islands with a first-class supported solution.
