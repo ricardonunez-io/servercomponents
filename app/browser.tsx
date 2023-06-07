@@ -189,7 +189,7 @@ export default function Browser() {
 							</div>
 						</div>
 					</div>
-					<div className="mt-12">
+					<div className="mt-12 hidden md:grid">
 						<div className="relative pt-4">
 							<div className="mx-auto h-3 rounded-sm bg-slate-300 dark:bg-slate-600 w-32" />
 							<div className="mt-4 flex gap-x-4 justify-center">
