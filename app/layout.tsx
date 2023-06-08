@@ -1,7 +1,5 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import localFont from "@next/font/local";
 
 export const metadata = {
 	title: "React Server Components",
@@ -16,9 +14,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body
-				className={`${inter.className} dark:bg-stone-950 dark:text-slate-300 dark:bg-dark-hero-pattern bg-slate-50 text-slate-700 bg-hero-pattern backdrop-blur-[2px] text-base md:text-lg font-medium`}
-			>
+			<body className="dark:bg-stone-950 dark:text-slate-300 dark:bg-dark-hero-pattern bg-slate-50 text-slate-700 bg-hero-pattern backdrop-blur-[2px] text-base font-medium md:text-lg">
 				{children}
 			</body>
 		</html>

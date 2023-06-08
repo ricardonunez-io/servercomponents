@@ -25,14 +25,14 @@ export default function Card({
 	return (
 		<Link href={href}>
 			<div
-				className={`flex flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-slate-200 dark:border-slate-600 pb-12 ${
+				className={`flex h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-slate-200 dark:border-slate-600 pb-12 ${
 					hoverState ? hoverState : ""
 				}`}
 			>
 				<div className="w-full flex flex-col p-6 mb-4">
 					<Image src={image} alt={imageDescription} />
 				</div>
-				<div className="font-bold text-lg md:text-xl px-6 lg:px-8">
+				<div className="font-semibold text-lg md:text-xl px-6 lg:px-8">
 					{title}
 				</div>
 				<div className="line-clamp-4 px-6 lg:px-8 text-slate-500 dark:text-slate-400 text-lg md:text-xl">

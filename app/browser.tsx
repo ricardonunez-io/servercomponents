@@ -30,7 +30,7 @@ export default function Browser() {
 		<LazyMotion features={domAnimation}>
 			<m.div
 				aria-hidden="true"
-				className="bg-none border-2 border-slate-300 dark:border-slate-600 h-fit w-full rounded-xl p-3 px-0 relative"
+				className="dark:bg-stone-950 bg-slate-50 border-2 border-slate-300 dark:border-slate-600 h-fit w-full rounded-xl p-3 px-0 relative bg-blend-exclusion z-50"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 1.5, ease: "easeOut" }}
@@ -47,10 +47,10 @@ export default function Browser() {
 						animate={{ opacity: 1 }}
 						transition={{ delay: 4, duration: 2 }}
 					>
-						<div className="text-cyan-500 dark:text-cyan-400">
+						<code className="text-cyan-500 dark:text-cyan-400">
 							Server
-						</div>
-						<div className="text-pink-500">Client</div>
+						</code>
+						<code className="text-pink-500">Client</code>
 					</m.div>
 				</div>
 				<div className="mt-2 -mx-3 bg-none h-fit rounded-t-sm rounded-b-[10px] p-4 px-8 overflow-hidden">
@@ -94,7 +94,7 @@ export default function Browser() {
 								<m.svg
 									initial="hidden"
 									animate="visible"
-									className="absolute w-10 md:w-36 h-10 -ml-4 -mt-2.5 rounded-md inset-0"
+									className="absolute w-10 md:w-36 h-10 -ml-5 -mt-2.5 rounded-md inset-0"
 								>
 									<m.rect
 										className="h-full rounded-lg w-full absolute stroke-[6] stroke-pink-500"
