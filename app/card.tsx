@@ -32,7 +32,7 @@ export default function Card({
 				<div className="w-full flex flex-col p-6 mb-4">
 					<Image src={image} alt={imageDescription} />
 				</div>
-				<div className="font-semibold text-lg md:text-xl px-6 lg:px-8">
+				<div className="font-bold text-lg md:text-xl px-6 lg:px-8">
 					{title}
 				</div>
 				<div className="line-clamp-4 px-6 lg:px-8 text-slate-500 dark:text-slate-400 text-lg md:text-xl">

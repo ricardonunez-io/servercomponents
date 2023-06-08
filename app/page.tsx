@@ -42,7 +42,7 @@ export default function Home() {
 				<div className="lg:sticky lg:top-0 lg:h-screen lg:max-h-screen lg:grid lg:place-items-center">
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
 						<Logo />
-						<p className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+						<p className="text-2xl sm:text-3xl md:text-4xl font-bold">
 							... are complicated.
 						</p>
 						<p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 mt-8">
