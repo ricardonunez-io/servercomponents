@@ -2,9 +2,11 @@
 
 React server components are React components that run only on the server.
 
-This is different to server side rendering (SSR), which is when you pre-run your React component tree for the page you're loading on the server, and then hydrate it on the client. The difference here is that instead of hydrating, you're essentially shipping a static React component that doesn't have interactivity, but since it's running on the server, you have access to things like data fetching, file system access, etc.
+This is different to server side rendering (SSR), which is when you pre-run your React component tree for the page you're loading on the server, and then hydrate it on the client.
 
-You can write async/await and pass data down to client components or other server components, and while you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
+The difference here is that instead of hydrating, you're essentially shipping a static React component that doesn't have interactivity, but since it's running on the server, you have access to things like data fetching, file system access, etc.
+
+You can write async/await and pass data down to client components or other server components, and while you technically _can_ use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
 
 With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect()` for data fetching and storing server data in state.
 

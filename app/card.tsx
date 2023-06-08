@@ -23,7 +23,7 @@ export default function Card({
 	}
 
 	return (
-		<a href={href}>
+		<Link href={href}>
 			<div
 				className={`flex flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-slate-200 dark:border-slate-600 pb-12 ${
 					hoverState ? hoverState : ""
@@ -39,6 +39,6 @@ export default function Card({
 					{description}
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 }
