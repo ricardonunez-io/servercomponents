@@ -1,16 +1,17 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-/* 	experimental: {
-		mdxRs: true,
+	experimental: {
+		mdxRs: false,
 	},
- */};
+};
 
 
 const rehypePrettyCode = require('rehype-pretty-code');
 
 const options = {
 	theme: "github-dark",
+	keepBackground: true,
 	onVisitLine(node) {
 		if (node.children.length === 0) {
 		  node.children = [{type: 'text', value: ' '}];

@@ -10,7 +10,7 @@ export default function Pre({ children }: { children: ReactNode }) {
 		<pre className="w-full my-4">
 			<code
 				ref={preRef}
-				className="group flex justify-between w-full p-6 m-1 font-mono rounded-xl text-base md:text-lg bg-slate-800 max-w-full overflow-x-scroll"
+				className="group flex justify-between w-full p-6 m-1 font-mono rounded-xl bg-slate-800 max-w-full overflow-x-scroll"
 			>
 				{children}
 				<CopyToClipboard

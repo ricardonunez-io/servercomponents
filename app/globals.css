@@ -37,6 +37,20 @@ code, pre {
 	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
+.highlighted {
+	background-color: rgba(0, 131, 131, 0.3);
+	height: fit-content;
+	padding-top: 0.1rem;
+	padding-bottom: 0.1rem;
+	width: 100%;
+}
+
+@media (min-width: 640px) { 
+	.highlighted {
+		padding-top: 0.2rem;
+		padding-bottom: 0.2rem; 
+	}
+}
 
 @font-face {
 	font-family: "Soleil";

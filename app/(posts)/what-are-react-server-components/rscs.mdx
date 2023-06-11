@@ -1,14 +1,16 @@
+import ClientWaterfall from "./client-waterfall.tsx"
+
 # What are React Server Components (RSCs)?
 
 React server components are React components that run *only* on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
 
 With this new paradigm, the main difference comes from the output of the component and where the component runs, not necessarily the way you build. You can read more about the more technical aspects of their architecture [here](/architecture).
 
-### What is Server Side Rendering
+### Server Side Rendering
 
-Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components *on the server*, and then hydrate it on the client.
+Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
 
-Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app on the server, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
+Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
 
 "Hydration" essentially means re-rendering all of that HTML, CSS, and JS in the user's browser so that the page can become interactive, so even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet.
 
@@ -16,13 +18,15 @@ So the challenge SSR solved wasn't necessarily running React on servers, but rat
 
 ### How are Server Components different from SSR?
 
-The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState()`, `useEffect()`, etc.) 
+The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState()`, `useEffect()`, etc.).
 
-Because these components are, for all intensive purposes, static, they don't *need* to hydrate, but the benefit  is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
+Static in this context means "not interactive", not that they're not dynamic. You can still pass props to these components, you can still render dynamic data, but you can't use hooks or other React features **that require a browser**.
+
+Because these components are, for all intensive purposes, static *once they're loaded*, they don't *need* to hydrate, but the benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
 
 So then, many people have the question: what happened to "regular React" or the React we all know? 
 
-Well, it's still there, but now, standard React components are called "client components". Only the name changed, though, and they're exactly the same and nothing at all has changed about them in terms of functionality.
+Well, it's still there, but now, "regular" React components (i.e. React pre-Server Components) are called "client components". Only the name changed, though, but they're exactly the same and nothing at all has changed about them in terms of functionality.
 
 ## The Problems They Solve
 
@@ -37,7 +41,11 @@ In a React component tree, let's say you have a root component like the shell of
 Now, let's say you want to fetch your profile data, your feed data, and your sidebar data. In a typical React app, you would have to do something like this:
 
 ```jsx
-export default function Profile() {
+import { useState, useEffect } from "react";
+import Profile from "./Profile";
+import Feed from "./Feed";
+
+export default function Shell() {
 	const [profile, setProfile] = useState(null);
 	const [feed, setFeed] = useState(null);
 
@@ -51,7 +59,7 @@ export default function Profile() {
 		fetch(`/api/feed/${profile.id}`)
 		.then((res) => res.json())
 		.then((data) => setFeed(data));
-	}, []);
+	}, [profile.id]);
 
 	return (
 		<div>
@@ -64,7 +72,81 @@ export default function Profile() {
 
 Nothing too crazy going on here, and if you're used to React, this pattern may seem familiar.
 
-We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass it down to the components that need it.
+We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>` and `<Feed>`.
+
+Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect()` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
+
+Also worth noting is that we just introduced a larger than necessary waterfall into the application. 
+
+That is, we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
+
+<ClientWaterfall/>
+
+means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database, etc.) is hosted on.
+
+Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />` component (one component to make it simple)? 
+
+Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all()` the requests to make sure they all resolve at the same time, right?
+
+Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
+
+Also, in those extra components like likes, comments, and friends, we also need to get their own respective data like how many likes a post has, the most up to date comments, the most up to date friends list, etc, so even though we're only fetching 1 user's activity, we're also fetching each of those posts' data as well.
+
+```jsx {4,9-11,25-40,46-50}
+import { useState, useEffect } from "react";
+import Profile from "./Profile";
+import Feed from "./Feed";
+import Activity from "./History";
+
+export default function Shell() {
+	const [profile, setProfile] = useState(null);
+	const [feed, setFeed] = useState(null);
+	const [likes, setLikes] = useState(null);
+	const [comments, setComments] = useState(null);
+	const [friends, setFriends] = useState(null);
+
+	useEffect(() => {
+		fetch("/api/profile")
+		.then((res) => res.json())
+		.then((data) => setProfile(data));
+	}, []);
+
+	useEffect(() => {
+		fetch(`/api/feed/${profile.id}`)
+		.then((res) => res.json())
+		.then((data) => setFeed(data));
+	}, [profile]);
+
+	useEffect (() => {
+		if (profile) {
+			Promise.all([
+				fetch(`/api/likes/${profile.id}`),
+				fetch(`/api/comments/${profile.id}`),
+				fetch(`/api/friends/${profile.id}`)
+			])
+			.then((res) => Promise.all(res.map((r) => r.json())))
+			.then(([likes, comments, friends]) => {
+				setLikes(likes);
+				setComments(comments);
+				setFriends(friends);
+			});
+		}
+	}, [profile]);
+	})
+
+	return (
+		<div>
+			<Profile profile={profile} />
+			<Feed feed={feed} />
+			<Activity 
+				likes={likes} 
+				comments={comments} 
+				friends={friends} 
+			/>
+		</div>
+	);
+}
+```
 
 ..... Continue here .....
 
