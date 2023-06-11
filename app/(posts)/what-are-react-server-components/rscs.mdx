@@ -10,23 +10,83 @@ With this new paradigm, the main difference comes from the output of the compone
 
 Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
 
+What pre-rendering means is that we're essentially rendering your React component tree as HTML and sending it to the browser, using React's `renderToString(){:js}` method. That string of HTML which looks like this:
+
+```js
+`<html><head><title>My App</></head><body><div id="root"><div class="App"><h1>Hello World!</></div></div></body></html>`
+```
+
+Here's the same thing, but formatted for readability:
+
+```js
+`
+<html>
+	<head>
+		<title>My App</title>
+	</head>
+	<body>
+		<div id="root">
+			<div class="App">
+				<h1>Hello World!</h1>
+			</div>
+		</div>
+	</body>
+</html>
+`
+```
+
+This string of HTML is then sent to the browser to render, and it's then hydrated by React once the browser loads React and all the necessary Javascript.
+
 Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
 
-"Hydration" essentially means re-rendering all of that HTML, CSS, and JS in the user's browser so that the page can become interactive, so even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet.
+"Hydration" essentially means re-rendering all of that HTML, *plus* the necessary JS in the user's *browser* so that the page can become interactive.
+
+So even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet. 
+
+React still has to do a lot of work in terms of binding your React components from the virtual DOM to the actual DOM, setting up event listeners/handlers, etc.
 
 So the challenge SSR solved wasn't necessarily running React on servers, but rather giving the user the app's content to look at instead of a blank screen with a loading spinner while React loaded all of the components.
 
 ### How are Server Components different from SSR?
 
-The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState()`, `useEffect()`, etc.).
+The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState(){:js}`, `useEffect(){:js}`, etc.).
 
-Static in this context means "not interactive", not that they're not dynamic. You can still pass props to these components, you can still render dynamic data, but you can't use hooks or other React features **that require a browser**.
+Static in this context means "not interactive", not that they're not dynamic. 
+
+You can still pass props to these components, you can still render dynamic data, but you can't use hooks or other React features **that require a browser**.
+
+Now, the mental model behind these components is actually more like "templates" or "views" from MVC frameworks like Rails or Laravel that are rendered on the server and then sent to the browser. 
+
+However, under the hood, rather than using `renderToString(){:js}`, React is returning objects (similar to JSON) called "React elements" to the browser, which are immutable objects that tell the browser what to render.
+
+For example, if we wanted to render a component that only contained a div that says "Hello World", in React, we'd simply write JSX like this:
+
+```jsx
+export default function HelloWorld() {
+	return <div>Hello World</div>
+}
+```
+
+The browser, however, won't get that JSX, nor will it get an HTML string like `"<div>Hello World</div>"{:js}`, but rather a React ***element*** that looks like this:
+
+```json
+{
+	type: "div",
+	props: {
+		children: "Hello World"
+	}
+}
+```
+
+This is what React uses on the *browser* to render your components, and it's what React Server Components use to render your components on the *server* and then *pass to the client* rather than passing JSX.
 
 Because these components are, for all intensive purposes, static *once they're loaded*, they don't *need* to hydrate, but the benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
 
 So then, many people have the question: what happened to "regular React" or the React we all know? 
 
-Well, it's still there, but now, "regular" React components (i.e. React pre-Server Components) are called "client components". Only the name changed, though, but they're exactly the same and nothing at all has changed about them in terms of functionality.
+Well, it's still there, but now, "regular" React components (i.e. React pre-Server Components) are called "client components". 
+
+Only the name changed, though, but they're exactly the same and nothing at all has changed about them in terms of functionality.
 
 ## The Problems They Solve
 
@@ -72,9 +132,9 @@ export default function Shell() {
 
 Nothing too crazy going on here, and if you're used to React, this pattern may seem familiar.
 
-We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>` and `<Feed>`.
+We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>{:js}` and `<Feed>{:js}`.
 
-Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect()` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
+Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect(){:js}` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
 
 Also worth noting is that we just introduced a larger than necessary waterfall into the application. 
 
@@ -84,9 +144,9 @@ That is, we have to wait for the *profile* to be fetched before we can fetch the
 
 means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database, etc.) is hosted on.
 
-Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />` component (one component to make it simple)? 
+Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />{:js}` component (one component to make it simple)? 
 
-Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all()` the requests to make sure they all resolve at the same time, right?
+Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all(){:js}` the requests to make sure they all resolve at the same time, right?
 
 Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
 
@@ -150,11 +210,11 @@ export default function Shell() {
 
 ..... Continue here .....
 
-So you can `async`/`await` data directly in a component and pass that data down other server components or even "client components" as props. 
+So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props. 
 
 While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
 
-With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect()` for data fetching and storing server data in state.
+With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect(){:js}` for data fetching and storing server data in state.
 
 Because of this, now you can build truly fullstack applications in a much more framework agnostic way using only the primitives that React gives you.
 
@@ -164,7 +224,7 @@ You can directly access your database, interact with a database access layer, et
 
 With traditional server-side technologies like PHP or Rails, a mutation or data request resulted in a hard reload where the entire page updates to show the updated data, which isn't ideal for cases where you need to preserve state, whereas with RSCs, you can retain state even with data requests or mutations occuring on a page.
 
-Traditionally, client side apps (single-page-applications) allowed you to do client side routing and retain state while only updating the UI that needed to be changed, but you had to write the backend completely separately and map it to the UI while using some fairly inefficient models like `useEffect()` which often created network waterfalls and large Javascript bundles.
+Traditionally, client side apps (single-page-applications) allowed you to do client side routing and retain state while only updating the UI that needed to be changed, but you had to write the backend completely separately and map it to the UI while using some fairly inefficient models like `useEffect(){:js}` which often created network waterfalls and large Javascript bundles.
 
 You would have to think about server-side data as state, think about how to trigger fetches, loading indications, and a lot more, because on the client side, you don't have as much flexibility to do those things safely without exposing sensitive data, services, or keys on the client.
 
