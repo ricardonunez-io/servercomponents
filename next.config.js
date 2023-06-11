@@ -11,6 +11,17 @@ const rehypePrettyCode = require('rehype-pretty-code');
 
 const options = {
 	theme: "github-dark",
+	onVisitLine(node) {
+		if (node.children.length === 0) {
+		  node.children = [{type: 'text', value: ' '}];
+		}
+	  },
+	  onVisitHighlightedLine(node) {
+		node.properties.className.push('highlighted');
+	  },
+	  onVisitHighlightedWord(node) {
+		node.properties.className = ['word'];
+	  },
 };
 
 const withMDX = require('@next/mdx')({
