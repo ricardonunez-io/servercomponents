@@ -1,12 +1,74 @@
 # What are React Server Components (RSCs)?
 
-React server components are React components that run only on the server.
+React server components are React components that run *only* on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
 
-This is different to server side rendering (SSR), which is when you pre-run your React component tree for the page you're loading on the server, and then hydrate it on the client.
+With this new paradigm, the main difference comes from the output of the component and where the component runs, not necessarily the way you build. You can read more about the more technical aspects of their architecture [here](/architecture).
 
-The difference here is that instead of hydrating, you're essentially shipping a static React component that doesn't have interactivity, but since it's running on the server, you have access to things like data fetching, file system access, etc.
+### What is Server Side Rendering
 
-You can write async/await and pass data down to client components or other server components, and while you technically _can_ use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
+Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components *on the server*, and then hydrate it on the client.
+
+Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app on the server, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
+
+"Hydration" essentially means re-rendering all of that HTML, CSS, and JS in the user's browser so that the page can become interactive, so even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet.
+
+So the challenge SSR solved wasn't necessarily running React on servers, but rather giving the user the app's content to look at instead of a blank screen with a loading spinner while React loaded all of the components.
+
+### How are Server Components different from SSR?
+
+The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState()`, `useEffect()`, etc.) 
+
+Because these components are, for all intensive purposes, static, they don't *need* to hydrate, but the benefit  is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
+
+So then, many people have the question: what happened to "regular React" or the React we all know? 
+
+Well, it's still there, but now, standard React components are called "client components". Only the name changed, though, and they're exactly the same and nothing at all has changed about them in terms of functionality.
+
+## The Problems They Solve
+
+Great, so we can run React on the server, but why would we want to? What problems does this solve?
+
+### Data Fetching
+
+One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like Angular, and that is unidrectional (one way) data flows.
+
+In a React component tree, let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. *(It's a very simple example, but it gets the point across)*
+
+Now, let's say you want to fetch your profile data, your feed data, and your sidebar data. In a typical React app, you would have to do something like this:
+
+```jsx
+export default function Profile() {
+	const [profile, setProfile] = useState(null);
+	const [feed, setFeed] = useState(null);
+
+	useEffect(() => {
+		fetch("/api/profile")
+		.then((res) => res.json())
+		.then((data) => setProfile(data));
+	}, []);
+
+	useEffect(() => {
+		fetch(`/api/feed/${profile.id}`)
+		.then((res) => res.json())
+		.then((data) => setFeed(data));
+	}, []);
+
+	return (
+		<div>
+			<Profile profile={profile} />
+			<Feed feed={feed} />
+		</div>
+	);
+}
+```
+
+Nothing too crazy going on here, and if you're used to React, this pattern may seem familiar.
+
+We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass it down to the components that need it.
+
+So you can `async`/`await` data directly in a component and pass that data down other server components or even "client components" as props. 
+
+While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
 
 With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect()` for data fetching and storing server data in state.
 

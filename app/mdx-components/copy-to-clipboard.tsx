@@ -3,8 +3,8 @@ import React, { ComponentProps, useCallback, useEffect, useState } from "react";
 function CopyIcon() {
 	return (
 		<svg
-			width="13"
-			height="16"
+			width="22"
+			height="30"
 			viewBox="0 0 13 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -20,15 +20,15 @@ function CopyIcon() {
 function CompleteIcon() {
 	return (
 		<svg
-			width="11"
-			height="11"
+			width="22"
+			height="22"
 			viewBox="0 0 11 11"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
 				d="M4.31445 10.9434C4.08398 10.9434 3.88086 10.8301 3.70508 10.6035L0.664062 6.73047C0.605469 6.66016 0.5625 6.58984 0.535156 6.51953C0.507812 6.44531 0.494141 6.37305 0.494141 6.30273C0.494141 6.14258 0.546875 6.01172 0.652344 5.91016C0.757812 5.80469 0.892578 5.75195 1.05664 5.75195C1.25195 5.75195 1.41992 5.84766 1.56055 6.03906L4.29102 9.61328L9.55273 1.22852C9.62305 1.11914 9.69531 1.04297 9.76953 1C9.84375 0.953125 9.93945 0.929688 10.0566 0.929688C10.2168 0.929688 10.3457 0.978516 10.4434 1.07617C10.541 1.17383 10.5898 1.30273 10.5898 1.46289C10.5898 1.5332 10.5781 1.60352 10.5547 1.67383C10.5312 1.74023 10.4941 1.81445 10.4434 1.89648L4.90625 10.6152C4.76172 10.834 4.56445 10.9434 4.31445 10.9434Z"
-				fill="white"
+				fill="cyan"
 			/>
 		</svg>
 	);
@@ -81,7 +81,7 @@ export default function CopyToClipboard({
 			onClick={handleClick}
 			title="Copy to clipboard"
 			{...props}
-			className={`rounded-md h-6 w-6 grid place-items-center hover:bg-gray-600 group-hover:opacity-100 opacity-0`}
+			className={`rounded-lg h-12 w-12 grid place-items-center hover:bg-gray-600 group-hover:opacity-100 opacity-0`}
 		>
 			<Icon />
 		</button>

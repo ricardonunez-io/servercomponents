@@ -5,6 +5,7 @@ import H3 from "./app/mdx-components/h3";
 import P from "./app/mdx-components/p";
 import Pre from "./app/mdx-components/pre";
 import Code from "./app/mdx-components/code";
+import A from "./app/mdx-components/a";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
@@ -14,6 +15,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		h2: ({ children }) => <H2>{children}</H2>,
 		h3: ({ children }) => <H3>{children}</H3>,
 		p: ({ children }) => <P>{children}</P>,
+		// @ts-expect-error
+		a: ({ children, href }) => <A href={href}>{children}</A>,
 		...components,
 	};
 }
