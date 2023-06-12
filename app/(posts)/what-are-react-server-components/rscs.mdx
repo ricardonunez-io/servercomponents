@@ -21,16 +21,16 @@ Here's the same thing, but formatted for readability:
 ```js
 `
 <html>
-	<head>
-		<title>My App</title>
-	</head>
-	<body>
-		<div id="root">
-			<div class="App">
-				<h1>Hello World!</h1>
-			</div>
-		</div>
-	</body>
+  <head>
+    <title>My App</title>
+  </head>
+  <body>
+    <div id="root">
+      <div class="App">
+        <h1>Hello World!</h1>
+      </div>
+    </div>
+  </body>
 </html>
 `
 ```
@@ -63,7 +63,7 @@ For example, if we wanted to render a component that only contained a div that s
 
 ```jsx
 export default function HelloWorld() {
-	return <div>Hello World</div>
+  return <div>Hello World</div>
 }
 ```
 
@@ -71,10 +71,10 @@ The browser, however, won't get that JSX, nor will it get an HTML string like `"
 
 ```json
 {
-	type: "div",
-	props: {
-		children: "Hello World"
-	}
+  type: "div",
+  props: {
+    children: "Hello World"
+  }
 }
 ```
 
@@ -106,27 +106,27 @@ import Profile from "./Profile";
 import Feed from "./Feed";
 
 export default function Shell() {
-	const [profile, setProfile] = useState(null);
-	const [feed, setFeed] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [feed, setFeed] = useState(null);
 
-	useEffect(() => {
-		fetch("/api/profile")
-		.then((res) => res.json())
-		.then((data) => setProfile(data));
-	}, []);
+  useEffect(() => {
+    fetch("/api/profile")
+    .then((res) => res.json())
+    .then((data) => setProfile(data));
+  }, []);
 
-	useEffect(() => {
-		fetch(`/api/feed/${profile.id}`)
-		.then((res) => res.json())
-		.then((data) => setFeed(data));
-	}, [profile.id]);
+  useEffect(() => {
+    fetch(`/api/feed/${profile.id}`)
+    .then((res) => res.json())
+    .then((data) => setFeed(data));
+  }, [profile.id]);
 
-	return (
-		<div>
-			<Profile profile={profile} />
-			<Feed feed={feed} />
-		</div>
-	);
+  return (
+    <div>
+      <Profile profile={profile} />
+      <Feed feed={feed} />
+    </div>
+  );
 }
 ```
 
@@ -159,52 +159,52 @@ import Feed from "./Feed";
 import Activity from "./History";
 
 export default function Shell() {
-	const [profile, setProfile] = useState(null);
-	const [feed, setFeed] = useState(null);
-	const [likes, setLikes] = useState(null);
-	const [comments, setComments] = useState(null);
-	const [friends, setFriends] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [feed, setFeed] = useState(null);
+  const [likes, setLikes] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [friends, setFriends] = useState(null);
 
-	useEffect(() => {
-		fetch("/api/profile")
-		.then((res) => res.json())
-		.then((data) => setProfile(data));
-	}, []);
+  useEffect(() => {
+    fetch("/api/profile")
+    .then((res) => res.json())
+    .then((data) => setProfile(data));
+  }, []);
 
-	useEffect(() => {
-		fetch(`/api/feed/${profile.id}`)
-		.then((res) => res.json())
-		.then((data) => setFeed(data));
-	}, [profile]);
+  useEffect(() => {
+    fetch(`/api/feed/${profile.id}`)
+    .then((res) => res.json())
+    .then((data) => setFeed(data));
+  }, [profile]);
 
-	useEffect (() => {
-		if (profile) {
-			Promise.all([
-				fetch(`/api/likes/${profile.id}`),
-				fetch(`/api/comments/${profile.id}`),
-				fetch(`/api/friends/${profile.id}`)
-			])
-			.then((res) => Promise.all(res.map((r) => r.json())))
-			.then(([likes, comments, friends]) => {
-				setLikes(likes);
-				setComments(comments);
-				setFriends(friends);
-			});
-		}
-	}, [profile]);
-	})
+  useEffect (() => {
+    if (profile) {
+      Promise.all([
+        fetch(`/api/likes/${profile.id}`),
+        fetch(`/api/comments/${profile.id}`),
+        fetch(`/api/friends/${profile.id}`)
+      ])
+      .then((res) => Promise.all(res.map((r) => r.json())))
+      .then(([likes, comments, friends]) => {
+        setLikes(likes);
+        setComments(comments);
+        setFriends(friends);
+      });
+    }
+  }, [profile]);
+  })
 
-	return (
-		<div>
-			<Profile profile={profile} />
-			<Feed feed={feed} />
-			<Activity 
-				likes={likes} 
-				comments={comments} 
-				friends={friends} 
-			/>
-		</div>
-	);
+  return (
+    <div>
+      <Profile profile={profile} />
+      <Feed feed={feed} />
+      <Activity 
+        likes={likes} 
+        comments={comments} 
+        friends={friends} 
+      />
+    </div>
+  );
 }
 ```
 
