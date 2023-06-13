@@ -10,7 +10,10 @@ const nextConfig = {
 const rehypePrettyCode = require('rehype-pretty-code');
 
 const options = {
-	theme: "github-dark",
+	theme: {
+		dark: "github-dark",
+		light: "github-dark"
+	},
 	keepBackground: true,
 	onVisitLine(node) {
 		if (node.children.length === 0) {

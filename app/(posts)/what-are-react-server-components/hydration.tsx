@@ -157,7 +157,7 @@ export default function ServerRendering({ caption }: { caption: string }) {
 							ref={tooltipScope}
 							style={{ opacity: 0, translateY: "200%" }}
 						>
-							<code className="text-lg sm:text-xl md:text-2xl border-2 border-slate-500 dark:border-slate-600 rounded-lg p-2 bg-slate-50 dark:bg-gray-950">
+							<code className="text-lg sm:text-xl md:text-2xl border-2 border-gray-500 dark:border-gray-600 rounded-lg p-2 bg-gray-50 dark:bg-gray-950">
 								`&lt;html/&gt;`
 							</code>
 						</m.div>
@@ -182,9 +182,9 @@ export default function ServerRendering({ caption }: { caption: string }) {
 					</div>
 					<div
 						aria-hidden="true"
-						className="dark:bg-stone-950 bg-slate-50 border-2 border-slate-300 dark:border-slate-600 h-fit max-[475px]:max-h-64 w-full rounded-xl p-3 px-0 relative"
+						className="dark:bg-stone-950 bg-gray-50 border-2 border-gray-300 dark:border-gray-600 h-fit max-[475px]:max-h-64 w-full rounded-xl p-3 px-0 relative"
 					>
-						<div className="flex w-full rounded-t-xl justify-between border-b-2 border-slate-300 dark:border-slate-600">
+						<div className="flex w-full rounded-t-xl justify-between border-b-2 border-gray-300 dark:border-gray-600">
 							<div className="flex my-auto min-w-fit w-full pt-2 pb-4 px-4 max-[475px]:pt-0.5 max-[475px]:pb-2">
 								<div className="h-3.5 w-3.5 rounded-full bg-red-500 inline-block mr-2" />
 								<div className="h-3.5 w-3.5 rounded-full bg-yellow-500 inline-block mr-2" />
@@ -199,53 +199,53 @@ export default function ServerRendering({ caption }: { caption: string }) {
 								<div className="flex items-center justify-between">
 									<div className="flex gap-x-1 items-center relative">
 										<div className="rounded-full w-6 h-6 max-[475px]:w-4 max-[475px]:h-4 gradient" />
-										<div className="bg-slate-300 dark:bg-slate-600 h-3 rounded-md w-12 max-[475px]:h-2" />
+										<div className="bg-gray-300 dark:bg-gray-600 h-3 rounded-md w-12 max-[475px]:h-2" />
 									</div>
 									<div className="hidden md:flex items-center gap-x-2 lg:gap-x-4 relative">
-										<div className="bg-slate-300 dark:bg-slate-600 h-3 rounded-md w-8" />
-										<div className="bg-slate-300 dark:bg-slate-600 h-3 rounded-md w-8" />
+										<div className="bg-gray-300 dark:bg-gray-600 h-3 rounded-md w-8" />
+										<div className="bg-gray-300 dark:bg-gray-600 h-3 rounded-md w-8" />
 									</div>
 									<div className="hidden md:flex items-center relative gap-x-4">
-										<div className="text-slate-600/50 dark:text-slate-300/50 text-sm font-medium">
+										<div className="text-gray-600/50 dark:text-gray-300/50 text-sm font-medium">
 											Log In
 										</div>
-										<div className="text-slate-600/50 dark:text-slate-300/50 text-sm font-medium">
+										<div className="text-gray-600/50 dark:text-gray-300/50 text-sm font-medium">
 											Sign Up
 										</div>
 									</div>
 									<div className="relative md:hidden -mt-1">
-										<MenuIcon className="stroke-slate-300/50" />
+										<MenuIcon className="stroke-gray-300/50" />
 									</div>
 								</div>
 								<div className="grid grid-cols-2 pt-6 space-x-2">
 									<div>
 										<div className="relative">
-											<div className="mt-2 bg-slate-300 dark:bg-slate-600 h-3 rounded-sm w-20 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
-											<div className="mt-4 bg-slate-300 dark:bg-slate-600 h-6 rounded-md w-28 max-w-full max-[475px]:h-3 max-[475px]:mt-2" />
-											<div className="mt-2 bg-slate-300 dark:bg-slate-600 h-3 rounded-sm w-36 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
-											<div className="mt-2 bg-slate-300 dark:bg-slate-600 h-3 rounded-sm w-48 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
-											<div className="mt-2 bg-slate-300 dark:bg-slate-600 h-3 rounded-sm w-32 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
+											<div className="mt-2 bg-gray-300 dark:bg-gray-600 h-3 rounded-sm w-20 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
+											<div className="mt-4 bg-gray-300 dark:bg-gray-600 h-6 rounded-md w-28 max-w-full max-[475px]:h-3 max-[475px]:mt-2" />
+											<div className="mt-2 bg-gray-300 dark:bg-gray-600 h-3 rounded-sm w-36 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
+											<div className="mt-2 bg-gray-300 dark:bg-gray-600 h-3 rounded-sm w-48 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
+											<div className="mt-2 bg-gray-300 dark:bg-gray-600 h-3 rounded-sm w-32 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1" />
 										</div>
 										<div className="mt-8 gradient h-5 rounded-full w-16 inset-0 px-2 max-[475px]:h-3 max-[475px]:w-full" />
 									</div>
 
 									<div className="relative h-40 md:h-64 w-full">
-										<div className="mt-2 bg-slate-300 dark:bg-slate-600 h-24 sm:h-32 md:h-full rounded-md w-full relative"></div>
+										<div className="mt-2 bg-gray-300 dark:bg-gray-600 h-24 sm:h-32 md:h-full rounded-md w-full relative"></div>
 									</div>
 								</div>
 							</div>
 							<div className="mt-12 hidden md:grid">
 								<div className="relative pt-4">
-									<div className="mx-auto h-3 rounded-sm bg-slate-300 dark:bg-slate-600 w-32" />
+									<div className="mx-auto h-3 rounded-sm bg-gray-300 dark:bg-gray-600 w-32" />
 									<div className="mt-4 flex gap-x-4 justify-center">
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600 hidden sm:flex" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600 hidden md:flex" />
-										<div className="rounded-full w-6 h-6 bg-slate-300 dark:bg-slate-600 hidden lg:flex" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600 hidden sm:flex" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600 hidden md:flex" />
+										<div className="rounded-full w-6 h-6 bg-gray-300 dark:bg-gray-600 hidden lg:flex" />
 									</div>
 								</div>
 							</div>
