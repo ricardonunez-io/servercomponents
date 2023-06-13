@@ -1,4 +1,5 @@
 import ClientWaterfall from "./client-waterfall.tsx"
+import ServerRendering from "./server-rendering.tsx"
 
 # What are React Server Components (RSCs)?
 
@@ -10,7 +11,11 @@ With this new paradigm, the main difference comes from the output of the compone
 
 Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
 
-What pre-rendering means is that we're essentially rendering your React component tree as HTML and sending it to the browser, using React's `renderToString(){:js}` method. That string of HTML looks like this:
+What pre-rendering means is that we're essentially rendering your React component tree (pre-animations, pre-hooks, etc.) as HTML and sending it to the browser, using React's `renderToString(){:js}` method. 
+
+<ServerRendering caption={"Press the play button for a rough visualization on what server rendering does."} />
+
+That string of HTML might look something like this in a basic React app:
 
 ```js
 `<html><head><title>My App</></head><body><div id="root"><div class="App"><h1>Hello World!</></div></div></body></html>`
@@ -35,7 +40,7 @@ Here's the same thing, but formatted for readability:
 `
 ```
 
-This string of HTML is sent to the browser to render, and it's then hydrated by React once the browser loads React and all the necessary Javascript.
+This string of HTML is rendered by the server, then sent to the browser to render, and it's then *hydrated* by React once the browser loads React and all the necessary Javascript.
 
 Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
 

@@ -4,7 +4,9 @@ import LibrariesVsRSC from "../public/libraries-vs-rsc.png";
 import ImportCost from "../public/import-cost.png";
 import NetworkWaterfall from "../public/network-waterfall.png";
 import Browser from "./browser";
-import Logo from "./logo";
+import Image from "next/image";
+import Link from "next/link";
+import ReactIcon from "../public/react-icon.svg";
 
 export const runtime = "edge";
 
@@ -41,7 +43,21 @@ export default function Home() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 space-y-4">
 				<div className="lg:sticky lg:top-0 lg:h-screen lg:max-h-screen lg:grid lg:place-items-center">
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
-						<Logo />
+						<Link
+							href="/"
+							className="flex text-3xl sm:text-4xl md:text-5xl font-extrabold gradient clip items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
+						>
+							<Image
+								src={ReactIcon}
+								alt="React Icon"
+								className="w-12 h-12"
+							/>
+							<span className="hidden md:flex pb-2">
+								Server Components
+							</span>
+							<span className="flex md:hidden">RSCs</span>
+						</Link>
+
 						<p className="text-2xl sm:text-3xl md:text-4xl font-bold">
 							... are complicated.
 						</p>

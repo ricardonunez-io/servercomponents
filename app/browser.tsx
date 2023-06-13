@@ -2,8 +2,6 @@
 
 import MenuIcon from "./menu-icon";
 import { m, LazyMotion, domAnimation } from "framer-motion";
-import ReactIcon from "../public/react-icon.svg";
-import Image from "next/image";
 
 export default function Browser() {
 	const draw = {
