@@ -38,25 +38,37 @@ code, pre {
 }
 
 @media (prefers-color-scheme: dark) {
-	pre[data-theme='light'],
-	code[data-theme='light'] {
+	pre:has(code[data-theme='light']), code[data-theme='light'] {
 		display: none;
 	}
 }
-   
+
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-	pre[data-theme='dark'],
-	code[data-theme='dark'] {
+	pre:has(code[data-theme='dark']), code[data-theme='dark'] {
 	  	display: none;
 	}
 }
 
-.highlighted {
-	background-color: rgb(0, 65, 65);
-	height: fit-content;
-	padding-top: 0.1rem;
-	padding-bottom: 0.1rem;
-	width: 100%;
+@media (prefers-color-scheme: dark) {
+	.highlighted {
+		background-color: rgb(0, 65, 65);
+		height: fit-content;
+		padding-top: 0.1rem;
+		padding-bottom: 0.1rem;
+		width: 100%;
+		display: inline-block;
+	}
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+	.highlighted {
+		background-color: rgb(197, 240, 240);
+		height: fit-content;
+		padding-top: 0.1rem;
+		padding-bottom: 0.1rem;
+		width: 100%;
+		display: inline-block;
+	}
 }
 
 @media (min-width: 640px) { 

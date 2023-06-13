@@ -7,21 +7,20 @@ export default function Pre({ children }: { children: ReactNode }) {
 	const preRef = useRef<HTMLPreElement | null>(null);
 
 	return (
-		<pre className="w-full">
-			<code
+		<div className="group relative w-full overflow-y-hidden">
+			<pre
+				className="overflow-x-scroll relative p-4 font-mono rounded-xl bg-gray-100 dark:bg-gray-950 border-2 border-gray-200 dark:border-gray-800"
 				ref={preRef}
-				className="group flex justify-between w-full pt-6 pb-4 px-6 m-1 font-mono rounded-xl bg-gray-800 overflow-x-scroll"
 			>
 				{children}
-				<div className="-mt-2">
-					<CopyToClipboard
-						getValue={() =>
-							preRef.current?.querySelector("code")
-								?.textContent || ""
-						}
-					/>
-				</div>
-			</code>
-		</pre>
+			</pre>
+			<div className="absolute right-1 top-1 group-hover:bg-inherit">
+				<CopyToClipboard
+					getValue={() =>
+						preRef.current?.querySelector("code")?.textContent || ""
+					}
+				/>
+			</div>
+		</div>
 	);
 }

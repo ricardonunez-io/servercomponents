@@ -12,7 +12,7 @@ import LI from "./app/mdx-components/li";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
 		pre: ({ children }) => <Pre>{children}</Pre>,
-		code: ({ children }) => <Code>{children}</Code>,
+		// code: ({ children }) => <Code>{children}</Code>,
 		h1: ({ children }) => <H1>{children}</H1>,
 		h2: ({ children }) => <H2>{children}</H2>,
 		h3: ({ children }) => <H3>{children}</H3>,

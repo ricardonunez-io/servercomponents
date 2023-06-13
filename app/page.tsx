@@ -45,7 +45,7 @@ export default function Home() {
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
 						<Link
 							href="/"
-							className="flex text-3xl sm:text-4xl md:text-5xl font-extrabold gradient clip items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
+							className="flex text-3xl sm:text-4xl md:text-5xl font-bold gradient clip items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
 						>
 							<Image
 								src={ReactIcon}

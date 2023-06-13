@@ -9,7 +9,7 @@ import { useState } from "react";
 function Spinner() {
 	return (
 		<svg
-			className="animate-spin w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-current"
+			className="animate-spin w-5 h-5 sm:w-6 sm:h-6 text-current"
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"
 			viewBox="0 0 24 24"
@@ -20,7 +20,7 @@ function Spinner() {
 				cy="12"
 				r="10"
 				stroke="currentColor"
-				stroke-width="4"
+				strokeWidth="4"
 			/>
 			<path
 				className="opacity-75"
@@ -37,7 +37,7 @@ function PlayButton() {
 			viewBox="0 0 51 57"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+			className="w-5 h-5 sm:w-6 sm:h-6"
 		>
 			<path
 				d="M5.62791 56.3769C4.27374 56.3769 3.13832 55.8874 2.22166 54.9082C1.32582 53.9499 0.877907 52.6269 0.877907 50.9394V5.87694C0.877907 4.21027 1.32582 2.89777 2.22166 1.93944C3.13832 0.960271 4.27374 0.470688 5.62791 0.470688C6.31541 0.470688 6.98207 0.585271 7.62791 0.814438C8.27374 1.0436 8.98207 1.37694 9.75291 1.81444L46.8779 23.3457C48.2737 24.1374 49.2946 24.9186 49.9404 25.6894C50.5862 26.4394 50.9092 27.3457 50.9092 28.4082C50.9092 29.4915 50.5862 30.4082 49.9404 31.1582C49.2946 31.9082 48.2737 32.6894 46.8779 33.5019L9.75291 55.0019C8.98207 55.4603 8.27374 55.804 7.62791 56.0332C6.98207 56.2624 6.31541 56.3769 5.62791 56.3769Z"
@@ -216,13 +216,13 @@ export default function ServerRendering({ caption }: { caption: string }) {
 							ref={tooltipScope}
 							style={{ opacity: 0, translateY: "200%" }}
 						>
-							<code className="text-lg sm:text-xl md:text-2xl border-2 border-gray-500 dark:border-gray-600 rounded-lg p-2 bg-gray-50 dark:bg-gray-950">
+							<span className="font-mono text-lg sm:text-xl md:text-2xl border-2 border-gray-500 dark:border-gray-600 rounded-lg p-2 bg-gray-50 dark:bg-stone-950">
 								`&lt;html/&gt;`
-							</code>
+							</span>
 						</m.div>
-						<code className="absolute translate-x-[44%] -translate-y-[250%] sm:-translate-y-[328%] md:-translate-y-[570%]">
+						<span className="font-mono absolute translate-x-[44%] -translate-y-[250%] sm:-translate-y-[328%] md:-translate-y-[570%]">
 							Server
-						</code>
+						</span>
 						<Image
 							src={ReactIcon}
 							alt="React Icon"
@@ -252,9 +252,9 @@ export default function ServerRendering({ caption }: { caption: string }) {
 								<div className="h-3.5 w-3.5 rounded-full bg-yellow-500 inline-block mr-2" />
 								<div className="h-3.5 w-3.5 rounded-full bg-green-500 inline-block mr-2" />
 							</div>
-							<code className="absolute inset-0 translate-x-[44%] max-[475px]:-mt-1 max-[475px]:ml-3">
+							<span className="font-mono absolute inset-0 translate-x-[44%] max-[475px]:-mt-1 max-[475px]:ml-3">
 								Client
-							</code>
+							</span>
 						</div>
 						<div className="mt-2 -mx-3 bg-none h-fit rounded-t-sm rounded-b-[10px] p-4 px-8 overflow-hidden">
 							<div>
@@ -326,12 +326,12 @@ export default function ServerRendering({ caption }: { caption: string }) {
 			</div>
 			<div className="flex items-center">
 				<div className="mr-3">
-					<div className="w-12 h-[56px] sm:w-16 sm:h-[72px] md:w-20 md:h-[88px] bg-gray-300 border-gray-300 dark:bg-gray-600 dark:border-gray-600 rounded-xl border-2 absolute" />
+					<div className="w-12 h-[56px] sm:w-16 sm:h-[72px] bg-gray-300 border-gray-300 dark:bg-gray-600 dark:border-gray-600 rounded-xl md:rounded-2xl border-2 absolute" />
 					<button
 						onClick={handleClick}
 						disabled={isPlaying}
 						aria-label="play animation"
-						className="group w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gray-100 border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-xl border-2 grid place-items-center hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-800 active:scale-90 transition-all transform-gpu duration-150 relative text-gray-700 dark:text-gray-300"
+						className="group w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-xl md:rounded-2xl border-2 grid place-items-center hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-800 active:scale-90 transition-all transform-gpu duration-150 relative text-gray-700 dark:text-gray-300"
 					>
 						<>{isPlaying ? <Spinner /> : <PlayButton />}</>
 					</button>
