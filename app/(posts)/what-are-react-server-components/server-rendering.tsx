@@ -51,11 +51,10 @@ function PlayButton() {
 function Arrow() {
 	return (
 		<svg
-			width="24"
-			height="20"
 			viewBox="0 0 12 10"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className="w-4 h-4 sm:w-6 sm:h-6 md:w-6 md:h-6 text-current"
 		>
 			<path
 				d="M0.494141 4.75781C0.494141 4.54688 0.572266 4.36719 0.728516 4.21875L4.56055 0.386719C4.64258 0.304688 4.72656 0.246094 4.8125 0.210938C4.90234 0.171875 4.99219 0.152344 5.08203 0.152344C5.29688 0.152344 5.4707 0.21875 5.60352 0.351562C5.73633 0.484375 5.80273 0.648438 5.80273 0.84375C5.80273 0.949219 5.78125 1.04688 5.73828 1.13672C5.69922 1.22266 5.64648 1.29883 5.58008 1.36523L4.26758 2.68945L2.1875 4.59961L1.91797 4.14844L4.05078 4.03125H10.9648C11.1875 4.03125 11.3672 4.09961 11.5039 4.23633C11.6406 4.36914 11.709 4.54297 11.709 4.75781C11.709 4.97656 11.6406 5.1543 11.5039 5.29102C11.3672 5.42383 11.1875 5.49023 10.9648 5.49023H4.05078L1.91797 5.36719L2.1875 4.92773L4.26758 6.82617L5.58008 8.15039C5.64648 8.2168 5.69922 8.29297 5.73828 8.37891C5.78125 8.46484 5.80273 8.5625 5.80273 8.67188C5.80273 8.86719 5.73633 9.03125 5.60352 9.16406C5.4707 9.29688 5.29688 9.36328 5.08203 9.36328C4.89453 9.36328 4.72461 9.28711 4.57227 9.13477L0.728516 5.29688C0.572266 5.14844 0.494141 4.96875 0.494141 4.75781Z"
@@ -159,23 +158,20 @@ export default function ServerRendering({ caption }: { caption: string }) {
 		await navAnimate(
 			navScope.current,
 			{ opacity: 1, translateY: [-20, 0] },
-			{ delay: 5.5, duration: 0.5 }
+			{ delay: 5.5 }
 		);
-		await copyAnimate(
-			copyScope.current,
-			{ opacity: 1, translateY: [-20, 0] },
-			{ delay: -0.2, duration: 0.5 }
-		);
-		await heroAnimate(
-			heroScope.current,
-			{ opacity: 1, translateY: [-20, 0] },
-			{ delay: -0.2, duration: 0.5 }
-		);
-		await logoCloudAnimate(
-			logoCloudScope.current,
-			{ opacity: 1, translateY: [-20, 0] },
-			{ delay: -0.2, duration: 0.5 }
-		);
+		await copyAnimate(copyScope.current, {
+			opacity: 1,
+			translateY: [-20, 0],
+		});
+		await heroAnimate(heroScope.current, {
+			opacity: 1,
+			translateY: [-20, 0],
+		});
+		await logoCloudAnimate(logoCloudScope.current, {
+			opacity: 1,
+			translateY: [-20, 0],
+		});
 
 		await navAnimate(
 			navScope.current,
@@ -224,7 +220,7 @@ export default function ServerRendering({ caption }: { caption: string }) {
 								`&lt;html/&gt;`
 							</code>
 						</m.div>
-						<code className="absolute translate-x-[44%] -mt-[59px]">
+						<code className="absolute translate-x-[44%] -translate-y-[250%] sm:-translate-y-[328%] md:-translate-y-[570%]">
 							Server
 						</code>
 						<Image
@@ -329,7 +325,7 @@ export default function ServerRendering({ caption }: { caption: string }) {
 				</div>
 			</div>
 			<div className="flex items-center">
-				<div className="mr-6">
+				<div className="mr-3">
 					<div className="w-12 h-[56px] sm:w-16 sm:h-[72px] md:w-20 md:h-[88px] bg-gray-600 rounded-xl border-2 border-gray-600 absolute" />
 					<button
 						onClick={handleClick}
@@ -341,7 +337,10 @@ export default function ServerRendering({ caption }: { caption: string }) {
 					</button>
 				</div>
 				<div className="flex gap-x-3 items-center text-sm sm:text-base md:text-lg text-center mt-4">
-					<Arrow /> {caption}
+					<div>
+						<Arrow />
+					</div>
+					<div>{caption}</div>
 				</div>
 			</div>
 		</div>
