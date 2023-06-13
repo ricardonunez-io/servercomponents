@@ -81,7 +81,7 @@ export default function CopyToClipboard({
 			onClick={handleClick}
 			title="Copy to clipboard"
 			{...props}
-			className={`rounded-lg h-12 w-12 min-w-12 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 group-hover:opacity-100 opacity-0`}
+			className={`rounded-lg h-12 w-12 min-w-12 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 group-hover:opacity-100 opacity-0 transition-all`}
 		>
 			<Icon />
 		</button>

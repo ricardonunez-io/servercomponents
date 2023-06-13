@@ -172,18 +172,6 @@ export default function ServerRendering({ caption }: { caption: string }) {
 			opacity: 1,
 			translateY: [-20, 0],
 		});
-
-		await navAnimate(
-			navScope.current,
-			{ opacity: 0, translateY: 0 },
-			{ delay: 3 }
-		);
-		await copyAnimate(copyScope.current, { opacity: 0, translateY: 0 });
-		await heroAnimate(heroScope.current, { opacity: 0, translateY: 0 });
-		await logoCloudAnimate(logoCloudScope.current, {
-			opacity: 0,
-			translateY: 0,
-		});
 	}
 
 	async function playAnimation() {
