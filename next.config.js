@@ -20,22 +20,6 @@ const options = {
 	onVisitHighlightedWord(node) {
 		node.properties.className = ['word'];
 	},
-	onParse(tree) {
-        (async () => {
-            const visit = (await import('unist-util-visit')).default;
-    
-            visit(tree, 'element', node => {
-                if (node.tagName === 'pre') {
-                    // Find the first 'code' child
-                    const codeChild = node.children.find(child => child.tagName === 'code');
-                    if (codeChild) {
-                        // Copy the 'data-theme' attribute from the 'code' child to the 'pre' node
-                        node.properties['data-theme'] = codeChild.dataset.theme;
-                    }
-                }
-            });
-        })();
-    }
 };
 
 const withMDX = require('@next/mdx')({
