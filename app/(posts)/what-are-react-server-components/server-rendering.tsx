@@ -281,7 +281,6 @@ export default function ServerRendering({ caption }: { caption: string }) {
 										</div>
 										<div className="mt-8 gradient h-5 rounded-full w-16 inset-0 px-2 max-[475px]:h-3 max-[475px]:w-full" />
 									</div>
-
 									<div
 										className="relative h-40 md:h-64 w-full opacity-0"
 										ref={heroScope}
@@ -324,10 +323,7 @@ export default function ServerRendering({ caption }: { caption: string }) {
 						<>{isPlaying ? <Spinner /> : <PlayButton />}</>
 					</button>
 				</div>
-				<div className="flex gap-x-3 items-center text-sm sm:text-base md:text-lg text-center mt-4">
-					<div>
-						<Arrow />
-					</div>
+				<div className="flex items-center text-sm sm:text-base md:text-lg text-center mt-4">
 					<div>{caption}</div>
 				</div>
 			</div>

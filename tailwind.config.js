@@ -15,6 +15,9 @@ module.exports = {
 				"hero-pattern": "url('../public/grid.svg')",
 				"dark-hero-pattern": "url('../public/dark-grid.svg')",
 			},
+			transitionProperty: {
+				height: "height",
+			}
 		},
 		plugins: [
 			require("@tailwindcss/line-clamp"),
