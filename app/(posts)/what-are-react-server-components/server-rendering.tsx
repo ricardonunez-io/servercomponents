@@ -5,6 +5,7 @@ import { m, useAnimate } from "framer-motion";
 import ReactIcon from "../../../public/react-icon.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { block } from "million/react";
 
 function Spinner() {
 	return (
@@ -43,22 +44,6 @@ function PlayButton() {
 				d="M5.62791 56.3769C4.27374 56.3769 3.13832 55.8874 2.22166 54.9082C1.32582 53.9499 0.877907 52.6269 0.877907 50.9394V5.87694C0.877907 4.21027 1.32582 2.89777 2.22166 1.93944C3.13832 0.960271 4.27374 0.470688 5.62791 0.470688C6.31541 0.470688 6.98207 0.585271 7.62791 0.814438C8.27374 1.0436 8.98207 1.37694 9.75291 1.81444L46.8779 23.3457C48.2737 24.1374 49.2946 24.9186 49.9404 25.6894C50.5862 26.4394 50.9092 27.3457 50.9092 28.4082C50.9092 29.4915 50.5862 30.4082 49.9404 31.1582C49.2946 31.9082 48.2737 32.6894 46.8779 33.5019L9.75291 55.0019C8.98207 55.4603 8.27374 55.804 7.62791 56.0332C6.98207 56.2624 6.31541 56.3769 5.62791 56.3769Z"
 				fill="currentColor"
 				className="text-gray-700 dark:text-gray-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-500 transition-all"
-			/>
-		</svg>
-	);
-}
-
-function Arrow() {
-	return (
-		<svg
-			viewBox="0 0 12 10"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			className="w-4 h-4 sm:w-6 sm:h-6 md:w-6 md:h-6 text-current"
-		>
-			<path
-				d="M0.494141 4.75781C0.494141 4.54688 0.572266 4.36719 0.728516 4.21875L4.56055 0.386719C4.64258 0.304688 4.72656 0.246094 4.8125 0.210938C4.90234 0.171875 4.99219 0.152344 5.08203 0.152344C5.29688 0.152344 5.4707 0.21875 5.60352 0.351562C5.73633 0.484375 5.80273 0.648438 5.80273 0.84375C5.80273 0.949219 5.78125 1.04688 5.73828 1.13672C5.69922 1.22266 5.64648 1.29883 5.58008 1.36523L4.26758 2.68945L2.1875 4.59961L1.91797 4.14844L4.05078 4.03125H10.9648C11.1875 4.03125 11.3672 4.09961 11.5039 4.23633C11.6406 4.36914 11.709 4.54297 11.709 4.75781C11.709 4.97656 11.6406 5.1543 11.5039 5.29102C11.3672 5.42383 11.1875 5.49023 10.9648 5.49023H4.05078L1.91797 5.36719L2.1875 4.92773L4.26758 6.82617L5.58008 8.15039C5.64648 8.2168 5.69922 8.29297 5.73828 8.37891C5.78125 8.46484 5.80273 8.5625 5.80273 8.67188C5.80273 8.86719 5.73633 9.03125 5.60352 9.16406C5.4707 9.29688 5.29688 9.36328 5.08203 9.36328C4.89453 9.36328 4.72461 9.28711 4.57227 9.13477L0.728516 5.29688C0.572266 5.14844 0.494141 4.96875 0.494141 4.75781Z"
-				fill="currentColor"
 			/>
 		</svg>
 	);
@@ -318,7 +303,7 @@ export default function ServerRendering({ caption }: { caption: string }) {
 						onClick={handleClick}
 						disabled={isPlaying}
 						aria-label="play animation"
-						className="group w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-xl md:rounded-2xl border-2 grid place-items-center hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-800 active:scale-90 transition-all transform-gpu duration-150 relative text-gray-700 dark:text-gray-300"
+						className="group w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-xl md:rounded-2xl border-2 grid place-items-center hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-800 active:scale-90 transition-all duration-150 relative text-gray-700 dark:text-gray-300"
 					>
 						<>{isPlaying ? <Spinner /> : <PlayButton />}</>
 					</button>

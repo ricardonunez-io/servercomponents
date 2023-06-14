@@ -23,6 +23,7 @@
 		"eslint": "8.42.0",
 		"eslint-config-next": "^13.4.5",
 		"framer-motion": "^10.12.16",
+		"million": "^2.4.6-beta.2",
 		"next": "^13.4.5",
 		"postcss": "8.4.24",
 		"react": "18.2.0",
