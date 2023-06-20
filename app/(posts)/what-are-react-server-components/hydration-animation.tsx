@@ -63,7 +63,7 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 									</div>
 								</div>
 								<div className="grid grid-cols-2 pt-6 space-x-2">
-									<div className="">
+									<div>
 										<div className="relative">
 											<div className="mt-2 bg-gray-300 shimmer dark:bg-gray-600 h-3 rounded-sm w-20 max-w-full max-[475px]:h-1.5 max-[475px]:mt-1"/>
 											<div className="mt-4 bg-gray-300 shimmer dark:bg-gray-600 h-6 rounded-md w-28 max-w-full max-[475px]:h-3 max-[475px]:mt-2"/>
