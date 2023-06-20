@@ -3,8 +3,8 @@ import React, { ComponentProps, useCallback, useEffect, useState } from "react";
 function CopyIcon() {
 	return (
 		<svg
-			width="22"
-			height="30"
+			width="18"
+			height="24"
 			viewBox="0 0 13 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -20,11 +20,12 @@ function CopyIcon() {
 function CompleteIcon() {
 	return (
 		<svg
-			width="22"
-			height="22"
+			width="18"
+			height="18"
 			viewBox="0 0 11 11"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className="text-green-600 dark:text-green-400"
 		>
 			<path
 				d="M4.31445 10.9434C4.08398 10.9434 3.88086 10.8301 3.70508 10.6035L0.664062 6.73047C0.605469 6.66016 0.5625 6.58984 0.535156 6.51953C0.507812 6.44531 0.494141 6.37305 0.494141 6.30273C0.494141 6.14258 0.546875 6.01172 0.652344 5.91016C0.757812 5.80469 0.892578 5.75195 1.05664 5.75195C1.25195 5.75195 1.41992 5.84766 1.56055 6.03906L4.29102 9.61328L9.55273 1.22852C9.62305 1.11914 9.69531 1.04297 9.76953 1C9.84375 0.953125 9.93945 0.929688 10.0566 0.929688C10.2168 0.929688 10.3457 0.978516 10.4434 1.07617C10.541 1.17383 10.5898 1.30273 10.5898 1.46289C10.5898 1.5332 10.5781 1.60352 10.5547 1.67383C10.5312 1.74023 10.4941 1.81445 10.4434 1.89648L4.90625 10.6152C4.76172 10.834 4.56445 10.9434 4.31445 10.9434Z"
@@ -40,9 +41,6 @@ export default function CopyToClipboard({
 }: { getValue: () => string } & ComponentProps<"button">) {
 	const [isCopied, setCopied] = useState(false);
 
-	// Function to determine which icon to show, either the
-	// two-documents-icon (copy to clipboard),
-	// or the success-icon (successfully copied to clipboard)
 	useEffect(() => {
 		if (!isCopied) return;
 		const timerId = setTimeout(() => {
@@ -54,7 +52,6 @@ export default function CopyToClipboard({
 		};
 	}, [isCopied]);
 
-	// Function to copy the value to the clipboard and handle errors if failed
 	const handleClick = useCallback<
 		NonNullable<ComponentProps<"button">["onClick"]>
 	>(async () => {
@@ -81,7 +78,12 @@ export default function CopyToClipboard({
 			onClick={handleClick}
 			title="Copy to clipboard"
 			{...props}
-			className={`rounded-xl h-12 w-12 min-w-12 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 group-hover:opacity-100 opacity-0 transition-all`}
+			className="rounded-lg h-10 w-10 min-w-12 grid place-items-center
+			text-gray-600 dark:text-gray-400
+			border-[1.5px] border-gray-300 dark:border-gray-700
+			hover:bg-gray-200 dark:hover:bg-gray-800
+			hover:border-gray-400 dark:hover:border-gray-500 group-hover:opacity-100 opacity-0 transition-all
+			active:scale-90"
 		>
 			<Icon />
 		</button>

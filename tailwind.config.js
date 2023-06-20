@@ -5,6 +5,7 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 		"./app/**/*.{js,ts,jsx,tsx}",
 		"./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+		"./mdx-components/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
 		extend: {
@@ -15,9 +16,6 @@ module.exports = {
 				"hero-pattern": "url('../public/grid.svg')",
 				"dark-hero-pattern": "url('../public/dark-grid.svg')",
 			},
-			transitionProperty: {
-				height: "height",
-			}
 		},
 		plugins: [
 			require("@tailwindcss/line-clamp"),

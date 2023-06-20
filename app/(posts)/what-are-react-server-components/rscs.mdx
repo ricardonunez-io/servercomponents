@@ -1,5 +1,7 @@
-import ClientWaterfall from "./client-waterfall.tsx"
-import ServerRendering from "./server-rendering.tsx"
+import ClientWaterfallDiagram from "./client-waterfall-diagram.tsx"
+import ServerRenderingAnimation from "./server-rendering-animation.tsx"
+import HydrationAnimation from "./hydration-animation.tsx"
+import SpinnerAnimation from "@/app/(posts)/what-are-react-server-components/spinner-animation";
 
 # What are React Server Components (RSCs)?
 
@@ -13,9 +15,9 @@ Running React components on the server might seem familiar if you've heard of "s
 
 What pre-rendering means is that we're essentially rendering your React component tree (pre-animations, pre-hooks, etc.) as HTML and sending it to the browser, using React's `renderToString(){:js}` method. 
 
-<ServerRendering caption={"Press play for a rough visualization on what server-side rendering does."} />
+<ServerRenderingAnimation caption={"Press play for a rough visualization on what server-side rendering does."} />
 
-That string of HTML might look something like this in a basic React app:
+That string of HTML might look something like this in a basic React app, and you can think of it as a screenshot of the very first frame you see when loading a page before any animations, state changes, effects, etc. happen:
 
 ```js
 `<html><head><title>My App</></head><body><div id="root"><div class="App"><h1>Hello World!</></div></div></body></html>`
@@ -38,7 +40,7 @@ Here's the same thing, but formatted for readability:
 </html>`
 ```
 
-This string of HTML is rendered by the server, then sent to the browser to render, and it's then *hydrated* by React once the browser loads React and all the necessary Javascript.
+This string of HTML is then sent to the browser to render, and then *hydrated* by React once the browser loads React and all the necessary Javascript.
 
 Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration. 
 
@@ -48,19 +50,25 @@ So even though SSR means that your user sees your content on their screen, it do
 
 React still has to do a lot of work in terms of binding your React components from the virtual DOM to the actual DOM, setting up event listeners/handlers, etc.
 
-So the challenge SSR solved wasn't necessarily running React on servers, but rather giving the user the app's content to look at instead of a blank screen with a loading spinner while React loaded all of the components.
+Even if you have a completely static page with no hooks, state, effects, click handlers, etc., React would *still* need to hydrate the page, meaning your static HTML and CSS are bound by the loading of Javascript.
+
+<HydrationAnimation caption={"↑ React needs to bind these things to your application behind the scenes before anything on the page can be interacted with (i.e. before you can navigate, click a button, etc.), even if the HTML is visible on the page."} />
+
+So the challenge SSR solved wasn't necessarily running React on servers to get rid of hydration, but rather giving the user content to look at while React loads up all the components.
 
 ### How are Server Components different from SSR?
 
-The difference with React Server Components and SSR is that instead of *hydrating*, you're essentially shipping static React components that don't have interactivity (which in this case means you can't use things like `useState(){:js}`, `useEffect(){:js}`, etc.).
+Now, if hydration is still necessary using SSR, that means that your React logic (i.e. what gets called before the `return(){:js}` statement) still needs to run on the client, which isn't ideal for every scenario.
 
-Static in this context means "not interactive", not that they're not dynamic. 
+This is the problem that Server Components set out to solve.
+
+The difference between React Server Components and SSR is that instead of rendering the first frame of your JSX's HTML output and then *hydrating* that HTML, you're essentially shipping React components that are ran on the server before the browser is even available to render to, and that don't have interactivity.
 
 You can still pass props to these components, you can still render dynamic data, but you can't use hooks or other React features **that require a browser**.
 
 Now, the mental model behind these components is actually more like "templates" or "views" from MVC frameworks like Rails or Laravel that are rendered on the server and then sent to the browser. 
 
-However, under the hood, rather than using `renderToString(){:js}`, React is returning objects (similar to JSON) called "React elements" to the browser, which are immutable objects that tell the browser what to render.
+However, under the hood, rather than using `renderToString(){:js}`, React is returning objects called "React elements" to the browser, which are immutable objects that tell the browser what to render.
 
 For example, if we wanted to render a component that only contained a div that says "Hello World", in React, we'd simply write JSX like this:
 
@@ -74,16 +82,16 @@ The browser, however, won't get that JSX, nor will it get an HTML string like `"
 
 ```json
 {
-  type: "div",
-  props: {
-    children: "Hello World"
+  "type": "div",
+  "props": {
+    "children": "Hello World"
   }
 }
 ```
 
 This is what React uses on the *browser* to render your components, and it's what React Server Components use to render your components on the *server* and then *pass to the client* rather than passing JSX.
 
-Because these components are, for all intensive purposes, static *once they're loaded*, they don't *need* to hydrate, but the benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
+Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but the benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
 
 So then, many people have the question: what happened to "regular React" or the React we all know? 
 
@@ -139,11 +147,11 @@ We just have two effects, two state stores that are updated by those effects, an
 
 Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect(){:js}` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
 
-Also worth noting is that we just introduced a larger than necessary waterfall into the application. 
+Also, worth noting is that we just introduced a larger than necessary waterfall into the application.
 
 That is, we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
 
-<ClientWaterfall/>
+<ClientWaterfallDiagram/>
 
 means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database, etc.) is hosted on.
 
@@ -195,7 +203,6 @@ export default function Shell() {
       });
     }
   }, [profile]);
-  })
 
   return (
     <div>

@@ -59,12 +59,12 @@ export default function Pre({ children }: { children: ReactNode }) {
 			{isOverflowing && (
 				<button
 					onClick={() => setIsExpanded(!isExpanded)}
-					className="absolute bottom-1.5 right-2 block rounded-full text-gray-700 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition-all px-3 py-1"
+					className="absolute bottom-1.5 right-2 block rounded-xl text-gray-700 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition-all px-3 py-1"
 				>
 					{isExpanded ? "Show less" : "Show more"}
 				</button>
 			)}
-			<div className="absolute right-2 top-1.5 group-hover:bg-gray-100 dark:group-hover:bg-gray-900 rounded-xl">
+			<div className="absolute right-1 top-2 group-hover:bg-gray-100 dark:group-hover:bg-gray-900 rounded-xl">
 				<CopyToClipboard
 					getValue={() =>
 						preRef.current?.querySelector("code")?.textContent || ""

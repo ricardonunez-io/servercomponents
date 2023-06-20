@@ -28,6 +28,54 @@
 	max-width: max-content;
 }
 
+@keyframes shimmer {
+	0% {background-position: 110%;}
+	35% {background-position: 0;}
+	70%, 100% {background-position: -40%;}
+}
+
+.shimmer {
+	position: relative;
+	overflow: hidden;
+}
+
+.shimmer::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: linear-gradient(
+			90deg,
+			rgba(0, 220, 255, 0.0) 0%,
+			rgba(0, 220, 255, 0.0) 40%,
+			rgba(0, 220, 255, 0.3) 50%,
+			rgba(0, 220, 255, 0.0) 60%,
+			rgba(0, 220, 255, 0.0) 100%
+	);
+	background-size: 200% 100%;
+	animation: 3s shimmer linear infinite;
+}
+
+@keyframes shimmer-first {
+	0% {background-position: 110%;}
+	35% {background-position: 0;}
+	70%, 100% {background-position: -40%;}
+}
+
+.shimmer-first {
+	background: linear-gradient(
+			90deg,
+			rgba(0, 220, 255, 0.0) 0%,
+			rgba(0, 220, 255, 0.0) 40%,
+			rgba(0, 220, 255, 0.3) 50%,
+			rgba(0, 220, 255, 0.0) 60%,
+			rgba(0, 220, 255, 0.0) 100%
+	);
+	background-size: 200% 100%;
+	animation: 3s shimmer-first linear infinite -0.6s;
+}
 
 h1, h2, h3, div, p {
 	font-family: Soleil, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

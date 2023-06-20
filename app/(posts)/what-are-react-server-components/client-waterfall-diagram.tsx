@@ -1,4 +1,4 @@
-export default function ClientWaterfall() {
+export default function ClientWaterfallDiagram() {
 	return (
 		<div className="max-w-fit text-center space-y-4 py-8 text-gray-500 dark:text-gray-400 text-lg md:text-xl">
 			<div className="hover:text-gray-700 dark:hover:text-gray-300">
