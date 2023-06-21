@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function HydrationAnimation({ caption }: { caption: string }) {
 	return (
-		<div className="my-4 h-full">
+		<div className="my-4 h-full" aria-hidden="true">
 			<div className="flex justify-between items-center overflow-hidden">
 				<div className="flex items-center w-full">
 					<div className="basis-1/3 md:basis-1/4 relative flex items-center">
@@ -27,7 +27,6 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 						<div className="w-full h-1 absolute translate-x-16 sm:translate-x-20 md:translate-x-24 lg:translate-x-28 shimmer-first hidden md:flex"/>
 					</div>
 					<div
-						aria-hidden="true"
 						className="dark:bg-stone-950 bg-gray-50 border-2 border-gray-300 dark:border-gray-600 h-fit max-[475px]:max-h-64 w-full rounded-xl p-3 px-0 relative basis-2/3 md:basis-3/4 shimmer"
 					>
 						<div className="flex w-full rounded-t-xl justify-between border-b-2 border-gray-300 dark:border-gray-600 relative">

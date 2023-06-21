@@ -179,7 +179,7 @@ export default function ServerRenderingAnimation({ caption }: { caption: string 
 	}
 
 	return (
-		<div className="my-4 h-full">
+		<div className="my-4 h-full" aria-hidden="true">
 			<div className="flex justify-between items-center overflow-hidden">
 				<div className="flex justify-between items-center w-full">
 					<div className="grid place-items-center mr-4 sm:mr-6 md:mr-8 lg:mr-10">
@@ -215,7 +215,6 @@ export default function ServerRenderingAnimation({ caption }: { caption: string 
 						</div>
 					</div>
 					<div
-						aria-hidden="true"
 						className="dark:bg-stone-950 bg-gray-50 border-2 border-gray-300 dark:border-gray-600 h-fit max-[475px]:max-h-64 w-full rounded-xl p-3 px-0 relative"
 					>
 						<div className="flex w-full rounded-t-xl justify-between border-b-2 border-gray-300 dark:border-gray-600 relative">
