@@ -1,14 +1,14 @@
 import type { MDXComponents } from "mdx/types";
-import H1 from "@/app/mdx-components/h1";
-import H2 from "@/app/mdx-components/h2";
-import H3 from "@/app/mdx-components/h3";
-import P from "@/app/mdx-components/p";
-import Pre from "@/app/mdx-components/pre";
-import A from "@/app/mdx-components/a";
-import UL from "@/app/mdx-components/ul";
-import OL from "@/app/mdx-components/ol";
-import LI from "@/app/mdx-components/li";
-import Blockquote from "@/app/mdx-components/blockquote";
+import H1 from "@/components/mdx-components/h1";
+import H2 from "@/components/mdx-components/h2";
+import H3 from "@/components/mdx-components/h3";
+import P from "@/components/mdx-components/p";
+import Pre from "@/components/mdx-components/pre";
+import A from "@/components/mdx-components/a";
+import UL from "@/components/mdx-components/ul";
+import OL from "@/components/mdx-components/ol";
+import LI from "@/components/mdx-components/li";
+import Blockquote from "@/components/mdx-components/blockquote";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {

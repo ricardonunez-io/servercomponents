@@ -1,6 +1,6 @@
 "use client";
 
-import MenuIcon from "../../menu-icon";
+import MenuIcon from "../../../components/menu-icon";
 import ReactIcon from "../../../public/react-icon.svg";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 							alt="React Icon"
 							className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 relative"
 							/>
-								<div className="text-center gradient clip text-sm sm:text-base md:text-lg">
+								<div className="text-center text-cyan-500 dark:text-cyan-400 text-sm sm:text-base md:text-lg">
 									<div>Event Listeners</div>
 									<div>Side Effects</div>
 									<div>Click Handlers</div>
@@ -24,7 +24,7 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 									Etc.
 								</div>
 						</div>
-						<div className="w-full h-1 absolute translate-x-16 sm:translate-x-20 md:translate-x-24 lg:translate-x-28 shimmer-first hidden md:flex"/>
+						<div className="w-full h-1 absolute translate-x-[70px] sm:translate-x-[86px] md:translate-x-[104px] lg:translate-x-[118px] shimmer-first hidden md:flex"/>
 					</div>
 					<div
 						className="dark:bg-stone-950 bg-gray-50 border-2 border-gray-300 dark:border-gray-600 h-fit max-[475px]:max-h-64 w-full rounded-xl p-3 px-0 relative basis-2/3 md:basis-3/4 shimmer"

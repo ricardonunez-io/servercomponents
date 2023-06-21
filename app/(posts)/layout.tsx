@@ -1,4 +1,4 @@
-import Logo from "../logo";
+import Logo from "../../components/logo";
 import GithubLink from "@/components/github";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
