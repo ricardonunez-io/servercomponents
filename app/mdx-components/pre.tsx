@@ -46,7 +46,7 @@ export default function Pre({ children }: { children: ReactNode }) {
 	
 	return (
 		<div
-			className={`group relative w-full overflow-y-hidden ${height} delay-0 transition-none overflow-auto rounded-xl ${
+			className={`my-4 group relative w-full overflow-y-hidden ${height} delay-0 transition-none overflow-auto rounded-xl ${
 				isPreHidden ? "hidden" : "grid"
 			}`}
 		>

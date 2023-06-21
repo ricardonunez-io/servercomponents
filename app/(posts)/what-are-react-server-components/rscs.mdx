@@ -68,17 +68,7 @@ This is because behind the scenes, Babel is transpiling your JSX into `React.cre
 
 These calls create React elements (JSON objects) that describe your components and tell the browser "these are the DOM nodes from the React virtual DOM that we'd like to add/change in the actual DOM".
 
-> I'm, of course, oversimplifying this quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags and explicitly creating React elements to JSX, check out Kent C. Dodds' free intro to React [here](https://egghead.io/courses/the-beginner-s-guide-to-react).
-
-So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
-
-The difference between React Server Components and SSR is that instead of rendering a snapshot of your JSX's HTML output for the first load, and then creating elements to then *hydrate* that HTML on the client, you're just shipping React components that have already been rendered as React elements (which, again, are object representations of the DOM and your component tree) and then shipping just those elements over to the browser.
-
-Now, that's certainly a lot to keep track of, but Ryan Florence, one of the creators of [React Router](https://reactrouter.com) and [Remix](https://remix.run), had a great Tweet to explain this mental model:
-
-<Tweet id="1661717887319670784" />
-
-For example, if we wanted to render a component that only contained a div that says "Hello World", in React, we'd simply write JSX like this:
+For example, if we wanted to render a component that only contained a div that says "Hello World", in JSX, we'd simply write:
 
 ```jsx
 export default function HelloWorld() {
@@ -86,7 +76,7 @@ export default function HelloWorld() {
 }
 ```
 
-With the new Server Components model, however, the browser won't get that JSX, nor will it get an HTML string like `"<div>Hello World</div>"{:js}`, but rather a React ***element*** that looks like this:
+And Babel would transpile that into `React.createElement(){:js}` calls which would output something like:
 
 ```json
 {
@@ -97,7 +87,25 @@ With the new Server Components model, however, the browser won't get that JSX, n
 }
 ```
 
-This is what React uses in the *browser* to render your components in the DOM, but now, it doesn't have to parse the JSX, transpile it to a bunch of `createElement(){:js}` calls, and *then* render your entire component tree, it can just take the elements passed by server components and render them.
+> I'm, of course, oversimplifying this quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags and explicitly creating React elements to JSX, check out Kent C. Dodds' free intro to React [here](https://egghead.io/courses/the-beginner-s-guide-to-react).
+
+So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
+
+The difference, then, between React Server Components and SSR is that instead of
+
+1. Rendering a snapshot of your JSX's HTML output for the first load with `renderToString(){:js}` and sending that to the browser
+
+2. Sending the JSX of your component tree to the browser
+
+3. Creating React elements from that JSX (which, again, are just JSON representations of the DOM and your component tree)
+
+4. Rendering those elements to the DOM to finish *hydrating* the HTML on the client
+
+What you're sending to the browser are just React components that have already been rendered as React elements by the server.
+
+Now, that's certainly a lot to keep track of, but Ryan Florence, one of the creators of [React Router](https://reactrouter.com) and [Remix](https://remix.run), had a great Tweet to explain this mental model:
+
+<Tweet id="1661717887319670784" />
 
 Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but they can refresh themselves, meaning if data changes on the page, React can re-render the components that are affected while maintaining state client-side.
 
