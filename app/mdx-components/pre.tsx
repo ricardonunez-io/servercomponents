@@ -9,7 +9,7 @@ export default function Pre({ children }: { children: ReactNode }) {
 	const [isOverflowing, setIsOverflowing] = useState(false);
 	const [isPreHidden, setIsPreHidden] = useState(false);
 	const [theme, setTheme] = useState<"dark" | "light">("dark");
-
+	
 	useEffect(() => {
 		if (preRef.current) {
 			setIsOverflowing(preRef.current.scrollHeight > 350);
@@ -17,8 +17,8 @@ export default function Pre({ children }: { children: ReactNode }) {
 		if (isOverflowing && preRef.current) {
 			preRef.current.classList.add("h-1000px");
 		}
-	}, [isExpanded, isOverflowing]);
-
+	}, [isExpanded, isOverflowing, theme]);
+	
 	useEffect(() => {
 		const darkModeMediaQuery = window.matchMedia(
 			"(prefers-color-scheme: dark)"
@@ -41,9 +41,9 @@ export default function Pre({ children }: { children: ReactNode }) {
 			darkModeMediaQuery.removeEventListener("change", setDarkMode);
 		};
 	}, [isPreHidden, theme]);
-
+	
 	const height = isExpanded ? "max-h-fit" : "max-h-[350px]";
-
+	
 	return (
 		<div
 			className={`group relative w-full overflow-y-hidden ${height} delay-0 transition-none overflow-auto rounded-xl ${
@@ -59,7 +59,11 @@ export default function Pre({ children }: { children: ReactNode }) {
 			{isOverflowing && (
 				<button
 					onClick={() => setIsExpanded(!isExpanded)}
-					className="absolute bottom-1.5 right-2 block rounded-xl text-gray-700 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition-all px-3 py-1"
+					className="absolute bottom-1.5 right-2 block rounded-lg text-gray-600 dark:text-gray-400
+					border-[1.5px] border-gray-300 dark:border-gray-700
+					hover:bg-gray-200 dark:hover:bg-gray-800
+					hover:border-gray-400 dark:hover:border-gray-500
+					transition-all px-3 py-1"
 				>
 					{isExpanded ? "Show less" : "Show more"}
 				</button>

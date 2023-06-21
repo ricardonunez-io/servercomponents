@@ -8,6 +8,7 @@ import Code from "@/app/mdx-components/code";
 import A from "@/app/mdx-components/a";
 import UL from "@/app/mdx-components/ul";
 import LI from "@/app/mdx-components/li";
+import Blockquote from "@/app/mdx-components/blockquote";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
@@ -21,6 +22,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		li: ({ children }) => <LI>{children}</LI>,
 		// @ts-expect-error
 		a: ({ children, href }) => <A href={href}>{children}</A>,
+		blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
 		...components,
 	};
 }
