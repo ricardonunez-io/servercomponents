@@ -2,6 +2,7 @@ import ClientWaterfallDiagram from "./client-waterfall-diagram.tsx"
 import ServerRenderingAnimation from "./server-rendering-animation.tsx"
 import HydrationAnimation from "./hydration-animation.tsx"
 import Tweet from "../../../components/tweet.tsx"
+import Mermaid from "../mermaid"
 
 # What are React Server Components (RSCs)?
 
@@ -19,7 +20,7 @@ Running React components on the server might seem familiar if you've heard of "s
 
 What pre-rendering means is that we're essentially rendering your React component tree (pre-animations, pre-hooks, etc.) as HTML and sending it to the browser, using React's `renderToString(){:js}` method.
 
-<ServerRenderingAnimation caption={"Press play for a rough visualization on what server-side rendering does."} />
+<ServerRenderingAnimation caption={"Press play for a rough visualization on what server-side rendering does."}/>
 
 You can think of that HTML string as a screenshot of the very first frame you see when a page loads before any animations, state changes, effects, etc. happen. For example:
 
@@ -54,7 +55,8 @@ So even though SSR means that your user sees your content on their screen, it do
 
 React still has to do a lot of work in terms of binding your React components from the virtual DOM to the actual DOM, setting up event listeners/handlers, etc.
 
-<HydrationAnimation caption={"↑ React needs to bind these things to your application behind the scenes before anything on the page can be interacted with (i.e. before you can navigate, click a button, etc.), even if the HTML is visible on the page."} />
+<HydrationAnimation
+	caption={"↑ React needs to bind these things to your application behind the scenes before anything on the page can be interacted with (i.e. before you can navigate, click a button, etc.), even if the HTML is visible on the page."}/>
 
 Even if you have a completely static page with no hooks, state, effects, click handlers, etc., React would *still* need to hydrate the page.
 
@@ -87,7 +89,7 @@ And Babel would transpile that into `React.createElement(){:js}` calls which wou
 }
 ```
 
-> I'm, of course, oversimplifying this quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags and explicitly creating React elements to JSX, check out Kent C. Dodds' free intro to React [here](https://egghead.io/courses/the-beginner-s-guide-to-react).
+> I'm, of course, oversimplifying this process quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags to JSX and what creating elements looks like a bit more under the hood, check out Kent C. Dodds' free intro to React [here](https://egghead.io/courses/the-beginner-s-guide-to-react).
 
 So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
 
@@ -105,9 +107,24 @@ With server components, what you're sending to the browser are just React compon
 
 Now, that's certainly a lot to keep track of, but Ryan Florence, one of the creators of [React Router](https://reactrouter.com) and [Remix](https://remix.run), had a great Tweet to explain this mental model:
 
-<Tweet id="1661717887319670784" />
+<Tweet id="1661717887319670784"/>
+
+> Dan Abramov's ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5) discussion on GitHub goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
 Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but they can refresh themselves, meaning if data changes on the page, React can re-render the components that are affected while maintaining state client-side.
+
+<Mermaid chart={`sequenceDiagram
+    participant Server
+    participant ReactServer as React (Server)
+    participant ReactBrowser as React (Browser)
+    participant Serialized as Serialized Result
+    participant DOM as Actual DOM
+    Server->>ReactServer: Server Component
+    ReactServer->>Serialized: Render and Serialize
+    Serialized->>ReactBrowser: Send Serialized Result
+    ReactBrowser->>ReactBrowser: Process Serialized Result
+    ReactBrowser->>DOM: Apply Changes to DOM
+`}/>
 
 The other benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
 

@@ -25,7 +25,7 @@ export default function Card({
 	return (
 		<Link href={href}>
 			<div
-				className={`flex h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pb-12 ${
+				className={`flex my-4 lg:h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pb-12 ${
 					hoverState ? hoverState : ""
 				}`}
 			>

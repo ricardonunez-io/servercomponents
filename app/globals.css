@@ -77,7 +77,7 @@
 	animation: 3s shimmer-first linear infinite -0.6s;
 }
 
-h1, h2, h3, div, p {
+h1, h2, h3, div, p, text, li, ol, ul {
 	font-family: Soleil, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
