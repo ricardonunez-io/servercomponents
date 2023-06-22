@@ -16,6 +16,9 @@ h2 > a, h3 > a {
     color: theme('colors.gray.900');
 }
 @media (prefers-color-scheme: dark) {
+    a {
+        color: theme('colors.sky.400');
+    }
     h1 > a {
         color: theme('colors.sky.400');
     }

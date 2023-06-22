@@ -1,5 +1,5 @@
 import "./posts.css";
-import NavLink from "../../components/navlink";
+import NavLink from "@/components/navlink";
 import GithubLink from "@/components/github";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					<NavLink />
 					<GithubLink />
 				</div>
-				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 max-w-5xl mx-auto">
+				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 max-w-5xl mx-auto relative">
 					{children}
 				</div>
 			</div>

@@ -117,6 +117,9 @@ blockquote {
     border-left-width: 4px;
     border-color: currentColor;
 }
+#home-page-link.no-underline, #github-link.no-underline {
+    text-decoration-line: none;
+}
 @media (prefers-color-scheme: dark) {
     li, p, text {
         color: theme('colors.gray.400');
