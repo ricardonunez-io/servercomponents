@@ -121,7 +121,7 @@ blockquote {
     text-decoration-line: none;
 }
 @media (prefers-color-scheme: dark) {
-    li, p, text {
+    p, text {
         color: theme('colors.gray.400');
     }
     h1 {
