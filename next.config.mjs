@@ -2,7 +2,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-const rehypePrettyCode = require('rehype-pretty-code');
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const options = {
 	theme: {
@@ -22,13 +24,12 @@ const options = {
 	},
 };
 
-const withMDX = require('@next/mdx')({
+const withMDX = (await import('@next/mdx')).default({
 	extension: /\.mdx?$/,
 	options: {
 		remarkPlugins: [],
-		rehypePlugins: [[rehypePrettyCode, options]],
+		rehypePlugins: [[rehypePrettyCode, options], rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]],
 	},
 });
-	
-	
-module.exports = withMDX(nextConfig)
+
+export default withMDX(nextConfig);

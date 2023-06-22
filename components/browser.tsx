@@ -68,7 +68,7 @@ export default function Browser() {
 										fill="none"
 									/>
 								</m.svg>
-								<div className="rounded-full w-6 h-6 gradient" />
+								<div className="rounded-full w-6 h-6 bg-sky-500 dark:bg-sky-400" />
 								<div className="bg-gray-300 dark:bg-gray-600 h-3 rounded-md w-12" />
 							</div>
 							<div className="hidden md:flex items-center gap-x-2 lg:gap-x-4 relative">
@@ -164,7 +164,7 @@ export default function Browser() {
 											fill="none"
 										/>
 									</m.svg>
-									<div className="mt-2.5 mx-3.5 gradient h-5 rounded-full w-16 absolute inset-0 px-2" />
+									<div className="mt-2.5 mx-3.5 bg-sky-500 dark:bg-sky-400 h-5 rounded-full w-16 absolute inset-0 px-2" />
 								</div>
 							</div>
 

@@ -45,23 +45,25 @@ export default function Home() {
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
 						<Link
 							href="/"
-							className="flex text-3xl sm:text-4xl md:text-5xl font-bold text-sky-500 dark:text-sky-400 items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
+							className="flex items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
 						>
-							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12" />
-							<span className="hidden md:flex pb-2">
+							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12 pb-4 text-sky-500 dark:text-sky-400" />
+							<h1 className="hidden md:flex">
 								Server Components
-							</span>
-							<span className="flex md:hidden">RSCs</span>
+							</h1>
+							<h1 className="flex md:hidden">RSCs</h1>
 						</Link>
 
-						<p className="text-2xl sm:text-3xl md:text-4xl font-bold">
+						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold -mt-3 -mb-6">
 							... are complicated.
-						</p>
+						</h2>
 						<p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-8 mb-4">
 							Here are some resources to make them easier to
 							understand and implement.
 						</p>
-						<div className="max-w-max"><GithubLink/></div>
+						<div className="max-w-max">
+							<GithubLink/>
+						</div>
 						<div className="grid mt-12">
 							<Browser />
 						</div>

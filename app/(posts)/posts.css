@@ -1,0 +1,33 @@
+a {
+    color: theme('colors.sky.500');
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+a:hover {
+    text-decoration-line: underline;
+}
+
+h2 > a, h3 > a {
+    color: theme('colors.gray.900');
+}
+@media (prefers-color-scheme: dark) {
+    h2 > a, h3 > a {
+        color: theme('colors.gray.100');
+    }
+}
+h1 > a {
+    color: theme('colors.sky.500');
+}
+@media (prefers-color-scheme: dark) {
+    h1 > a {
+        color: theme('colors.sky.400');
+    }
+}
+footer > a {
+    color: theme('colors.gray.900');
+}
+@media (prefers-color-scheme: dark) {
+    footer > a {
+        color: theme('colors.gray.100');
+    }
+}
