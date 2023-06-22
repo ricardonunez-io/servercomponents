@@ -60,6 +60,7 @@ export default function Pre({ children }: { children: ReactNode }) {
 				<button
 					onClick={() => setIsExpanded(!isExpanded)}
 					className="absolute bottom-1.5 right-2 block rounded-lg text-gray-600 dark:text-gray-400
+					bg-gray-100 dark:bg-gray-900
 					border-[1.5px] border-gray-300 dark:border-gray-700
 					hover:bg-gray-200 dark:hover:bg-gray-800
 					hover:border-gray-400 dark:hover:border-gray-500

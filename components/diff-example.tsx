@@ -9,7 +9,7 @@ export default function DiffExample({ width }: { width: number | string }) {
 					Old component tree
 				</div>
 				<div>
-					Component tree after a component is dynamically added by another component&apos;s data fetching
+					New component tree
 				</div>
 			</div>
 			<svg width={width} className="relative" viewBox="0 0 83 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,8 +81,17 @@ export default function DiffExample({ width }: { width: number | string }) {
 					d="M48.9938 36C48.696 36 48.438 35.9544 48.2196 35.8632C48.0012 35.7703 47.83 35.6397 47.706 35.4714C47.5835 35.3013 47.5157 35.0988 47.5025 34.8639L47.5 34.8166H48.371L48.3734 34.8402C48.3817 34.9174 48.4132 34.9866 48.4677 35.048C48.5223 35.1076 48.5959 35.1549 48.6886 35.19C48.7812 35.2251 48.8879 35.2426 49.0087 35.2426C49.1278 35.2426 49.2312 35.2251 49.3189 35.19C49.4065 35.1549 49.4744 35.1059 49.5223 35.0427C49.572 34.9796 49.5968 34.9086 49.5968 34.8297V34.8271C49.5968 34.7201 49.5529 34.6377 49.4653 34.5799C49.3776 34.522 49.2287 34.4712 49.0186 34.4274L48.6489 34.3511C48.2717 34.2722 47.9963 34.1389 47.8226 33.9513C47.6505 33.7638 47.5645 33.5218 47.5645 33.2255V33.2229C47.5662 32.9757 47.6282 32.7609 47.7506 32.5786C47.873 32.3945 48.0409 32.2525 48.2543 32.1525C48.4677 32.0508 48.7117 32 48.9864 32C49.2858 32 49.5389 32.05 49.7457 32.1499C49.9541 32.2481 50.1154 32.384 50.2295 32.5575C50.3437 32.7293 50.4098 32.9275 50.428 33.1519L50.4305 33.1834H49.5868L49.5819 33.1545C49.5687 33.0739 49.5364 33.0046 49.4851 32.9467C49.4355 32.8871 49.3685 32.8407 49.2841 32.8074C49.1998 32.7741 49.1022 32.7574 48.9913 32.7574C48.8838 32.7574 48.7911 32.7741 48.7134 32.8074C48.6356 32.8389 48.5753 32.8836 48.5323 32.9415C48.4909 32.9976 48.4702 33.0633 48.4702 33.1387V33.1414C48.4702 33.2501 48.5132 33.3368 48.5993 33.4017C48.6869 33.4648 48.8275 33.5157 49.0211 33.5542L49.3908 33.6305C49.6456 33.6831 49.8548 33.7559 50.0186 33.8488C50.1824 33.9417 50.3031 34.06 50.3809 34.2038C50.4603 34.3476 50.5 34.522 50.5 34.7272V34.7298C50.5 34.9875 50.4396 35.2119 50.3189 35.403C50.1998 35.5924 50.0277 35.7396 49.8027 35.8448C49.5778 35.9483 49.3081 36 48.9938 36Z"
 					fill="currentColor" className="text-sky-500"/>
 			</svg>
-			<div className="text-sm sm:text-base md:text-lg text-center mt-4 px-8">
-				Only the <span className="text-teal-500 dark:text-teal-400 text-center">green</span> outlined components in this component tree diff will be re-rendered, because only those two have changed. The rest of the tree is unaffected, and will be preserved.
+			<div className="absolute bottom-28 md:bottom-24 left-2 flex flex-col text-sm sm:text-base md:text-lg">
+				<code className="text-sky-500 dark:text-sky-400">
+					Server
+				</code>
+				<code className="text-pink-500 dark:text-pink-400">
+					Client
+				</code>
+			</div>
+			<div className="text-sm sm:text-base md:text-lg text-center mt-8 sm:mt-6 md:mt-4 px-8">
+				Only the <span className="text-teal-500 dark:text-teal-400 text-center">green</span> outlined components in this component tree diff will be re-rendered, because only those two have
+				changed. The rest of the tree is unaffected, and will be preserved.
 			</div>
 		</div>
 	)

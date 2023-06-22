@@ -3,7 +3,8 @@ import "./globals.css";
 export const metadata = {
 	title: "React Server Components",
 	description:
-		"A brief outline of React Server Components, as noted by Dan Abramov and Joe Savona.",
+		"An outline of React Server Components, what they are, why they're here, and how to use them conceptually.",
+	icons: "./favicon.ico",
 };
 
 export default function RootLayout({

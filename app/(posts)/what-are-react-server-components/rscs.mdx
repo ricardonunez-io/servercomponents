@@ -96,7 +96,7 @@ And Babel would transpile that into `React.createElement(){:js}` calls which wou
 }
 ```
 
-> I'm, of course, oversimplifying this process quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags to JSX and what creating elements looks like a bit more under the hood, Kent C. Dodds' free intro to React course [here](https://egghead.io/courses/the-beginner-s-guide-to-react) explains it really well.
+> I'm, of course, oversimplifying this process quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags to JSX and what creating elements looks like a bit more under the hood, Kent C. Dodds' free intro to React course [here](https://egghead.io/lessons/react-create-a-user-interface-with-vanilla-javascript-and-dom) explains it really well.
 
 So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
 
@@ -118,7 +118,7 @@ That is to say the browser is getting the serialized output of your JSX directly
 >
 > <Tweet id="1661717887319670784"/>
 >
-> Also, Dan Abramov's (from the React core team at <MetaLogo width={28}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
+> Also, Dan Abramov's (from the React core team at <MetaLogo width={21}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
 It's worth noting that server components *can* be seen as somewhat static once they're loaded, because they can't and won't hydrate.
 
