@@ -2,9 +2,10 @@ export default function GithubLink() {
 	return (
 		<a href="https://github.com/ricardonunez-io/servercomponents"
 		   aria-label="View source on GitHub"
-		   className="flex hover:underline items-center gap-x-2 sm:gap-x-3 md:gap-x-4 text-lg md:text-xl text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-all"
+		   className="flex hover:underline items-center gap-x-2 sm:gap-x-3 md:gap-x-4 text-lg md:text-xl text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-all no-underline"
 		   target="_blank"
 		   rel="noopener noreferrer"
+		   id="github-link"
 		>
 			<svg className="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<path
