@@ -28,7 +28,7 @@ With RSC, you don't have to have publicly consumable APIs but are still able to 
 
 Worth noting, however, is that RSC don't necessarily rely on a "server", but are moreso a specification for the component running ahead of time.
 
-On Next.js, this means at build time, which allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could be client components and interactive.
+On Next.js, this means at build time, which allows you to do things like file system access for Markdown files, but things like a comment section or theme-toggle could be client components and interactive.
 
 All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like getServerSideProps, Remix loaders, or Astro islands with a first-class solution.
 
@@ -36,13 +36,13 @@ All in all, server components are a React take on how to do data fetching that i
 
 You couldn't do _everything_ natively. One good example is componentizing build logic or server logic.
 
-Let's say you have a markdown renderer component in a static site like a blog.
+Let's say you have a Markdown renderer component in a static site like a blog.
 
-If you have a markdown renderer on NPM that imports a markdown parser and turns it into HTML, then the only way to consume it is at runtime previous to RSC.
+If you have a Markdown renderer on NPM that imports a Markdown parser and turns it into HTML, then the only way to consume it is at runtime previous to RSC.
 
-That means that at runtime, the client will have this markdown parser delivered to their browser, which means a bigger Javascript bundle, which doesn't make sense for a static blog.
+That means that at runtime, the client will have this Markdown parser delivered to their browser, which means a bigger Javascript bundle, which doesn't make sense for a static blog.
 
-It wasn't possible to publish a component on NPM that runs only a build time. Now, we could put some logic on a Remix loader for example, but what if there are multiple places to do this, or what if we have code snippets that need to be highlighted and need to be parsed? We would have to write a loader for each of those, _or_ we could use React Server Components to compnentize it.
+It wasn't possible to publish a component on NPM that runs only a build time. Now, we could put some logic on a Remix loader for example, but what if there are multiple places to do this, or what if we have code snippets that need to be highlighted and need to be parsed? We would have to write a loader for each of those, _or_ we could use React Server Components to componentize it.
 
 Now, let's say you have a dashboard component on a private NPM registry that calls a microservice, reads from your database layer, but since it's isolated, you can specify how to load data for it but still compose it.
 
@@ -54,7 +54,7 @@ Why can't we just async/await and return a bunch of UI?
 
 `<Suspense>` was the solution for how to show loading state.
 
-But what if your component is awaiting for something, but the parent component updates state so synchronicity is necessary, i.e. typing into an input.
+But what if your component is awaiting something, but the parent component updates state so synchronicity is necessary, i.e. typing into an input.
 
 How do we deal with this where the UI is stuck waiting for an output?
 
@@ -72,13 +72,13 @@ Mental model is powerful to take data, await it, and return the response.
 
 However, traditional use-cases like live-response typing areas, drag and drop areas, complex forms, are still great use cases for traditional client components since state is geared towards that.
 
-Data should feel stateless so that it's easy to write/wait for, and we should keep using state for stateful components (i.e. user does something and we need to remember it), and we need to bind these two things seamlessly.
+Data should feel stateless so that it's easy to write/wait for, and we should keep using state for stateful components (i.e. user does something, and we need to remember it), and we need to bind these two things seamlessly.
 
 It should be easy to publish packages and compose server only logic as well so that it's seamless with existing client logic as well.
 
 Targeted components for specific use-cases:
 
--   How to not ship markdown parser to client
+-   How to not ship Markdown parser to client
 -   Nested routing
 -   Easier data fetching
 

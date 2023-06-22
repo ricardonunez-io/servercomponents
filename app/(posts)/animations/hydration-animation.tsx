@@ -95,8 +95,8 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 					</div>
 				</div>
 			</div>
-			<div className="text-sm sm:text-base md:text-lg text-center mt-4">
-				<div>{caption}</div>
+			<div className="text-sm sm:text-base md:text-lg text-center mt-4 px-8">
+				{caption}
 			</div>
 		</div>
 	);

@@ -7,8 +7,11 @@ import RemixLogo from "@/components/remix-logo";
 import NextJSLogo from "@/components/nextjs-logo";
 import MetaLogo from "@/components/meta-logo";
 import Footer from "@/components/footer.tsx";
+import RailsIcon from "@/components/rails-icon";
+import PHPLogo from "@/components/php-logo"
+import DiffExample from "@/components/diff-example";
 
-# What are React Server Components (RSCs)?
+# What are React Server Components (RSCs) and how are they different?
 
 React server components are React components that run *only* on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
 
@@ -117,9 +120,39 @@ That is to say the browser is getting the serialized output of your JSX directly
 >
 > Also, Dan Abramov's (from the React core team at <MetaLogo width={28}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
-Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but they can refresh themselves, meaning if data changes on the page, React can re-render the components that are affected while maintaining state client-side.
+It's worth noting that server components *can* be seen as somewhat static once they're loaded, because they can't and won't hydrate.
 
-The other benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
+This is why if you've seen or played with any applications that use [Next.js 13's app directory](https://nextjs.org/docs/app), you might've seen the error message pop up that a server component can't support hooks that require a browser, i.e. `useState(){:js}` or `useEffect(){:js}`.
+
+The reason why is that server components:
+
+1. Are considered "stateless" components, meaning they don't manage their own state, but rather rely on props from parent components or data fetching within their own component.
+
+2. Run only on the server, so browser-only APIs like `window` or `document` don't work, since the server has no concept of a browser, just an endpoint to which it sends responses.
+
+Because they can't have state and can't access browser APIs, state can't be derived in server components, and effects do not work, because the components are shipped as elements already that can't be hydrated, and don't know when they are mounted to the DOM, updated, etc.
+
+If you're familiar with traditional server-side frameworks like <RailsIcon width={34}/> Rails or those in <PHPLogo width={40} /> PHP, this might seem like a familiar concept, and you might be wondering why server components are addressing a solved problem.
+
+However, the key difference here is that data changes don't trigger a reload of the entire page, and this is one of they key improvements over `getServerSideProps` and Remix `loaders`.
+
+Instead of calling your entire route (i.e. your entire page re-fetching `getServerSideProps` or `/your-example-path/index.php` path being hit again) to fetch and replace stale data, React Server Components' architecture allows your application to re-execute your component tree and perform its [reconciliation](https://legacy.reactjs.org/docs/reconciliation.html) process to update only the components and DOM nodes that have changed after a mutation for example, or after new data is available.
+
+What this means is that state is completely maintained on the client, so if your user is typing something in the search bar of a blog and new comments are streaming into the current blog post that the user is on, they:
+
+A. Won't have to reload to get those new comments.
+
+B. Won't lose their search input if they navigate to a new blog post (provided the search bar is part of a layout that wraps the comments and blog post)
+
+On the server-side, a new, updated component tree will be serialized and sent to the browser for the client to diff and patch, and no unnecessary re-renders or re-fetches will be triggered.
+
+<DiffExample width={"100%"} />
+
+Each component can be responsible for its own data/data-fetching, rather than the entire route having to be responsible for dynamic data.
+
+The other benefit is that since these components are running on the server, you have access to things like direct database access, private API access, and file system access directly within components themselves.
+
+So not only can each component be responsible for its own data, but each component can be kept secure from client-side data or API-key leaks, whereas previously, in a framework-less approach, you'd most commonly see an effect being used for data fetching through a public API endpoint.
 
 So then, many people have the question: what happened to "regular React" or the React we all know?
 

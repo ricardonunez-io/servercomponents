@@ -313,7 +313,7 @@ export default function ServerRenderingAnimation({ caption }: { caption: string 
 					</button>
 				</div>
 				<div className="flex items-center text-sm sm:text-base md:text-lg text-center mt-4">
-					<div>{caption}</div>
+					{caption}
 				</div>
 			</div>
 		</div>
