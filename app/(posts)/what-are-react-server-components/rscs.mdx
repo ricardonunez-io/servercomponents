@@ -1,8 +1,10 @@
 import ClientWaterfallDiagram from "../client-waterfall-diagram.tsx"
 import ServerRenderingAnimation from "../animations/server-rendering-animation.tsx"
 import HydrationAnimation from "../animations/hydration-animation.tsx"
-import Tweet from "../../../components/tweet.tsx"
-import Mermaid from "../../../components/mermaid"
+import Tweet from "@/components/tweet.tsx"
+import ReactRouterLogo from "@/components/react-router-logo";
+import RemixLogo from "@/components/remix-logo";
+import NextJSLogo from "@/components/nextjs-logo";
 
 # What are React Server Components (RSCs)?
 
@@ -16,7 +18,7 @@ This site *is* completely open sourced, so if you're interested in adding anythi
 
 ### Server Side Rendering
 
-Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [Next.js](https://nextjs.org) or [Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
+Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [<NextJSLogo width={28} /> Next.js](https://nextjs.org) or [<RemixLogo width={20} /> Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
 
 What pre-rendering means is that we're essentially rendering your React component tree (pre-animations, pre-hooks, etc.) as HTML and sending it to the browser, using React's `renderToString(){:js}` method.
 
@@ -93,38 +95,27 @@ And Babel would transpile that into `React.createElement(){:js}` calls which wou
 
 So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
 
-The difference, then, between React Server Components and SSR is that instead of
+The difference, then, between React Server Components is that the process SSR takes to render your React app is:
 
-1. Rendering a snapshot of your JSX's HTML output for the first load with `renderToString(){:js}` and sending that to the browser
+1. Having the server render a snapshot of your JSX's initial HTML output with `renderToString(){:js}` and sending that to the browser
 
-2. Sending the JSX of your component tree to the browser
+2. Sending your component tree's JSX from the server to the browser
 
-3. Creating React elements from that JSX (which, again, are just JSON representations of the DOM and your component tree)
+3. Creating React elements (which, again, are just JSON representations of the DOM and your component tree) from that JSX in the browser with `React.createElement(){:js}` calls
 
 4. Rendering those elements to the DOM to finish *hydrating* the HTML on the client
 
-With server components, what you're sending to the browser are just React components that have already been rendered as React elements by the server.
+Instead, with server components, what you're sending to the browser are just React components that have already been rendered as React elements by the server.
 
-Now, that's certainly a lot to keep track of, but Ryan Florence, one of the creators of [React Router](https://reactrouter.com) and [Remix](https://remix.run), had a great Tweet to explain this mental model:
+That is to say the browser is getting the serialized output of your JSX directly from the server, instead of having to transpile the JSX itself on the client.
+
+That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), had a great Tweet to explain this mental model:
 
 <Tweet id="1661717887319670784"/>
 
 > Dan Abramov's ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5) discussion on GitHub goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
 Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but they can refresh themselves, meaning if data changes on the page, React can re-render the components that are affected while maintaining state client-side.
-
-<Mermaid chart={`sequenceDiagram
-    participant Server
-    participant ReactServer as React (Server)
-    participant ReactBrowser as React (Browser)
-    participant Serialized as Serialized Result
-    participant DOM as Actual DOM
-    Server->>ReactServer: Server Component
-    ReactServer->>Serialized: Render and Serialize
-    Serialized->>ReactBrowser: Send Serialized Result
-    ReactBrowser->>ReactBrowser: Process Serialized Result
-    ReactBrowser->>DOM: Apply Changes to DOM
-`}/>
 
 The other benefit is that since it's running on the server, you have access to things like data fetching and file system access directly within components themselves.
 

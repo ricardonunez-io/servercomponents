@@ -9,7 +9,7 @@ export default function A({
 }) {
 	return (
 		<a
-			className="text-cyan-500 dark:text-cyan-500 underline hover:text-gray-600 dark:hover:text-gray-300 text-lg md:text-xl py-4 hover:cursor-pointer"
+			className="text-blue-600 dark:text-blue-400 hover:underline text-lg md:text-xl py-1 hover:cursor-pointer"
 			href={href}
 		>
 			{children}

@@ -5,7 +5,7 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 		"./app/**/*.{js,ts,jsx,tsx}",
 		"./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
-		"./mdx-components/**/*.{js,ts,jsx,tsx}",
+		"./public/**/*.{js,ts,jsx,tsx,svg}",
 	],
 	theme: {
 		extend: {

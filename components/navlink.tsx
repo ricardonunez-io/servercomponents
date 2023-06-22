@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ReactIcon from "../public/react-icon.svg";
 
-export default function Logo() {
+export default function Navlink() {
 	return (
 		<Link
 			href="/"
