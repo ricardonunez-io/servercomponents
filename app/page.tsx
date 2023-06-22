@@ -54,12 +54,12 @@ export default function Home() {
 							<h1 className="flex md:hidden">RSCs</h1>
 						</Link>
 
-						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold -mt-3 -mb-6">
+						<h2 className="-mt-3 -mb-6">
 							... are complicated.
 						</h2>
-						<p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-8 mb-4">
+						<p className="mt-8 mb-4">
 							Here are some resources to make them easier to
-							understand and implement.
+							understand and implement. From a non-expert.
 						</p>
 						<div className="max-w-max">
 							<GithubLink/>

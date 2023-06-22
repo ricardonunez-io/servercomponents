@@ -9,6 +9,15 @@ a:hover {
 #home-page-link.no-underline, #github-link.no-underline {
     text-decoration-line: none;
 }
+
+h1::before, h2::before, h3::before {
+    content: '';
+    display: block;
+    height: 80px;
+    margin-top: -80px;
+    visibility: hidden;
+}
+
 h1 > a {
     color: theme('colors.sky.500');
 }
