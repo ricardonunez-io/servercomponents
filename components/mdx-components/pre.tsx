@@ -51,7 +51,7 @@ export default function Pre({ children }: { children: ReactNode }) {
 			}`}
 		>
 			<pre
-				className={`relative p-4 font-mono text-sm md:text-base bg-gray-100 dark:bg-gray-900 overflow-auto`}
+				className={`relative p-4 font-mono text-sm md:text-base ${height} bg-gray-100 dark:bg-gray-900 overflow-auto overflow-y-scroll`}
 				ref={preRef}
 			>
 				{children}

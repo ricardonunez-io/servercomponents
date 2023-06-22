@@ -1,10 +1,12 @@
-import ClientWaterfallDiagram from "../client-waterfall-diagram.tsx"
+import ClientWaterfallDiagram from "../the-problems-rscs-solve/client-waterfall-diagram.tsx"
 import ServerRenderingAnimation from "../animations/server-rendering-animation.tsx"
 import HydrationAnimation from "../animations/hydration-animation.tsx"
 import Tweet from "@/components/tweet.tsx"
 import ReactRouterLogo from "@/components/react-router-logo";
 import RemixLogo from "@/components/remix-logo";
 import NextJSLogo from "@/components/nextjs-logo";
+import MetaLogo from "@/components/meta-logo";
+import Footer from "@/components/footer.tsx";
 
 # What are React Server Components (RSCs)?
 
@@ -66,13 +68,13 @@ So the challenge SSR solved wasn't necessarily running React on servers to get r
 
 ### How are Server Components different from SSR?
 
-Now, if hydration is still necessary using SSR, that means that your React logic (i.e. what gets called before the `return(){:js}` statement) still needs to run on the client (for now, let's ignore solutions like Next.js's [`getServerSideProps`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props) and Remix's [`loaders`](https://remix.run/docs/en/1.17.1/route/loader)).
+Now, if hydration is still necessary using SSR, that means that your React logic (i.e. what gets called before the `return(){:js}` statement) still needs to run on the client. For now, let's ignore solutions like Next.js's [`getServerSideProps`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props) and Remix [`loaders`](https://remix.run/docs/en/1.17.1/route/loader).
 
-This is because behind the scenes, Babel is transpiling your JSX into `React.createElement(){:js}` calls on the client-side.
+The reason why your component and its logic still runs on the client is because behind the scenes, Babel is transpiling your JSX into `React.createElement(){:js}` calls on the client-side.
 
 These calls create React elements (JSON objects) that describe your components and tell the browser "these are the DOM nodes from the React virtual DOM that we'd like to add/change in the actual DOM".
 
-For example, if we wanted to render a component that only contained a div that says "Hello World", in JSX, we'd simply write:
+For example, if we wanted to render a component in JSX that only contained a div that says "Hello World", we'd simply write:
 
 ```jsx
 export default function HelloWorld() {
@@ -91,11 +93,11 @@ And Babel would transpile that into `React.createElement(){:js}` calls which wou
 }
 ```
 
-> I'm, of course, oversimplifying this process quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags to JSX and what creating elements looks like a bit more under the hood, check out Kent C. Dodds' free intro to React [here](https://egghead.io/courses/the-beginner-s-guide-to-react).
+> I'm, of course, oversimplifying this process quite a bit, but if you want a more explicit and tangible example of what it means to go from React in just an HTML file with `<script>{:html}` tags to JSX and what creating elements looks like a bit more under the hood, Kent C. Dodds' free intro to React course [here](https://egghead.io/courses/the-beginner-s-guide-to-react) explains it really well.
 
 So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
 
-The difference, then, between React Server Components is that the process SSR takes to render your React app is:
+The difference, then, between React Server Components and SSR is that the process SSR takes to render your React app is:
 
 1. Having the server render a snapshot of your JSX's initial HTML output with `renderToString(){:js}` and sending that to the browser
 
@@ -107,13 +109,13 @@ The difference, then, between React Server Components is that the process SSR ta
 
 Instead, with server components, what you're sending to the browser are just React components that have already been rendered as React elements by the server.
 
-That is to say the browser is getting the serialized output of your JSX directly from the server, instead of having to transpile the JSX itself on the client.
+That is to say the browser is getting the serialized output of your JSX directly from the server, instead of having to transpile the JSX itself client-side.
 
-That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), had a great Tweet to explain this mental model:
-
-<Tweet id="1661717887319670784"/>
-
-> Dan Abramov's ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5) discussion on GitHub goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
+> That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), had a great Tweet to explain this mental model as simply as possible:
+>
+> <Tweet id="1661717887319670784"/>
+>
+> Also, Dan Abramov's (from the React core team at <MetaLogo width={28}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
 Because these components are, for all intents and purposes, static *once they're loaded*, they don't *need* to hydrate, but they can refresh themselves, meaning if data changes on the page, React can re-render the components that are affected while maintaining state client-side.
 
@@ -125,149 +127,4 @@ Well, it's still there, but now, "regular" React components (i.e. React pre-Serv
 
 Only the name changed, though, but they're exactly the same and nothing at all has changed about them in terms of functionality.
 
-## The Problems They Solve
-
-Great, so we can run React on the server, but why would we want to? What problems does this solve?
-
-### Data Fetching
-
-One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like Angular, and that is unidrectional (one way) data flows.
-
-In a React component tree, let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. *(It's a very simple example, but it gets the point across)*
-
-Now, let's say you want to fetch your profile data, your feed data, and your sidebar data. In a typical React app, you would have to do something like this:
-
-```jsx
-import { useState, useEffect } from "react";
-import Profile from "./Profile";
-import Feed from "./Feed";
-
-export default function Shell() {
-  const [profile, setProfile] = useState(null);
-  const [feed, setFeed] = useState(null);
-
-  useEffect(() => {
-    fetch("/api/profile")
-    .then((res) => res.json())
-    .then((data) => setProfile(data));
-  }, []);
-
-  useEffect(() => {
-    fetch(`/api/feed/${profile.id}`)
-    .then((res) => res.json())
-    .then((data) => setFeed(data));
-  }, [profile.id]);
-
-  return (
-    <div>
-      <Profile profile={profile} />
-      <Feed feed={feed} />
-    </div>
-  );
-}
-```
-
-Nothing too crazy going on here, and if you're used to React, this pattern may seem familiar.
-
-We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>{:js}` and `<Feed>{:js}`.
-
-Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect(){:js}` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
-
-Also, worth noting is that we just introduced a larger than necessary waterfall into the application.
-
-That is, we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
-
-<ClientWaterfallDiagram/>
-
-means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database, etc.) is hosted on.
-
-Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />{:js}` component (one component to make it simple)?
-
-Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all(){:js}` the requests to make sure they all resolve at the same time, right?
-
-Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
-
-Also, in those extra components like likes, comments, and friends, we also need to get their own respective data like how many likes a post has, the most up-to-date comments, the most up-to-date friends list, etc., so even though we're only fetching 1 user's activity, we're also fetching each of those posts' data as well.
-
-```jsx {4,9-11,25-40,46-50}
-import { useState, useEffect } from "react";
-import Profile from "./Profile";
-import Feed from "./Feed";
-import Activity from "./History";
-
-export default function Shell() {
-  const [profile, setProfile] = useState(null);
-  const [feed, setFeed] = useState(null);
-  const [likes, setLikes] = useState(null);
-  const [comments, setComments] = useState(null);
-  const [friends, setFriends] = useState(null);
-
-  useEffect(() => {
-    fetch("/api/profile")
-    .then((res) => res.json())
-    .then((data) => setProfile(data));
-  }, []);
-
-  useEffect(() => {
-    fetch(`/api/feed/${profile.id}`)
-    .then((res) => res.json())
-    .then((data) => setFeed(data));
-  }, [profile]);
-
-  useEffect (() => {
-    if (profile) {
-      Promise.all([
-        fetch(`/api/likes/${profile.id}`),
-        fetch(`/api/comments/${profile.id}`),
-        fetch(`/api/friends/${profile.id}`)
-      ])
-      .then((res) => Promise.all(res.map((r) => r.json())))
-      .then(([likes, comments, friends]) => {
-        setLikes(likes);
-        setComments(comments);
-        setFriends(friends);
-      });
-    }
-  }, [profile]);
-
-  return (
-    <div>
-      <Profile profile={profile} />
-      <Feed feed={feed} />
-      <Activity
-        likes={likes}
-        comments={comments}
-        friends={friends}
-      />
-    </div>
-  );
-}
-```
-
-..... Continue here .....
-
-So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props.
-
-While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
-
-With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect(){:js}` for data fetching and storing server data in state.
-
-Because of this, now you can build truly fullstack applications in a much more framework-agnostic way using only the primitives that React gives you.
-
-This way, instead of writing the backend and frontend components and services in two different ways, the entire stack can be represented in a component tree.
-
-You can directly access your database, interact with a database access layer, etc. and map the response from a request to an output (UI) to show to the user.
-
-With traditional server-side technologies like PHP or Rails, a mutation or data request resulted in a hard reload where the entire page updates to show the updated data, which isn't ideal for cases where you need to preserve state, whereas with RSCs, you can retain state even with data requests or mutations occurring on a page.
-
-Traditionally, client side apps (single-page-applications) allowed you to do client side routing and retain state while only updating the UI that needed to be changed, but you had to write the backend completely separately and map it to the UI while using some fairly inefficient models like `useEffect(){:js}` which often created network waterfalls and large Javascript bundles.
-
-You would have to think about server-side data as state, think about how to trigger fetches, loading indications, and a lot more, because on the client side, you don't have as much flexibility to do those things safely without exposing sensitive data, services, or keys on the client.
-
-With RSCs, you don't necessarily have to create publicly consumable APIs to map data to UI and update backend data, but you're still able to retain state and do client side routing while being able to effectively have dynamic, data driven applications.
-
-Worth noting, however, is that RSCs don't necessarily rely on a "server", but are more so a specification for the component running ahead of time.
-
-On Next.js, this means at build time, which allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
-
-All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like getServerSideProps, Remix loaders, or Astro islands with a first-class supported solution.
+<Footer previousPost={"Home Page"} previousHref={"/"} nextPost={"The Problems React Server Components Solve"} nextHref={"/the-problems-rscs-solve"} />

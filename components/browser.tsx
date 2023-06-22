@@ -45,7 +45,7 @@ export default function Browser() {
 						animate={{ opacity: 1 }}
 						transition={{ delay: 4, duration: 2 }}
 					>
-						<code className="text-cyan-500 dark:text-cyan-400">
+						<code className="text-sky-500 dark:text-sky-400">
 							Server
 						</code>
 						<code className="text-pink-500">Client</code>
@@ -61,7 +61,7 @@ export default function Browser() {
 									className="absolute w-24 h-10 -ml-2 -mt-2 rounded-md inset-0"
 								>
 									<m.rect
-										className="h-full rounded-lg w-full absolute stroke-[6] stroke-cyan-500"
+										className="h-full rounded-lg w-full absolute stroke-[6] stroke-sky-500"
 										xmlns="http://www.w3.org/2000/svg"
 										strokeLinecap="round"
 										variants={draw}
@@ -135,7 +135,7 @@ export default function Browser() {
 										className="w-52 max-w-full h-full rounded-md"
 									>
 										<m.rect
-											className="h-full rounded-lg w-full absolute stroke-[6] stroke-cyan-500 dark:stroke-cyan-400"
+											className="h-full rounded-lg w-full absolute stroke-[6] stroke-sky-500 dark:stroke-sky-400"
 											xmlns="http://www.w3.org/2000/svg"
 											strokeLinecap="round"
 											variants={draw}
@@ -176,7 +176,7 @@ export default function Browser() {
 										className="w-full h-full rounded-md"
 									>
 										<m.rect
-											className="h-full rounded-lg w-full absolute stroke-[6] stroke-cyan-500 dark:stroke-cyan-400"
+											className="h-full rounded-lg w-full absolute stroke-[6] stroke-sky-500 dark:stroke-sky-400"
 											xmlns="http://www.w3.org/2000/svg"
 											strokeLinecap="round"
 											variants={draw}
@@ -206,7 +206,7 @@ export default function Browser() {
 								className="absolute w-full h-[5.2rem] rounded-md inset-0"
 							>
 								<m.rect
-									className="w-full h-full absolute rounded-lg stroke-[6] stroke-cyan-500 dark:stroke-cyan-400"
+									className="w-full h-full absolute rounded-lg stroke-[6] stroke-sky-500 dark:stroke-sky-400"
 									xmlns="http://www.w3.org/2000/svg"
 									strokeLinecap="round"
 									variants={draw}

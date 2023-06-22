@@ -4,30 +4,20 @@ import Link from "next/link";
 export default function Card({
 	title,
 	description,
-	hover,
 	image,
 	imageDescription,
 	href,
 }: {
 	title: string;
 	description: string;
-	hover: boolean;
 	image: any;
 	imageDescription: string;
 	href: string;
 }) {
-	let hoverState;
-	if (hover) {
-		hoverState =
-			"hover:bg-cyan-200/50 hover:border-cyan-200 dark:hover:bg-cyan-800/50 dark:hover:border-cyan-800 transition-all hover:cursor-pointer";
-	}
-
 	return (
 		<Link href={href}>
 			<div
-				className={`flex my-4 lg:h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pb-12 ${
-					hoverState ? hoverState : ""
-				}`}
+				className="flex my-4 lg:h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pb-12 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all"
 			>
 				<div className="w-full flex flex-col p-6 mb-4">
 					<Image src={image} alt={imageDescription} />

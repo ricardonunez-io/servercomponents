@@ -3,6 +3,7 @@
 import MenuIcon from "../../../components/menu-icon";
 import ReactIcon from "../../../public/react-icon.svg";
 import Image from "next/image";
+import ReactLogo from "@/components/react-logo";
 
 export default function HydrationAnimation({ caption }: { caption: string }) {
 	return (
@@ -11,12 +12,8 @@ export default function HydrationAnimation({ caption }: { caption: string }) {
 				<div className="flex items-center w-full">
 					<div className="basis-1/3 md:basis-1/4 relative flex items-center">
 						<div className="flex flex-col justify-center items-center">
-							<Image
-							src={ReactIcon}
-							alt="React Icon"
-							className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 relative"
-							/>
-								<div className="text-center text-cyan-500 dark:text-cyan-400 text-sm sm:text-base md:text-lg">
+							<ReactLogo className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 text-sky-500 dark:text-sky-400"/>
+								<div className="text-center text-sky-500 dark:text-sky-400 text-sm sm:text-base md:text-lg">
 									<div>Event Listeners</div>
 									<div>Side Effects</div>
 									<div>Click Handlers</div>

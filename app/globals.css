@@ -48,11 +48,11 @@
 	left: 0;
 	background: linear-gradient(
 			90deg,
-			rgba(0, 220, 255, 0.0) 0%,
-			rgba(0, 220, 255, 0.0) 40%,
-			rgba(0, 220, 255, 0.3) 50%,
-			rgba(0, 220, 255, 0.0) 60%,
-			rgba(0, 220, 255, 0.0) 100%
+			rgba(56, 189, 248, 0.0) 0%,
+			rgba(56, 189, 248, 0.0) 40%,
+			rgba(56, 189, 248, 0.3) 50%,
+			rgba(56, 189, 248, 0.0) 60%,
+			rgba(56, 189, 248, 0.0) 100%
 	);
 	background-size: 200% 100%;
 	animation: 3s shimmer linear infinite;
@@ -67,14 +67,18 @@
 .shimmer-first {
 	background: linear-gradient(
 			90deg,
-			rgba(0, 220, 255, 0.0) 0%,
-			rgba(0, 220, 255, 0.0) 40%,
-			rgba(0, 220, 255, 0.3) 50%,
-			rgba(0, 220, 255, 0.0) 60%,
-			rgba(0, 220, 255, 0.0) 100%
+			rgba(56, 189, 248, 0.0) 0%,
+			rgba(56, 189, 248, 0.0) 40%,
+			rgba(56, 189, 248, 0.3) 50%,
+			rgba(56, 189, 248, 0.0) 60%,
+			rgba(56, 189, 248, 0.0) 100%
 	);
 	background-size: 200% 100%;
 	animation: 3s shimmer-first linear infinite -0.6s;
+}
+
+.react-tweet-theme {
+	font-style: normal
 }
 
 h1, h2, h3, div, p, text, li, ol, ul {
@@ -106,12 +110,12 @@ pre, code {
 		display: inline-block;
 	}
 
-	/* pre:has(code[data-theme='light']) {
+	code[data-theme='light'] {
 		display: none;
 		height: 0;
-	} */
+	}
 
-	code[data-theme='light'] {
+	pre:has(code[data-theme='light']) {
 		display: none;
 		height: 0;
 	}
@@ -127,10 +131,12 @@ pre, code {
 		display: inline-block;
 	}
 
-	/* pre:has(code[data-theme='dark']) {
-		display: none;
-  	} */
 	code[data-theme='dark'] {
+		display: none;
+		height: 0;
+	}
+
+	pre:has(code[data-theme='dark']) {
 		display: none;
 		height: 0;
 	}

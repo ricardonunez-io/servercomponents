@@ -4,9 +4,9 @@ import LibrariesVsRSC from "../public/libraries-vs-rsc.png";
 import ImportCost from "../public/import-cost.png";
 import NetworkWaterfall from "../public/network-waterfall.png";
 import Browser from "../components/browser";
-import Image from "next/image";
 import Link from "next/link";
-import ReactIcon from "../public/react-icon.svg";
+import ReactLogo from "@/components/react-logo";
+import GithubLink from "@/components/github";
 
 export const runtime = "edge";
 
@@ -45,13 +45,9 @@ export default function Home() {
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
 						<Link
 							href="/"
-							className="flex text-3xl sm:text-4xl md:text-5xl font-bold gradient clip items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
+							className="flex text-3xl sm:text-4xl md:text-5xl font-bold text-sky-500 dark:text-sky-400 items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
 						>
-							<Image
-								src={ReactIcon}
-								alt="React Icon"
-								className="w-12 h-12"
-							/>
+							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12" />
 							<span className="hidden md:flex pb-2">
 								Server Components
 							</span>
@@ -61,10 +57,11 @@ export default function Home() {
 						<p className="text-2xl sm:text-3xl md:text-4xl font-bold">
 							... are complicated.
 						</p>
-						<p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-8">
+						<p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-8 mb-4">
 							Here are some resources to make them easier to
 							understand and implement.
 						</p>
+						<div className="max-w-max"><GithubLink/></div>
 						<div className="grid mt-12">
 							<Browser />
 						</div>
@@ -76,7 +73,6 @@ export default function Home() {
 							key={topic.title}
 							title={topic.title}
 							description={topic.description}
-							hover={true}
 							image={topic.image}
 							imageDescription={topic.title + "hero image"}
 							href={topic.href}
