@@ -1,4 +1,5 @@
 import ClientWaterfallDiagram from "./client-waterfall-diagram";
+import WaterfallExampleAnimation from "@/app/(posts)/animations/waterfall-example-animation";
 
 # The Problems That React Server Components Solve
 
@@ -6,7 +7,7 @@ Great, so we can run React on the server, but why would we want to? What problem
 
 We went into it a bit in the last post, but the main three are:
 
-1. Data fetching and one-way data flow
+1. [Data fetching and one-way data flow](#data-fetching)
 
 2. Composable and granular business logic
 
@@ -36,10 +37,12 @@ export default function Shell() {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/feed/${profile.id}`)
-    .then((res) => res.json())
-    .then((data) => setFeed(data));
-  }, [profile.id]);
+    if (profile) {
+      fetch(`/api/feed/${profile.id}`)
+      .then((res) => res.json())
+      .then((data) => setFeed(data));
+    }
+  }, [profile]);
 
   return (
     <div>
@@ -58,7 +61,7 @@ Now, this is fine, but the big problem with this approach and what many develope
 
 Also, worth noting is that we just introduced a larger than necessary waterfall into the application.
 
-That is, we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
+That is, we first have to wait for the component to mount in the effect, then we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
 
 <ClientWaterfallDiagram/>
 
@@ -68,11 +71,7 @@ Now, what if there's more data to load? What if we also want to get the user's l
 
 Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all(){:js}` the requests to make sure they all resolve at the same time, right?
 
-Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
-
-Also, in those extra components like likes, comments, and friends, we also need to get their own respective data like how many likes a post has, the most up-to-date comments, the most up-to-date friends list, etc., so even though we're only fetching 1 user's activity, we're also fetching each of those posts' data as well.
-
-```jsx {4,9-11,25-40,46-50}
+```jsx {4,9-11,27-41,47-51}
 import { useState, useEffect } from "react";
 import Profile from "./Profile";
 import Feed from "./Feed";
@@ -92,9 +91,11 @@ export default function Shell() {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/feed/${profile.id}`)
-    .then((res) => res.json())
-    .then((data) => setFeed(data));
+    if (profile) {
+      fetch(`/api/feed/${profile.id}`)
+      .then((res) => res.json())
+      .then((data) => setFeed(data));
+    }
   }, [profile]);
 
   useEffect (() => {
@@ -127,11 +128,101 @@ export default function Shell() {
 }
 ```
 
-..... Continue here .....
+Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
 
-So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props.
+However, the thing React is pushing towards and what traditional server-side frameworks have always had as a model is that state is something that the UI needs to remember on the client-side, not that the application logic should remember on the server-side.
 
-While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components" (which are just standard React components).
+Something like a toggle button that remembers the theme is an example of a good use-case for using state in React and having that be a "client component", or a regular React component pre-RSCs.
+
+It's stateful because the user did something to change the *state* of the UI on their side, so that UI should have its own memory and keep track of that state.
+
+However, in our example above, the data-fetching logic all being kept in effects within the shell component would be considered a good use-case for abstraction away into their own respective server components.
+
+Why? Well, besides the waterfalls they create, those widgets of a profile, feed, activity, etc. can have their data passed to them through props within their own server component, and just displayed within that shell instead.
+
+That way, we can turn the shell into more of a shell component that just styles the layout, rather than the place where all the logic is held:
+
+```jsx
+import Profile from "./Profile";
+import Feed from "./Feed";
+import Activity from "./History";
+
+export default function Shell() {
+  // Now, we can use the parent div for styling only
+  return (
+    <div className="grid grid-cols-3">
+      <Profile />
+      <Feed />
+      <Activity />
+    </div>
+  )
+}
+```
+
+And each component will look more or less like this at their core:
+
+```jsx
+// Profile.jsx
+export async function Profile() {
+  const profileData = await fetch("/api/profile");
+  return (
+	<div className="flex">
+      <div>{profileData.image}</div>
+      <div>{profileData.name}</div>
+      <div>{profileData.username}</div>
+	</div>
+	)
+}
+
+// Feed.jsx
+export async function Feed() {
+  // the profileData fetch will automatically be deduplicated,
+  // so we're not hitting the same endpoint multiple times per request
+  const profileData = await fetch("/api/profile");
+  const feedData = await fetch(`/api/feed/${profileData.id}`); // returns an array of posts
+  return (
+	<div className="flex flex-col">
+      {feedData.map(post => (
+		<div>
+          <p>{post.username}</p>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
+        </div>
+      ))}
+	</div>
+	)
+}
+
+// ...
+```
+
+So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props if needed.
+
+And now, our server is added to the one-way data flow, meaning when the data is stale or when we define that our data needs to be revalidated, we can re-execute our component tree, perform reconciliation on only the parts that have changed, and stream updates into the UI, all while maintaining client-side state for things like theme toggles, checkboxes, active searches, etc., without any extra work to sync state for data as well.
+
+### Async Await
+
+You might've noticed in those two components with data-fetches, the exported functions were both async, and we awaited the fetches within them.
+
+This is a new feature of RSCs, but it might seem a bit strange that it's considered "new". The browser supports async fetch calls, and so does Node, so why can't client components make async fetch calls?
+
+While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components".
+
+Before React 18, when trying to use `async await{:js}` in components, the promises were null until resolved, meaning there would've been nothing to show in the UI which leads to a poor user experience.
+
+Now, however, you can use `<Suspense>{:jsx}` in React 18 to have a "fallback" component to display while the promise is resolving from that async call, but there are other reasons as well that async fetches could result in poor UX.
+
+Probably the main one is what we mentioned before, waterfalls.
+
+Let's say, again, you're fetching data within each level of your component tree asynchronously. There would be a segment of fetches being kicked off by the client to the server, then from the server to the service or API it's calling on, and then that response would be returned to the client to resolve the promise, and then we'd continue rendering to go deeper in the tree, and then it starts again and again on each level of your tree until the entire page is rendered.
+
+<WaterfallExampleAnimation caption="Press play to visualize how network requests made between the client and server can typically introduce more latency than server-to-service calls, which are typically close together (i.e. AWS's us-east-1)." />
+
+What we're describing here is an architecture where once a component resolves one async fetch, it has to then execute other fetches until all promises are resolved.
+
+To avoid a poor UX, the component tree, then, has to know ahead of time which functions are going to be executed in what order, which components depend on which props, which props depend on which fetches, etc., and what we're describing, then, is the server components model.
+
+The last piece of it would be minimizing that waterfall, and the solution that the React team came up with is that if we need to know and execute all async fetches in a component tree ahead of time, then let's move them all to the server to eliminate client-server back and forth, and have the server component part of the tree execute beforehand so that on each request, all promises can be resolved upon the UI being rendered.
 
 With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect(){:js}` for data fetching and storing server data in state.
 
