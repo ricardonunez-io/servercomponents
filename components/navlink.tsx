@@ -1,4 +1,4 @@
-import ReactLogo from "@/components/react-logo";
+import ReactLogo from "@/components/logos/react-logo";
 
 export default function NavLink() {
 	return (

@@ -1,6 +1,6 @@
 "use client";
 
-import MenuIcon from "./menu-icon";
+import MenuIcon from "../menu-icon";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 
 export default function Browser() {

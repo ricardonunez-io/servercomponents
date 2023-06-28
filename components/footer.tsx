@@ -1,4 +1,4 @@
-import VercelLogo from "@/components/vercel-logo";
+import VercelLogo from "@/components/logos/vercel-logo";
 
 export default function Footer() {
 	return (

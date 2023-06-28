@@ -1,6 +1,6 @@
 "use client";
 
-import MenuIcon from "../../../components/menu-icon";
+import MenuIcon from "../menu-icon";
 import { m, useAnimate } from "framer-motion";
 import { useState } from "react";
 

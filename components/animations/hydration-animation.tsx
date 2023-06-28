@@ -1,9 +1,9 @@
 "use client";
 
-import MenuIcon from "../../../components/menu-icon";
+import MenuIcon from "../menu-icon";
 import ReactIcon from "../../../public/react-icon.svg";
 import Image from "next/image";
-import ReactLogo from "@/components/react-logo";
+import ReactLogo from "@/components/logos/react-logo";
 
 export default function HydrationAnimation({ caption }: { caption: string }) {
 	return (

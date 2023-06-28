@@ -5,7 +5,7 @@ import A from "@/components/mdx-components/a";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
 		pre: ({ children }) => <Pre>{children}</Pre>,
-		/* @ts-expect-error */
+		/* @ts-expect-error-TS2322 */
 		a: ({ children, href }) => <A href={href}>{children}</A>,
 		...components,
 	};
