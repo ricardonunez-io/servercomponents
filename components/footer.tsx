@@ -1,28 +1,28 @@
-import Link from "next/link";
+import VercelLogo from "@/components/vercel-logo";
 
-export default function Footer({ previousPost, nextPost, previousHref, nextHref }: { previousPost: string, nextPost: string, previousHref: string, nextHref: string }) {
+export default function Footer() {
 	return (
-		<footer className="gap-x-4 my-8 grid grid-cols-2 text-base sm:text-lg md:text-xl">
-			<Link href={previousHref}
-				  className="grid place-items-center text-center py-8 px-4 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all"
+		<footer
+			className="pt-6 pb-12 px-8 bg-gray-50 dark:bg-stone-950 border-t-2 border-gray-200 dark:border-gray-800 flex flex-col items-center gap-y-4 lg:flex-row lg:justify-between relative z-[10000]">
+			<div>
+				Made by {" "}
+				<a href="https://twitter.com/ricardonunez_io"
+				   className="hover:underline text-sky-500 dark:text-sky-400"
+				   target="_blank"
+				   rel="noopener noreferrer"
+				>
+					Ricardo Nunez
+				</a>
+			</div>
+			<a id="vercel-link"
+			   target="_blank"
+			   rel="noopener noreferrer"
+			   href="https://vercel.com"
+			   className="no-underline text-inherit hover:opacity-80 grid grid-cols-2 place-items-center gap-x-0 sm:gap-x-0.5 md:gap-x-1 lg:gap-x-2"
 			>
-				<div className="grid grid-cols-5 w-full">
-					<div className="hidden sm:flex justify-center items-center text-xl md:text-2xl lg:text-3xl">←</div>
-					<div className="font-bold col-span-5 sm:col-span-4 grid place-items-center">
-						{previousPost}
-					</div>
-				</div>
-			</Link>
-			<Link href={nextHref}
-				  className="grid place-items-center text-center py-8 px-4 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all"
-			>
-				<div className="grid grid-cols-5 w-full">
-					<div className="font-bold col-span-5 sm:col-span-4 grid place-items-center">
-						{nextPost}
-					</div>
-					<div className="hidden sm:flex justify-center items-center text-xl md:text-2xl lg:text-3xl">→</div>
-				</div>
-			</Link>
+				<div>Powered by</div>
+				<VercelLogo width={100}/>
+			</a>
 		</footer>
 	)
 }

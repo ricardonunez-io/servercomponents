@@ -6,7 +6,7 @@ a {
 a:hover {
     text-decoration-line: underline;
 }
-#home-page-link.no-underline, #github-link.no-underline {
+#home-page-link.no-underline, #github-link.no-underline, #vercel-link.no-underline {
     text-decoration-line: none;
 }
 

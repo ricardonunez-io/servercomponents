@@ -60,7 +60,7 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 		);
 		await reqAnimate(
 			reqScope.current,
-			{ translateX: "-100%" },
+			{ translateX: "-110%" },
 			{ duration: 3 }
 		);
 	}
