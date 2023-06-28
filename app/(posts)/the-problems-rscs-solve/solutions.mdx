@@ -1,23 +1,33 @@
 import ClientWaterfallDiagram from "./client-waterfall-diagram";
 import WaterfallExampleAnimation from "@/app/(posts)/animations/waterfall-example-animation";
+import AngularLogo from "@/components/angular-logo";
+import BlogFooter from "@/components/blog-footer";
+import PingLogo from "@/components/ping-logo";
+import MDXLogo from "@/components/mdx-logo";
 
 # The Problems That React Server Components Solve
 
 Great, so we can run React on the server, but why would we want to? What problems does this solve?
 
-We went into it a bit in the last post, but the main three are:
+We went into it a bit in the [last post](/what-are-react-server-components), but the main three are:
 
 1. [Data fetching and one-way data flow](#data-fetching)
 
-2. Composable and granular business logic
+2. [Composable and granular business logic](#composable-business-logic)
 
-3. Bundle sizes
+3. [Bundle sizes](#bundle-sizes)
 
-### Data Fetching
+## Data Fetching
 
-One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like Angular, and that is unidrectional (one way) data flows.
+One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like [<AngularLogo width={25} /> Angular](https://angular.io), and that is unidirectional (one way) data flows.
 
-In a React component tree, let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. *(It's a very simple example, but it gets the point across)*
+This unidirectional data flow means that data is passed only way in your application (down your component tree), so if there's an update in data, React will perform reconciliation across your entire tree and re-render all the components that've had their props/data changed as well as their children.
+
+With RSCs, we're now adding the server to the one-way data flow, meaning that changes that happen on the server-side (i.e. new data is available in the database), we can perform the same process of reconciliation against the entire component tree, and if there are any server components with updated data, they can update the client's HTML without any additional work to sync state.
+
+To better understand, though, it might be useful to consider a classical React data-fetching example.
+
+Let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. *(It's a very simple example, but it gets the point across)*
 
 Now, let's say you want to fetch your profile data, your feed data, and your sidebar data. In a typical React app, you would have to do something like this:
 
@@ -55,23 +65,23 @@ export default function Shell() {
 
 Nothing too crazy going on here, and if you're used to React, this pattern may seem familiar.
 
-We just have two effects, two state stores that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>{:js}` and `<Feed>{:js}`.
+We just have two [effects](https://react.dev/learn/synchronizing-with-effects), two [state stores](https://react.dev/learn/state-a-components-memory) that are updated by those effects, and then once the data is fetched, we pass the data down as props from the shell to the components that need it, `<Profile>{:js}` and `<Feed>{:js}`.
 
 Now, this is fine, but the big problem with this approach and what many developers have historically complained about is that we have to use `useEffect(){:js}` to fetch data, which means we have to think about how to trigger the fetch (i.e. on renders and re-renders), how to handle loading states, and how to handle errors in a more disconnected way to the components themselves since we're doing it all in the shell.
 
 Also, worth noting is that we just introduced a larger than necessary waterfall into the application.
 
-That is, we first have to wait for the component to mount in the effect, then we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
+That is, we first have to wait for the component to mount to trigger the effects, then we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
 
 <ClientWaterfallDiagram/>
 
-means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database, etc.) is hosted on.
+means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database access layer, etc.) is hosted on.
 
 Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />{:js}` component (one component to make it simple)?
 
 Well, we'd have to add more effects, more state, and more props to pass down, but we can `Promise.all(){:js}` the requests to make sure they all resolve at the same time, right?
 
-```jsx {4,9-11,27-41,47-51}
+```jsx {4,9-11,19-35,41-45}
 import { useState, useEffect } from "react";
 import Profile from "./Profile";
 import Feed from "./Feed";
@@ -90,23 +100,17 @@ export default function Shell() {
     .then((data) => setProfile(data));
   }, []);
 
-  useEffect(() => {
-    if (profile) {
-      fetch(`/api/feed/${profile.id}`)
-      .then((res) => res.json())
-      .then((data) => setFeed(data));
-    }
-  }, [profile]);
-
   useEffect (() => {
     if (profile) {
       Promise.all([
+	    fetch(`/api/feed/${profile.id}`),
         fetch(`/api/likes/${profile.id}`),
         fetch(`/api/comments/${profile.id}`),
         fetch(`/api/friends/${profile.id}`)
       ])
       .then((res) => Promise.all(res.map((r) => r.json())))
-      .then(([likes, comments, friends]) => {
+      .then(([feed, likes, comments, friends]) => {
+	    setFeed(feed);
         setLikes(likes);
         setComments(comments);
         setFriends(friends);
@@ -128,9 +132,11 @@ export default function Shell() {
 }
 ```
 
-Well, that still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
+> Yes, this isn't optimized, but it isn't far from data loading patterns often seen in React apps.
 
-However, the thing React is pushing towards and what traditional server-side frameworks have always had as a model is that state is something that the UI needs to remember on the client-side, not that the application logic should remember on the server-side.
+However, even with `Promise.all(){:js}`, it still doesn't get rid of that initial waterfall where we need to go back and forth between client and server to get the profile data first.
+
+The thing React is pushing towards and what traditional server-side frameworks have always had as a model is that state is something that the UI needs to remember on the client-side, not something that the application logic should remember on the server-side.
 
 Something like a toggle button that remembers the theme is an example of a good use-case for using state in React and having that be a "client component", or a regular React component pre-RSCs.
 
@@ -145,7 +151,7 @@ That way, we can turn the shell into more of a shell component that just styles 
 ```jsx
 import Profile from "./Profile";
 import Feed from "./Feed";
-import Activity from "./History";
+import Activity from "./Activity";
 
 export default function Shell() {
   // Now, we can use the parent div for styling only
@@ -173,13 +179,15 @@ export async function Profile() {
 	</div>
 	)
 }
+```
 
+```jsx
 // Feed.jsx
 export async function Feed() {
-  // the profileData fetch will automatically be deduplicated,
+  // the profileData fetch will automatically be deduplicated by React,
   // so we're not hitting the same endpoint multiple times per request
   const profileData = await fetch("/api/profile");
-  const feedData = await fetch(`/api/feed/${profileData.id}`); // returns an array of posts
+  const feedData = await fetch(`/api/feed/${profileData.id}`);
   return (
 	<div className="flex flex-col">
       {feedData.map(post => (
@@ -190,10 +198,11 @@ export async function Feed() {
         </div>
       ))}
 	</div>
-	)
+  )
 }
-
-// ...
+```
+```jsx
+// etc. etc...
 ```
 
 So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props if needed.
@@ -206,7 +215,7 @@ You might've noticed in those two components with data-fetches, the exported fun
 
 This is a new feature of RSCs, but it might seem a bit strange that it's considered "new". The browser supports async fetch calls, and so does Node, so why can't client components make async fetch calls?
 
-While you technically *can* use async/await natively in the browser, there's a very specific reason why that doesn't exist in React "client components".
+While you technically *can* use `async await{:js}` natively in the browser, there's a very specific reason why that doesn't exist in React "client components".
 
 Before React 18, when trying to use `async await{:js}` in components, the promises were null until resolved, meaning there would've been nothing to show in the UI which leads to a poor user experience.
 
@@ -222,26 +231,90 @@ What we're describing here is an architecture where once a component resolves on
 
 To avoid a poor UX, the component tree, then, has to know ahead of time which functions are going to be executed in what order, which components depend on which props, which props depend on which fetches, etc., and what we're describing, then, is the server components model.
 
-The last piece of it would be minimizing that waterfall, and the solution that the React team came up with is that if we need to know and execute all async fetches in a component tree ahead of time, then let's move them all to the server to eliminate client-server back and forth, and have the server component part of the tree execute beforehand so that on each request, all promises can be resolved upon the UI being rendered.
+The last piece of it would be minimizing that waterfall, and the solution that the React team came up with is that if we need to know and execute all async fetches in a component tree ahead of time, then let's move them all to the server to eliminate client-server back and forth, and have the server component part of the tree execute beforehand so that on each request, all data fetching related promises can be resolved upon the UI being rendered.
 
 With this model, you use a server for what it's good for, use the client/browser for reactivity, and get rid of using `useEffect(){:js}` for data fetching and storing server data in state.
 
 Because of this, now you can build truly fullstack applications in a much more framework-agnostic way using only the primitives that React gives you.
 
-This way, instead of writing the backend and frontend components and services in two different ways, the entire stack can be represented in a component tree.
+This way, the entire stack can be represented in a component tree.
 
-You can directly access your database, interact with a database access layer, etc. and map the response from a request to an output (UI) to show to the user.
+You can directly access your database or private service and map the response from a request to an output (UI) to show to the user, i.e. the prototypical React model of thinking of UI as a function of state, except now, instead of thinking of it as "state", we're just thinking of it as data if it's in a server component ( `UI = fn(state /*client component*/ | data /*server component*/){:js}` ).
 
-With traditional server-side technologies like PHP or Rails, a mutation or data request resulted in a hard reload where the entire page updates to show the updated data, which isn't ideal for cases where you need to preserve state, whereas with RSCs, you can retain state even with data requests or mutations occurring on a page.
+Worth noting, however, is that RSCs don't necessarily rely on a "server" in terms of their mental model, but are more so a specification for the component running ahead of time.
 
-Traditionally, client side apps (single-page-applications) allowed you to do client side routing and retain state while only updating the UI that needed to be changed, but you had to write the backend completely separately and map it to the UI while using some fairly inefficient models like `useEffect(){:js}` which often created network waterfalls and large Javascript bundles.
+In Next.js 13's app directory, this means at build time. This allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
 
-You would have to think about server-side data as state, think about how to trigger fetches, loading indications, and a lot more, because on the client side, you don't have as much flexibility to do those things safely without exposing sensitive data, services, or keys on the client.
+All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like `getServerSideProps` or Remix `loaders` with a first-class supported solution.
 
-With RSCs, you don't necessarily have to create publicly consumable APIs to map data to UI and update backend data, but you're still able to retain state and do client side routing while being able to effectively have dynamic, data driven applications.
+## Composable Business Logic
 
-Worth noting, however, is that RSCs don't necessarily rely on a "server", but are more so a specification for the component running ahead of time.
+Great, so we can do data-fetching within components themselves now without using `useEffect(){:js}`. What use for this do we have, though, if we already had solutions like `getServerSideProps`, `loaders`, or Astro `.server` files?
 
-On Next.js, this means at build time, which allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
+Well the issue with those solutions is the way they handle requests.
 
-All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like getServerSideProps, Remix loaders, or Astro islands with a first-class supported solution.
+> [Theo Browne](https://twitter.com/t3dotgg) from [<PingLogo width={40} /> Ping.gg](https://ping.gg) has a great [YouTube video](https://youtu.be/d6lKEV_3kxQ?t=759) explaining the difference between the request/response model that you get when using `getServerSideProps` vs. `loaders`.
+>
+> The TL;DR is that Remix's request flow of
+>
+> `root.tsx` → `loader` → component
+>
+> is a lot simpler than Next.js's
+>
+> `_middleware.ts` → `_document.tsx` → `getServerSideProps` → `_app.tsx` (`root.tsx` equivalent) and finally → `page.tsx`
+>
+> but there are some caveats for both that I'll go into here that aren't mentioned in the video.
+
+The thing that neither framework addresses natively is the data-loading story on a per component basis. Even with Remix's [nested routing](https://remix.run/docs/en/1.18.0/guides/routing#what-is-nested-routing), you're still having to write non-composable business logic on a per-route basis, meaning data-fetching and revalidation can only happen by route instead of by component, and you can't really re-use that logic in a way where you're importing it from a *.jsx file or from NPM.
+
+What this means practically is that:
+
+1. There isn't a framework-agnostic way to write your business logic in a componentized way in React, as in you can't `import DatabaseQueryComponent from "./business-logic"{:jsx}`.
+
+2. The solutions that do exist in frameworks either have to use route-based logic to get data into your application which can lead to logic duplication, or use nested-routing which *is* a great solution, but still doesn't support "componentizing" your logic.
+
+One of the key components (no pun intended) of RSCs is the ability to "componentize" business logic so that it can be composed in different areas of your application without having to copy/paste only certain parts of logic from a specific route.
+
+One great example is implementing Stripe into your application to collect subscription revenue.
+
+Pre-RSCs, you'd have to go to the Stripe documentation, look into integrations with React, see if there were any framework-specific guides if you were using Remix or Next.js or Astro, etc., and do the plumbing and wiring yourself to integrate with Stripe.
+
+Now that RSCs are allowing you to ship React components whose logic runs only on the server, we can now instead publish a Stripe integration component to a private NPM registry for example, so that we can use backend-only business logic as we would a UI library and ship that so that the rest of our team can all use the same logic to integrate with Stripe.
+
+## Bundle Sizes
+
+Lastly but not least, one of the most popular benefits that's been touted by developers talking about RSCs, 0 impact on bundle sizes.
+
+To clarify up front, React Server Components themselves don't have 0 bundle sizes, meaning if you were to ship a completely static "Hello World" `div` as a server component, there would still be React and ReactDOM shipped to the client, meaning the bundle size is not 0.
+
+What's meant by "0 impact on bundle size" is rather the libraries/dependencies used by your server components won't be shipped to the browser.
+
+What this means is let's say we were using the incredible [UI library](https://ui.shadcn.com) from [@shadcn](https://twitter.com/shadcn), and we had a component there that didn't rely on interactivity like a button or typography.
+
+Even though those components themselves have dependencies like RadixUI or TailwindCSS for example, we'd be able to ship them to the browser as if they had no dependencies, so no impact on bundle sizes at all.
+
+Why this gets lots of people excited is:
+
+- Lower bandwidth used by your application if you're shipping less Javascript over the wire
+
+- Which in turn leads to faster load times since you're shipping less in the client-side bundle
+
+How? Well, as mentioned in the [first post](/what-are-react-server-components#how-are-server-components-different-from-ssr), we're only shipping the output of the server component to the client, meaning server components ship React Elements to the browser rather than JSX, so since we're only shipping the output after React processes everything on the server, there's no need to ship those dependencies to the browser if they aren't going to be used by any client-side Javascript, which means server components have no impact on bundle sizes, no matter how many dependencies or libraries are used within one.
+
+Obviously, the more dependencies used, the longer it might take for React to create those elements on the server in the first place, so dependencies should still be kept in check to optimize for performance (this isn't a catch-all to use any and all dependencies), but now, apps can theoretically scale infinitely without scaling bundle sizes proportionately.
+
+I.e. as your app gets bigger, your bundle size could stay the same as it was when it was a small, simple application.
+
+A great example here from Dan Abramov is having a Markdown parser.
+
+Let's say you have a simple blog that has code snippets similar to this site, where you want to import something like `"shiki"{:js}` to perform syntax highlighting.
+
+Ignoring solutions like [<MDXLogo width={35} /> MDX](https://mdxjs.com) or [Rehype](https://github.com/rehypejs/rehype) plugins which might typically parse everything at build time on Next.js, you'd typically have to import `"shiki"{:js}`, ship it to the client, and have the client perform the parsing of the code blocks in order to highlight them accordingly before the first load, which could add seconds to load time and upwards of 200kb to the client-side bundle.
+
+Now, we could use something like a Remix `loader` to parse the code blocks for us, but that would have to result in duplicated logic across multiple routes if we have code blocks on more than one page, which, for a simple blog, might not make the most sense from a developer-experience standpoint.
+
+Or, we could have a React Server Component perform the parsing, pass all code blocks into that component, and ship only the parsed and highlighted code blocks to the client without any additional dependencies.
+
+Again, we're ignoring solutions that already exist like [SSG](https://www.cloudflare.com/learning/performance/static-site-generator/), [ISR](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration), [Rehype](https://github.com/rehypejs/rehype), [MDX](https://mdxjs.com), etc. for the sake of this example as they would all typically perform this parsing at build time, but it makes it clear to understand what the real world benefits would be in shipping no additional client-side bundle with your relatively static components besides just the abstract "faster load times" and "less work to be done on the client".
+
+<BlogFooter previousPost="What are React Server Components?" previousHref="/what-are-react-server-components" nextPost="" nextHref="/"  />

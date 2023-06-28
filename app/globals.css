@@ -88,6 +88,10 @@ h3 {
     line-height: 1.75rem;
     font-weight: 700;
 }
+
+h1, h2, h3 {
+    margin-top: 1rem;
+}
 p, text {
     color: theme('colors.gray.500');
     font-size: 1rem;
@@ -117,7 +121,7 @@ blockquote {
     border-left-width: 4px;
     border-color: currentColor;
 }
-#home-page-link.no-underline, #github-link.no-underline {
+#home-page-link.no-underline, #github-link.no-underline, #vercel-link.no-underline, #footer.no-underline {
     text-decoration-line: none;
 }
 @media (prefers-color-scheme: dark) {
