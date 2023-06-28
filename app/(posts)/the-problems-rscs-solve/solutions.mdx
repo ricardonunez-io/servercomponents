@@ -1,9 +1,11 @@
 import ClientWaterfallDiagram from "./client-waterfall-diagram";
 import WaterfallExampleAnimation from "@/app/(posts)/animations/waterfall-example-animation";
 import AngularLogo from "@/components/angular-logo";
+import RemixLogo from "@/components/remix-logo";
 import BlogFooter from "@/components/blog-footer";
 import PingLogo from "@/components/ping-logo";
 import MDXLogo from "@/components/mdx-logo";
+import NetworkWaterfallExample from "@/app/(posts)/the-problems-rscs-solve/network-waterfall-example";
 
 # The Problems That React Server Components Solve
 
@@ -76,6 +78,10 @@ That is, we first have to wait for the component to mount to trigger the effects
 <ClientWaterfallDiagram/>
 
 means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database access layer, etc.) is hosted on.
+
+[<RemixLogo width={20} /> Remix's website](https://remix.run) has a great example of what this waterfall might look like in the real world:
+
+<NetworkWaterfallExample />
 
 Now, what if there's more data to load? What if we also want to get the user's likes, comments, and friends in an `<Activity />{:js}` component (one component to make it simple)?
 
@@ -207,7 +213,7 @@ export async function Feed() {
 
 So you can `async await{:js}` data directly in a component and pass that data down other server components or even "client components" as props if needed.
 
-And now, our server is added to the one-way data flow, meaning when the data is stale or when we define that our data needs to be revalidated, we can re-execute our component tree, perform reconciliation on only the parts that have changed, and stream updates into the UI, all while maintaining client-side state for things like theme toggles, checkboxes, active searches, etc., without any extra work to sync state for data as well.
+And now, our server is added to the one-way data flow, meaning when the data is stale or when we define that our data needs to be revalidated, we can re-execute our component tree, perform reconciliation on only the components (server or client) that have changed, and stream updates into the UI, all while maintaining client-side state for things like theme toggles, checkboxes, active searches, etc., without any extra work to sync state for data as well.
 
 ### Async Await
 
@@ -239,11 +245,13 @@ Because of this, now you can build truly fullstack applications in a much more f
 
 This way, the entire stack can be represented in a component tree.
 
-You can directly access your database or private service and map the response from a request to an output (UI) to show to the user, i.e. the prototypical React model of thinking of UI as a function of state, except now, instead of thinking of it as "state", we're just thinking of it as data if it's in a server component ( `UI = fn(state /*client component*/ | data /*server component*/){:js}` ).
+You can directly access your database or private service and map the response from a request to an output (UI) to show to the user, i.e. the prototypical React model of thinking of UI as a function of state, except now, instead of thinking of it as "state", we're just thinking of it as data if it's in a server component ( `UI = fn(state /*client*/ | data /*server*/){:js}` ).
 
 Worth noting, however, is that RSCs don't necessarily rely on a "server" in terms of their mental model, but are more so a specification for the component running ahead of time.
 
-In Next.js 13's app directory, this means at build time. This allows you to do things like file system access for markdown files, but things like a comment section or theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
+In Next.js 13's app directory, this means at build time, and in practice, this means on the server to solve the problems above, but a server isn't a requirement per se.
+
+Running on the server, however, allows you to do things like file system access for markdown files and database access for direct queries, but things like a theme-toggle could still be client components and interactive, as you can mix client and server components in your component tree seamlessly.
 
 All in all, server components are a React take on how to do data fetching that is more similar to how you would do it in a traditional server-side app, and could possibly replace paradigms like `getServerSideProps` or Remix `loaders` with a first-class supported solution.
 
@@ -253,7 +261,7 @@ Great, so we can do data-fetching within components themselves now without using
 
 Well the issue with those solutions is the way they handle requests.
 
-> [Theo Browne](https://twitter.com/t3dotgg) from [<PingLogo width={40} /> Ping.gg](https://ping.gg) has a great [YouTube video](https://youtu.be/d6lKEV_3kxQ?t=759) explaining the difference between the request/response model that you get when using `getServerSideProps` vs. `loaders`.
+> [Theo (@t3dotgg)](https://twitter.com/t3dotgg) from [<PingLogo width={40} /> Ping.gg](https://ping.gg) has a great [YouTube video](https://youtu.be/d6lKEV_3kxQ?t=759) explaining the difference between the request/response model that you get when using `getServerSideProps` vs. `loaders`.
 >
 > The TL;DR is that Remix's request flow of
 >
@@ -265,7 +273,7 @@ Well the issue with those solutions is the way they handle requests.
 >
 > but there are some caveats for both that I'll go into here that aren't mentioned in the video.
 
-The thing that neither framework addresses natively is the data-loading story on a per component basis. Even with Remix's [nested routing](https://remix.run/docs/en/1.18.0/guides/routing#what-is-nested-routing), you're still having to write non-composable business logic on a per-route basis, meaning data-fetching and revalidation can only happen by route instead of by component, and you can't really re-use that logic in a way where you're importing it from a *.jsx file or from NPM.
+The thing that neither framework addresses natively is the data-loading story on a per component basis. Even with Remix's [nested routing](https://remix.run/docs/en/1.18.0/guides/routing#what-is-nested-routing), you're still having to write non-composable business logic on a per-route basis, meaning data-fetching and revalidation can only happen by route instead of by component, and you can't really re-use that logic in a way where you're importing it from a `*.jsx` file or from NPM.
 
 What this means practically is that:
 
@@ -279,7 +287,7 @@ One great example is implementing Stripe into your application to collect subscr
 
 Pre-RSCs, you'd have to go to the Stripe documentation, look into integrations with React, see if there were any framework-specific guides if you were using Remix or Next.js or Astro, etc., and do the plumbing and wiring yourself to integrate with Stripe.
 
-Now that RSCs are allowing you to ship React components whose logic runs only on the server, we can now instead publish a Stripe integration component to a private NPM registry for example, so that we can use backend-only business logic as we would a UI library and ship that so that the rest of our team can all use the same logic to integrate with Stripe.
+Now that RSCs are allowing you to ship React components whose logic runs only on the server, you can now instead publish a Stripe integration component to a private NPM registry for example, so that you can use and re-use backend-only business logic as you would a UI library and ship it so that the rest of your team can all use the same logic to integrate with Stripe by importing it as you would [`"framer-motion"`](https://framer.com/motion) for example.
 
 ## Bundle Sizes
 
@@ -291,7 +299,7 @@ What's meant by "0 impact on bundle size" is rather the libraries/dependencies u
 
 What this means is let's say we were using the incredible [UI library](https://ui.shadcn.com) from [@shadcn](https://twitter.com/shadcn), and we had a component there that didn't rely on interactivity like a button or typography.
 
-Even though those components themselves have dependencies like RadixUI or TailwindCSS for example, we'd be able to ship them to the browser as if they had no dependencies, so no impact on bundle sizes at all.
+Even though those components themselves have dependencies like RadixUI for example, we'd be able to ship them to the browser as if they had no dependencies, so no impact on bundle sizes at all.
 
 Why this gets lots of people excited is:
 
@@ -299,7 +307,9 @@ Why this gets lots of people excited is:
 
 - Which in turn leads to faster load times since you're shipping less in the client-side bundle
 
-How? Well, as mentioned in the [first post](/what-are-react-server-components#how-are-server-components-different-from-ssr), we're only shipping the output of the server component to the client, meaning server components ship React Elements to the browser rather than JSX, so since we're only shipping the output after React processes everything on the server, there's no need to ship those dependencies to the browser if they aren't going to be used by any client-side Javascript, which means server components have no impact on bundle sizes, no matter how many dependencies or libraries are used within one.
+How? Well, as mentioned in the [first post](/what-are-react-server-components#how-are-server-components-different-from-ssr), we're only shipping the output of the server component to the client, meaning server components ship React Elements to the browser rather than JSX.
+
+Since we're only shipping the output after React processes/renders everything on the server, there's no need to ship those dependencies to the browser if they aren't going to be used by any client-side Javascript, which means server components have no impact on bundle sizes, no matter how many dependencies or libraries are used within one.
 
 Obviously, the more dependencies used, the longer it might take for React to create those elements on the server in the first place, so dependencies should still be kept in check to optimize for performance (this isn't a catch-all to use any and all dependencies), but now, apps can theoretically scale infinitely without scaling bundle sizes proportionately.
 
@@ -307,9 +317,9 @@ I.e. as your app gets bigger, your bundle size could stay the same as it was whe
 
 A great example here from Dan Abramov is having a Markdown parser.
 
-Let's say you have a simple blog that has code snippets similar to this site, where you want to import something like `"shiki"{:js}` to perform syntax highlighting.
+Let's say you have a simple blog that has code snippets similar to this site, where you want to import something like [`"shiki"`](https://shiki.matsu.io) to perform syntax highlighting.
 
-Ignoring solutions like [<MDXLogo width={35} /> MDX](https://mdxjs.com) or [Rehype](https://github.com/rehypejs/rehype) plugins which might typically parse everything at build time on Next.js, you'd typically have to import `"shiki"{:js}`, ship it to the client, and have the client perform the parsing of the code blocks in order to highlight them accordingly before the first load, which could add seconds to load time and upwards of 200kb to the client-side bundle.
+Ignoring solutions like [<MDXLogo width={35} /> MDX](https://mdxjs.com) or [Rehype](https://github.com/rehypejs/rehype) plugins which might typically parse everything at build time on Next.js, you'd typically have to import [`"shiki"`](https://shiki.matsu.io), ship it to the client, and have the client perform the parsing of the code blocks in order to highlight them accordingly before the first load, which could add seconds to load time and upwards of 200kb to the client-side bundle.
 
 Now, we could use something like a Remix `loader` to parse the code blocks for us, but that would have to result in duplicated logic across multiple routes if we have code blocks on more than one page, which, for a simple blog, might not make the most sense from a developer-experience standpoint.
 

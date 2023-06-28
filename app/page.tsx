@@ -12,20 +12,20 @@ export const runtime = "edge";
 
 const topics = [
 	{
-		title: "What are React Server Components (RSCs) and how are they different?",
-		description: `RSCs are React components that run only on the server. This is different to server side rendering, which is when you pre-run a route's component tree on the server, render and pass HTML to the client, and then hydrate it. Because it's run only on the server, you can access private services, direct databases, etc.`,
+		title: "What Are React Server Components (RSCs) and How Are They Different?",
+		description: `A brief introduction to React Server Components and how they differ to Server-Side Rendering.`,
 		image: RSCHero,
 		href: "/what-are-react-server-components",
 	},
 	{
-		title: "Why build the RSC model if solutions already existed to data fetching and backend logic?",
-		description: `Solutions like React Query & Redux exist, but they aren't native to React. For example, build/server logic couldn't be componentized, which led to duplicated logic. Another example is having unavoidable network waterfalls when using useEffect(), which could only really be avoided by having framework abstractions like loaders of getServerSideProps(), which each have their own unique challenges for the componentization model.`,
+		title: "The Problems That React Server Components Solve",
+		description: `How React Server Components address data fetching, composing business logic, and bundle sizes differently than existing solutions.`,
 		image: LibrariesVsRSC,
-		href: "/",
+		href: "/the-problems-rscs-solve",
 	},
 	{
-		title: "What's the main goal behind RSCs and what are their benefits/side effects?",
-		description: `In React, we want to be able to re-use code that includes build/server logic. The mental model of fetching data, awaiting the response, and displaying it in the UI is incredibly powerful and provides a standardized primitive for getting data into your dynamic application on a per component basis, which allows for re-usability on a much more granular level than previously possible.`,
+		title: "Adopting React Server Components Incrementally",
+		description: `This seems like as big of a breaking change as we can get, right? Sort of... But how do we incrementally adopt RSCs to get the benefits?`,
 		image: ImportCost,
 		href: "/",
 	},
@@ -45,13 +45,13 @@ export default function Home() {
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
 						<Link
 							href="/"
-							className="flex items-center gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
+							className="flex items-center max-w-max gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
 						>
 							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12 pb-4 text-sky-500 dark:text-sky-400" />
-							<h1 className="hidden md:flex">
+							<h1 className="hidden md:flex -mt-1">
 								Server Components
 							</h1>
-							<h1 className="flex md:hidden">RSCs</h1>
+							<h1 className="flex md:hidden -mt-1">RSCs</h1>
 						</Link>
 
 						<h2 className="-mt-3 -mb-6">

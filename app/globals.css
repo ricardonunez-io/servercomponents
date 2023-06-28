@@ -90,7 +90,7 @@ h3 {
 }
 
 h1, h2, h3 {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 p, text {
     color: theme('colors.gray.500');

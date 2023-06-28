@@ -11,7 +11,7 @@ import RailsIcon from "@/components/rails-icon";
 import PHPLogo from "@/components/php-logo"
 import DiffExample from "@/components/diff-example";
 
-# What are React Server Components (RSCs) and how are they different?
+# What Are React Server Components (RSCs) and How Are They Different?
 
 React server components are React components that run *only* on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
 
@@ -21,7 +21,7 @@ There's still a shift in the way you think about building React apps, but it's n
 
 This site *is* completely open sourced, so if you're interested in adding anything, changing anything, correcting any mistakes, or just want to see how it works, you can check out the [repo on GitHub](https://github.com/ricardonunez-io/servercomponents).
 
-### Server Side Rendering
+## Server Side Rendering
 
 Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [<NextJSLogo width={28} /> Next.js](https://nextjs.org) or [<RemixLogo width={20} /> Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
 
@@ -56,6 +56,8 @@ This string of HTML is then sent to the browser to render, and then *hydrated* b
 
 Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration.
 
+### Hydration
+
 "Hydration" essentially means re-rendering all of that HTML, *plus* the necessary JS in the user's *browser* so that the page can become interactive.
 
 So even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet.
@@ -69,7 +71,7 @@ Even if you have a completely static page with no hooks, state, effects, click h
 
 So the challenge SSR solved wasn't necessarily running React on servers to get rid of hydration, but rather giving the user content to look at while React loads up all the components.
 
-### How are Server Components different from SSR?
+### How do React components work in a non-RSC world?
 
 Now, if hydration is still necessary using SSR, that means that your React logic (i.e. what gets called before the `return(){:js}` statement) still needs to run on the client. For now, let's ignore solutions like Next.js's [`getServerSideProps`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props) and Remix [`loaders`](https://remix.run/docs/en/1.17.1/route/loader).
 
@@ -100,6 +102,8 @@ And Babel would transpile that into `React.createElement(){:js}` calls which wou
 
 So even if you server-side render your application, that initial HTML output is just going to be overwritten by the output of those `React.createElement(){:js}` calls, and the HTML is then going to be considered hydrated.
 
+## How do React Server Components differ from SSR?
+
 The difference, then, between React Server Components and SSR is that the process SSR takes to render your React app is:
 
 1. Having the server render a snapshot of your JSX's initial HTML output with `renderToString(){:js}` and sending that to the browser
@@ -112,13 +116,15 @@ The difference, then, between React Server Components and SSR is that the proces
 
 Instead, with server components, what you're sending to the browser are just React components that have already been rendered as React elements by the server.
 
-That is to say the browser is getting the serialized output of your JSX directly from the server, instead of having to transpile the JSX itself client-side.
+That is to say the browser is getting the serialized JSON output from your JSX directly from the server, instead of having to transpile the JSX itself client-side.
 
 > That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), had a great Tweet to explain this mental model as simply as possible:
 >
 > <Tweet id="1661717887319670784"/>
 >
 > Also, Dan Abramov's (from the React core team at <MetaLogo width={21}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
+
+### Reconciliation in Server Components
 
 It's worth noting that server components *can* be seen as somewhat static once they're loaded, because they can't and won't hydrate.
 
@@ -140,9 +146,9 @@ Instead of calling your entire route (i.e. your entire page re-fetching `getServ
 
 What this means is that state is completely maintained on the client, so if your user is typing something in the search bar of a blog and new comments are streaming into the current blog post that the user is on, they:
 
-A. Won't have to reload to get those new comments.
+- Won't have to reload to get those new comments.
 
-B. Won't lose their search input if they navigate to a new blog post (provided the search bar is part of a layout that wraps the comments and blog post)
+- Won't lose their search input if they navigate to a new blog post (provided the search bar is part of a layout that wraps the comments and blog post)
 
 On the server-side, a new, updated component tree will be serialized and sent to the browser for the client to diff and patch, and no unnecessary re-renders or re-fetches will be triggered.
 
