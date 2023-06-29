@@ -11,8 +11,14 @@ const boldFont = fetch(new URL("https://use.typekit.net/af/a9ccd8/00000000000000
 );
 
 export const alt = "ServerComponents.dev | What are RSCs, what do they bring to the table, and why are they exciting (or frightening)?"
+export const size = {
+	width: 1200,
+	height: 630,
+}
+export const contentType = 'image/png'
 
-export default async function GET() {
+
+export default async function Image() {
 	const fontData = await font;
 	const boldFontData = await boldFont;
 	
