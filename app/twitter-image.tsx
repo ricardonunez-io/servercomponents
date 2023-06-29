@@ -13,7 +13,7 @@ const boldFont = fetch(new URL("https://use.typekit.net/af/a9ccd8/00000000000000
 export const alt = "ServerComponents.dev | What are RSCs"
 export const size = {
 	width: 1500,
-	height: 500,
+	height: 1000,
 }
 export const contentType = 'image/png'
 export const title = "ServerComponents.dev | What are RSCs"
@@ -55,7 +55,7 @@ export default async function TwitterImage() {
 		),
 		{
 			width: 1500,
-			height: 500,
+			height: 1000,
 			fonts: [
 				{
 					name: 'BoldSoleil',
