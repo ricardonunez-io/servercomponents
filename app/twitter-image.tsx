@@ -16,6 +16,9 @@ export const size = {
 	height: 630,
 }
 export const contentType = 'image/png'
+export const metadata = {
+	title: "ServerComponents.dev | What are RSCs, what do they bring to the table, and why are they exciting (or frightening)?",
+}
 
 
 export default async function TwitterImage() {
