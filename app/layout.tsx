@@ -2,10 +2,8 @@ import "./globals.css";
 import Footer from "@/components/footer";
 
 export const metadata = {
-	title: "React Server Components",
-	description:
-		"An outline of React Server Components, what they are, why they're here, and how to use them conceptually.",
 	icons: "./favicon.ico",
+	openGraph: {},
 };
 
 export default function RootLayout({

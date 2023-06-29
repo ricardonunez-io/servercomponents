@@ -9,6 +9,12 @@ import GithubLink from "@/components/github-link";
 
 export const runtime = "edge";
 
+export const metadata = {
+	title: "React Server Components",
+	description:
+		"An outline of React Server Components, what they are, why they're here, and how to use them conceptually.",
+};
+
 const topics = [
 	{
 		title: "What Are React Server Components (RSCs) and How Are They Different?",
