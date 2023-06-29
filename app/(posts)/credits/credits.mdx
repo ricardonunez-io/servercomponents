@@ -4,6 +4,7 @@ import ReactRouterLogo from "@/components/logos/react-router-logo";
 import PingLogo from "@/components/logos/ping-logo";
 import NextJSLogo from "@/components/logos/nextjs-logo";
 import Tweet from "@/components/tweet";
+import BlogFooter from "@/components/blog-footer";
 
 # Credits
 
@@ -46,4 +47,8 @@ The official React docs are some of the best maintained docs I've read through, 
 
 Both videos were foundational in understanding why Server Components aren't an abstraction away from SSR, nor are they solving problems that SSR or existing meta-frameworks solved already.
 
+[This livestream](https://www.youtube.com/watch?v=h7tur48JSaw) from Kent C. Dodds, Dan Abramov, and Joe Savona on Server Components and how their mental model differs from existing solutions is also a great watch if you'd like to dive deeper into the weeds, and although it is a bit "spicy" as a commenter put it, each perspective gave a great amount of insight into where the landscape is for data-fetching/rendering solutions in React today.
+
 Finally, [<NextJSLogo width={28}/> Next.js's docs for the new app router](https://nextjs.org/docs/app) were incredibly helpful in learning what it looks like to get up and running with React Server Components either from new project or from an incrementally adopted standpoint. The information there on how [fetches work in server components](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching), deduplication, the new ["server actions"](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions) feature, etc. were all well explained, and helped me migrate two (small) production apps from the pages router to the app router for work without any issues with stability, bugs, or data leaks from server to client.
+
+<BlogFooter previousPost="Home Page" previousHref="/" nextPost="What are React Server Components?" nextHref="/what-are-react-server-components"  />

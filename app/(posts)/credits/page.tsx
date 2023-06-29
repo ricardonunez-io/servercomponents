@@ -1,4 +1,5 @@
 import Credits from "./credits.mdx";
+import PageMap from "./credits-pagemap.mdx";
 
 export const runtime = "edge";
 export const metadata = {
@@ -8,5 +9,14 @@ export const metadata = {
 }
 
 export default function RSCsPage() {
-	return <Credits />;
+	return (
+		<div className="lg:grid lg:grid-cols-4 w-full gap-x-4">
+			<div className="col-span-4 max-w-4xl mx-auto xl:col-span-3 h-fit w-full">
+				<Credits/>
+			</div>
+			<div className="hidden xl:grid xl:col-span-1 h-fit sticky top-32 w-full">
+				<PageMap/>
+			</div>
+		</div>
+	);
 }

@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					<NavLink />
 					<GithubLink />
 				</Header>
-				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 max-w-5xl mx-auto relative">
+				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 mx-auto relative">
 					{children}
 				</div>
 			</div>

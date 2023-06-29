@@ -79,7 +79,7 @@ That is, we first have to wait for the component to mount to trigger the effects
 
 means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database access layer, etc.) is hosted on.
 
-[<RemixLogo width={20} /> Remix's website](https://remix.run) has a great example of what this waterfall might look like in the real world:
+[<RemixLogo width={20} /> Remix's website](https://remix.run) includes a great visualization of what this waterfall might look like in the real world:
 
 <NetworkWaterfallExample />
 
@@ -327,4 +327,4 @@ Or, we could have a React Server Component perform the parsing, pass all code bl
 
 Again, we're ignoring solutions that already exist like [SSG](https://www.cloudflare.com/learning/performance/static-site-generator/), [ISR](https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration), [Rehype](https://github.com/rehypejs/rehype), [MDX](https://mdxjs.com), etc. for the sake of this example as they would all typically perform this parsing at build time, but it makes it clear to understand what the real world benefits would be in shipping no additional client-side bundle with your relatively static components besides just the abstract "faster load times" and "less work to be done on the client".
 
-<BlogFooter previousPost="What are React Server Components?" previousHref="/what-are-react-server-components" nextPost="" nextHref="/"  />
+<BlogFooter previousPost="What are React Server Components?" previousHref="/what-are-react-server-components" nextPost="Home Page" nextHref="/"  />

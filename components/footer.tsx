@@ -3,7 +3,7 @@ import VercelLogo from "@/components/logos/vercel-logo";
 export default function Footer() {
 	return (
 		<footer
-			className="pt-6 pb-12 px-8 bg-gray-50 dark:bg-stone-950 border-t-2 border-gray-200 dark:border-gray-800 flex flex-col items-center gap-y-4 lg:flex-row lg:justify-between relative z-[10000]">
+			className="py-6 px-8 bg-gray-50 dark:bg-stone-950 border-t-2 border-gray-200 dark:border-gray-800 flex flex-col items-center gap-y-4 lg:flex-row lg:justify-between relative z-[10000]">
 			<div>
 				Made by {" "}
 				<a href="https://twitter.com/ricardonunez_io"

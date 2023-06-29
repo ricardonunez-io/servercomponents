@@ -4,10 +4,8 @@ import LibrariesVsRSC from "../public/libraries-vs-rsc.png";
 import ImportCost from "../public/import-cost.png";
 import NetworkWaterfall from "../public/network-waterfall.png";
 import Browser from "../components/animations/browser";
-import Link from "next/link";
 import ReactLogo from "@/components/logos/react-logo";
 import GithubLink from "@/components/github-link";
-import Image from "next/image";
 
 export const runtime = "edge";
 
@@ -28,13 +26,7 @@ const topics = [
 		title: "Adopting React Server Components Incrementally",
 		description: `This seems like as big of a breaking change as we can get, right? Sort of... But how do we incrementally adopt RSCs to get the benefits?`,
 		image: ImportCost,
-		href: "/",
-	},
-	{
-		title: "Network waterfalls and how RSCs help devs minimize them.",
-		description: `Network waterfalls (when requests are staggered sequentially) haven't natively been solved as much as band-aided by things like useEffect(). Framework solutions exist that minimize the problem (i.e. Remix loaders with parallelized requests), but RSCs help minimize them on a per-component basis rather than a per page/route basis by allowing you to fetch data for your entire component tree by component at initial request time, instead of having to ping-pong back and forth between server and client upon each component's render.`,
-		image: NetworkWaterfall,
-		href: "/",
+		href: "/incremental-adoption",
 	},
 ];
 
@@ -44,7 +36,7 @@ export default function Home() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 space-y-4">
 				<div className="lg:sticky lg:top-0 lg:h-screen lg:max-h-screen lg:grid lg:place-items-center">
 					<div className="relative pt-12 px-8 lg:px-16 w-full h-full flex flex-col justify-center">
-						<Link
+						<a
 							href="/"
 							className="flex items-center max-w-max gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity"
 						>
@@ -53,7 +45,7 @@ export default function Home() {
 								Server Components
 							</h1>
 							<h1 className="flex md:hidden -mt-1">RSCs</h1>
-						</Link>
+						</a>
 
 						<h2 className="-mt-3 -mb-6">
 							... are complicated.
@@ -71,7 +63,7 @@ export default function Home() {
 					</div>
 				</div>
 				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-x-4 md:gap-y-4">
-					<Link href="/credits" className="md:col-span-2 lg:col-span-1 xl:col-span-2">
+					<a href="/credits" className="md:col-span-2 lg:col-span-1 xl:col-span-2">
 						<div
 							className="flex flex-col rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pt-6 pb-2 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all mb-4 md:mb-0 xl:my-0"
 						>
@@ -87,7 +79,7 @@ export default function Home() {
 								</p>
 							</div>
 						</div>
-					</Link>
+					</a>
 					{topics.map((topic) => (
 						<Card
 							key={topic.title}

@@ -21,7 +21,7 @@ h1::before, h2::before, h3::before {
 h1 > a {
     color: theme('colors.sky.500');
 }
-h2 > a, h3 > a {
+h2 > a, h3 > a, h4 > a {
     color: theme('colors.gray.900');
 }
 @media (prefers-color-scheme: dark) {
@@ -31,7 +31,7 @@ h2 > a, h3 > a {
     h1 > a {
         color: theme('colors.sky.400');
     }
-    h2 > a, h3 > a, footer > a {
+    h2 > a, h3 > a, h4 > a, footer > a {
         color: theme('colors.gray.100');
     }
 }
