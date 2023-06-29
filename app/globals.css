@@ -81,20 +81,14 @@ h1 {
     font-weight: 700;
 }
 h2 {
-    color: theme("colors.gray.900");
     font-size: 1.5rem;
     line-height: 2rem;
     font-weight: 700;
 }
 h3 {
-    color: theme("colors.gray.900");
     font-size: 1.125rem;
     line-height: 1.75rem;
     font-weight: 700;
-}
-
-h1, h2, h3 {
-    margin-top: 1.5rem;
 }
 h4 {
     font-size: 1rem;
@@ -102,6 +96,12 @@ h4 {
     font-weight: 400;
     padding-top: 1rem;
     padding-bottom: 1rem;
+}
+h1, h2, h3 {
+    margin-top: 1.5rem;
+}
+h2, h3, h4 {
+    color: theme("colors.gray.900");
 }
 p, text {
     color: theme('colors.gray.500');
@@ -142,10 +142,7 @@ blockquote {
     h1 {
         color: theme("colors.sky.400");
     }
-    h2 {
-        color: theme('colors.gray.100');
-    }
-    h3 {
+    h2, h3, h4 {
         color: theme('colors.gray.100');
     }
 }
@@ -180,6 +177,24 @@ blockquote {
         font-size: 1.25rem;
         line-height: 1.75rem;
     }
+}
+h1::before, h2::before, h3::before {
+    content: '';
+    display: block;
+    height: 80px;
+    margin-top: -80px;
+    visibility: hidden;
+}
+#github-link.no-underline, #vercel-link.no-underline, #footer.no-underline, #home-page.no-underline {
+    text-decoration-line: none;
+}
+a {
+    color: theme('colors.sky.500');
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+a:hover {
+    text-decoration-line: underline;
 }
 
 /* Fonts */

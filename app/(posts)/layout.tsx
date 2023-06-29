@@ -1,4 +1,3 @@
-import "./posts.css";
 import NavLink from "@/components/navlink";
 import GithubLink from "@/components/github-link";
 

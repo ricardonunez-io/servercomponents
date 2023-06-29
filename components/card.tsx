@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Card({
 	title,
@@ -14,7 +15,7 @@ export default function Card({
 	href: string;
 }) {
 	return (
-		<a href={href}>
+		<Link id="home-page" href={href} className="no-underline">
 			<div
 				className="flex md:h-full flex-col gap-y-2 rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pt-0 pb-8 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all mb-4 xl:my-0"
 			>
@@ -28,6 +29,6 @@ export default function Card({
 					{description}
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 }
