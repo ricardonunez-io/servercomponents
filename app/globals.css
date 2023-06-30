@@ -211,6 +211,7 @@ blockquote > h1, blockquote > h2, blockquote > h3, blockquote > h4 {
     margin-bottom: 0;
     padding-top: 0;
     padding-bottom: 0;
+    font-weight: 500;
 }
 
 blockquote {
