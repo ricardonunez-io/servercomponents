@@ -10,7 +10,7 @@ As a non-expert myself in the React space, I wanted something that would both al
 
 This site is built from scratch using React Server Components in [Next.js 13](https://nextjs.org/docs/app).
 
-I didn't want to use any existing React component libraries (probably a mistake because [@shadcn's](https://twitter.com/shadcn)'s [UI library](htts://ui.shadcn.com)) is so good, so I built my own components from scratch using [Tailwind CSS](https://tailwindcss.com/) and vanilla CSS.
+I didn't want to use any existing React component libraries (probably a mistake because [@shadcn's](https://twitter.com/shadcn)'s [UI library](htts://ui.shadcn.com) is so good), so I built my own components from scratch using [Tailwind CSS](https://tailwindcss.com/) and vanilla CSS.
 
 There are custom components for code blocks (styled for both dark and light modes automatically using [`rehype-pretty-code`](https://rehype-pretty-code.netlify.app)), the `a` tag for automatically opening external links in a new tab, and custom SVG and HTML animations using [`framer-motion`](https://framer.com/motion).
 
