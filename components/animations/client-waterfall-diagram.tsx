@@ -1,6 +1,6 @@
 export default function ClientWaterfallDiagram() {
 	return (
-		<div className="max-w-fit mx-auto text-center space-y-4 py-8 text-gray-500 dark:text-gray-400 text-lg md:text-xl">
+		<div className="max-w-fit mx-auto text-center space-y-4 text-gray-500 dark:text-gray-400 text-lg md:text-xl">
 			<div className="hover:text-gray-700 dark:hover:text-gray-300">
 				Client makes <code>fetch()</code> request for profile
 			</div>
