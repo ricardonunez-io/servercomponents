@@ -7,10 +7,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const options = {
-	theme: {
-		dark: "github-dark",
-		light: "github-light"
-	},
+	theme: 'css-variables',
 	onVisitLine(node) {
 		if (node.children.length === 0) {
 		  node.children = [{type: 'text', value: ' '}];

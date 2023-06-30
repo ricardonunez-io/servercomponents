@@ -81,7 +81,7 @@ export default function CopyToClipboard({
 			className="rounded-lg h-10 w-10 min-w-12 grid place-items-center
 			text-gray-600 dark:text-gray-400
 			border-[1.5px] border-gray-300 dark:border-gray-700
-			hover:bg-gray-200 dark:hover:bg-gray-800
+			hover:bg-gray-100 dark:hover:bg-gray-800
 			hover:border-gray-400 dark:hover:border-gray-500 group-hover:opacity-100 opacity-0 transition-all
 			active:scale-90"
 		>
