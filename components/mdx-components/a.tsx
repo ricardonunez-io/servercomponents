@@ -1,6 +1,6 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-export default function A({ children, href }: { children: React.ReactNode; href: string }) {
+export default function A({ children, href }: { children: ReactNode; href: string }) {
 	if (href.startsWith("https")) {
 		return (
 			<a href={href} target="_blank" rel="noopener noreferrer">

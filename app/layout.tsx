@@ -1,6 +1,6 @@
 import "./globals.css";
 import Footer from "@/components/footer";
-import Head from "next/head";
+import type { ReactNode } from "react";
 
 export const metadata = {
 	icons: "./favicon.ico",
@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({
 	children,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 }) {
 	return (
 		<html lang="en">
