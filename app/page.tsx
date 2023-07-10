@@ -69,12 +69,12 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-x-4 md:gap-y-4">
+				<div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-x-8 md:gap-y-8">
 					<Link id="home-page" href="/credits" className="md:col-span-2 lg:col-span-1 xl:col-span-2 no-underline">
 						<div
-							className="flex flex-col rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pt-6 pb-2 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all mb-4 md:mb-0 xl:my-0"
+							className="flex flex-col rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pt-6 pb-2 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all mb-8 md:mb-0 xl:my-0"
 						>
-							<div className="font-bold text-xl md:text-2xl px-6 lg:px-8">
+							<div className="font-bold text-xl md:text-2xl text-sky-500 dark:text-sky-400 px-6 lg:px-8">
 								Credits
 							</div>
 							<div className="px-6 lg:px-8 text-gray-500 dark:text-gray-400 text-lg md:text-xl">

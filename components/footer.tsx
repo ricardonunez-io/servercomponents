@@ -14,15 +14,6 @@ export default function Footer() {
 					Ricardo Nunez
 				</a>
 			</div>
-			<a id="vercel-link"
-			   target="_blank"
-			   rel="noopener noreferrer"
-			   href="https://vercel.com"
-			   className="no-underline text-inherit hover:opacity-80 grid grid-cols-2 place-items-center gap-x-0 sm:gap-x-0.5 md:gap-x-1 transition-all"
-			>
-				<div>Deployed on</div>
-				<VercelLogo width={100}/>
-			</a>
 		</footer>
 	)
 }
