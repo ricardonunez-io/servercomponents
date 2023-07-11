@@ -2,7 +2,6 @@ import Card from "../components/card";
 import RSCHero from "../public/rsc-hero.png";
 import LibrariesVsRSC from "../public/libraries-vs-rsc.png";
 import ImportCost from "../public/import-cost.png";
-import NetworkWaterfall from "../public/network-waterfall.png";
 import Browser from "../components/animations/browser";
 import ReactLogo from "@/components/logos/react-logo";
 import GithubLink from "@/components/github-link";

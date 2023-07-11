@@ -49,7 +49,9 @@ export default async function Image() {
 						fill="currentColor"/>
 				</svg>
 				<div tw="text-7xl" style={{ fontFamily: "BoldSoleil" }}>ServerComponents.dev</div>
-				<div tw="text-white text-5xl max-w-3xl text-center leading-9 mt-5" style={{ fontFamily: "Soleil" }}>What are RSCs, what do they bring to the table, and why are they exciting (or frightening)?</div>
+				<div tw="text-white text-5xl max-w-3xl text-center leading-9 mt-5" style={{ fontFamily: "Soleil" }}>What are RSCs, what do they bring to the table, and why are they exciting (or
+					frightening)?
+				</div>
 			</div>
 		),
 		{
