@@ -13,7 +13,7 @@ const boldFont = fetch(new URL("https://use.typekit.net/af/a9ccd8/00000000000000
 export const alt = "ServerComponents.dev | What are RSCs"
 export const size = {
 	width: 1200,
-	height: 630,
+	height: 600,
 }
 export const contentType = 'image/png';
 
