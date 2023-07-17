@@ -6,7 +6,7 @@ export const metadata = {
 	icons: "./favicon.ico",
 	twitter: {
 		card: 'summary_large_image',
-		title: "ServerComponents.dev | What are RSCs"
+		title: "ServerComponents.dev | What are RSCs",
 	},
 	openGraph: {
 		title: "ServerComponents.dev | What are RSCs"
