@@ -1,4 +1,5 @@
 import IncrementalAdoption from "./incremental-adoption.mdx";
+import PageMap from "./pagemap.mdx"
 
 export const runtime = "edge";
 export const metadata = {
@@ -14,6 +15,7 @@ export default function RSCsPage() {
 				<IncrementalAdoption/>
 			</div>
 			<div className="hidden xl:grid xl:col-span-1 h-fit sticky top-32 w-full">
+				<PageMap />
 			</div>
 		</div>
 	);

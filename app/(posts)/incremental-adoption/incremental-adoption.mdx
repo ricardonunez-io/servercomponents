@@ -1,1 +1,51 @@
-Work in progress
+import BlogFooter from "@/components/blog-footer"
+
+# Incremental Adoption of Server Components
+
+You might've heard that React Server Components are able to be incrementally adopted, but also heard something that sounds conflicting like, "You must upgrade to Next.js 13 and move your app to the *app router* to take advantage."
+
+While this might sound like conflicting advice, it's actually a lot more intuitive than it initially seems to leverage RSCs in your application, and it all starts at the root of your app.
+
+Most people's first thought might be to instead move the leaves of their application (the components furthest from the root) to RSCs, as those are typically the components that rely on data/data fetching, and that's where Server Components shine, right?
+
+Not exactly. The main reason why RSCs must be adopted from the root of your application inwards is because, if you recall from the [previous post](/the-problems-rscs-solve), "RSCs don't necessarily rely on a "server" in terms of their mental model, but are more so a specification for the component running ahead of time."
+
+This means that in order for server components to acheive their goal of running the component tree ahead of time, it must know which components *should* run ahead of time. How can they do this? By starting at the root of your application.
+
+Now, having the root of your app be a server component might also pose another challenge: what do we do with contexts? [React Context](https://react.dev/reference/react#context-hooks) is an incredible helpful and versatile way to get data from/to different components without passing them as props. Think of it like a very primitive, very basic form of global state management.
+
+However, because it relies on some form of state, server components can't access it, as they're run ahead of time on the server before being serialized and sent over to the client. 
+
+How do we fix this issue? Simply moving your context further down the component tree, closer to the leaves of your tree rather than at the root. This also has the benefit of making the app a bit more performant, as having less Javascript objects that have to be created/destroyed constantly by the garbage collector/application throughout your entire application creates often unknown performance bottlenecks.
+
+## Adopting Server Components
+
+Now that we know why we need to start at the root, we can look into what that looks like. Suppose we have our root component that's a very simply wrapper around our app with nothing but a div that holds the children. No context providers, state stores, etc. 
+
+```jsx
+export default function App(React.children) {
+	return (
+		<html lang="en">
+			<body className="body-styles">
+				{children}
+			</body>
+		</html>
+	)
+}
+```
+
+Because this component has no context, state stores, etc., all we'd have to do is change the move the file (and the rest of the app) from `pages/App.jsx` (in Next.js's Pages router) to `app/layout.jsx` (in Next.js's App router). 
+
+> Keep in mind, because Next.js is currently React's recommended framework to use React Server Components, we're going with Next.js for the sake of this example, but other frameworks exist like [Daishi Kato's](https://twitter.com/dai_shi) [Waku](https://github.com/dai-shi/waku).
+
+Now, for the part of the migration that means "incremental". You might've heard that (for the most part), there are no breaking changes when migrating to RSCs. The reason why is, like we went over in the [first post](/what-are-react-server-components), React components from pre-RSCs still exist. `useState{:js}`, `useEffect{:js}`, etc. still exist, and they're still widely used and have their use cases.
+
+How, then, are we able to leverage them? Well, all we'd have to do is add a `"use client"` to the top of the file. Any `.jsx`, `.js`, `.tsx`, or `.ts` files that are placed in the `app/` directory are server components by default, so adding a `"use client"` to the top of the file tells the server components "compiler" that the file should not be executed and serialized ahead of time.
+
+This means that, effectively, you can have an app that is composed of a root server component and only client components thereafter. This doesn't make the app necessarily take advantage of the new features, but it is a compelling reason to start the migration right away, since you'll be able to pick it up at any time.
+
+From there, you can simply move any apps that rely on data fetching to server components that are connected to the root or connected to other server components, meaning you can't import a server component into a client component, since it won't be able to serialize ahead of time, but you *can* import server components to other server components, import them and place them at the root, and import client components into server components.
+
+There are plenty of tutorials for working with server components online, and I'd recommend [Josh Tried Coding's tutorial](https://www.youtube.com/watch?v=Sbl04kOL1dM&pp=ygUYam9zaCB0cmllZCBjb2RpbmcgbmV4dGpz) and [Fireship's intro video](https://www.youtube.com/watch?v=__mSgDEOyv8&pp=ygUJbmV4dGpzIDEz).
+
+<BlogFooter previousPost="The Problems React Server Components Solve" previousHref="/the-problems-rscs-solve" nextPost="Home Page" nextHref="/"  />
