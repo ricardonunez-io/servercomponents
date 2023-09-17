@@ -25,9 +25,9 @@ export default function Card({
 				<div className="font-bold text-xl md:text-2xl text-sky-500 dark:text-sky-400 px-6 lg:px-8">
 					{title}
 				</div>
-				<div className="line-clamp-4 px-6 lg:px-8 text-gray-500 dark:text-gray-400 text-lg md:text-xl">
+				<p className="line-clamp-4 px-6 lg:px-8 text-gray-500 dark:text-gray-400 my-2">
 					{description}
-				</div>
+				</p>
 			</div>
 		</Link>
 	);

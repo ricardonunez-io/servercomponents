@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<head>
 			<meta name="twitter:text:title" content="ServerComponents.dev | What are RSCs"/>
 		</head>
-		<body className="dark:bg-stone-950 dark:text-gray-300 dark:bg-dark-hero-pattern bg-gray-50 text-gray-700 bg-hero-pattern text-base font-medium md:text-lg overflow-x-hidden">
+		<body className="dark:bg-stone-900 dark:text-gray-300 bg-gray-50 text-gray-700 text-base font-medium md:text-lg overflow-x-hidden">
 		<div className="relative">
 			{children}
 		</div>

@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 function Header({ children }: { children: ReactNode }) {
 	return(
-		<div className="sticky top-0 py-2 px-8 bg-gray-50 dark:bg-stone-950 border-b-2 border-gray-200 dark:border-gray-800 z-[100] flex justify-between items-center">
+		<div className="sticky top-0 py-2 px-8 bg-gray-50 dark:bg-stone-900 border-b-2 border-gray-200 dark:border-gray-800 z-[100] flex justify-between items-center">
 			{children}
 		</div>
 	)

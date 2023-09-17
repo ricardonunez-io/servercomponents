@@ -65,7 +65,7 @@
 }
 
 .react-tweet-theme {
-    font-style: normal
+    font-style: normal;
 }
 
 blockquote > h3, blockquote > h4 {
@@ -74,7 +74,7 @@ blockquote > h3, blockquote > h4 {
 
 /* Markdown styling */
 h1 {
-    color: theme("colors.sky.500");
+    color: theme("colors.sky.600");
     padding-bottom: 1rem;
     font-size: 2.25rem;
     line-height: 2.5rem;
@@ -137,13 +137,13 @@ blockquote {
 }
 @media (prefers-color-scheme: dark) {
     p, text {
-        color: theme('colors.gray.400');
+        color: theme('colors.gray.300');
     }
     h1 {
         color: theme("colors.sky.400");
     }
     h2, h3, h4 {
-        color: theme('colors.gray.100');
+        color: theme('colors.gray.50');
     }
 }
 @media (min-width: 640px) {
@@ -189,7 +189,7 @@ h1::before, h2::before, h3::before {
     text-decoration-line: none;
 }
 a {
-    color: theme('colors.sky.500');
+    color: theme('colors.sky.600');
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }
@@ -204,6 +204,9 @@ a:hover {
     .tweet-body_root__f5XIs {
         color: white;
         margin: 0;
+    }
+    a {
+        color: theme('colors.sky.400')
     }
 }
 blockquote > h1, blockquote > h2, blockquote > h3, blockquote > h4 {
@@ -220,12 +223,17 @@ blockquote {
 }
 
 /* Fonts */
-h1, h2, h3, div, p, text, li, ol, ul {
-    font-family: Soleil, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+h1, h2, h3 {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.5px;
 }
 
+p, text, li, ol, ul {
+    font-family: Cambria, ui-serif, Georgia, "Times New Roman", Times, serif;
+} 
+
 code, pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-family: Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /* Hiding scrollbar  */
@@ -289,53 +297,4 @@ pre, code {
         --shiki-token-punctuation: #ededed;
         --shiki-token-link: #62c073
     }
-}
-
-/* Font imports for Soleil */
-@font-face {
-    font-family: "Soleil";
-    src: url("https://use.typekit.net/af/59b013/00000000000000007735a1aa/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"), url("https://use.typekit.net/af/59b013/00000000000000007735a1aa/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"), url("https://use.typekit.net/af/59b013/00000000000000007735a1aa/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
-    font-display: swap;
-    font-style: normal;
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "Soleil";
-    src: url("https://use.typekit.net/af/5d2da8/00000000000000007735a1ac/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/5d2da8/00000000000000007735a1ac/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/5d2da8/00000000000000007735a1ac/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-    font-display: swap;
-    font-style: normal;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: "soleil";
-    src: url("https://use.typekit.net/af/a9ccd8/00000000000000007735a1b7/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("woff2"), url("https://use.typekit.net/af/a9ccd8/00000000000000007735a1b7/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("woff"), url("https://use.typekit.net/af/a9ccd8/00000000000000007735a1b7/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("opentype");
-    font-display: swap;
-    font-style: normal;
-    font-weight: 800;
-}
-
-@font-face {
-    font-family: "Soleil";
-    src: url("https://use.typekit.net/af/84e430/00000000000000007735a1c0/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3") format("woff2"), url("https://use.typekit.net/af/84e430/00000000000000007735a1c0/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3") format("woff"), url("https://use.typekit.net/af/84e430/00000000000000007735a1c0/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3") format("opentype");
-    font-display: swap;
-    font-style: italic;
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "Soleil";
-    src: url("https://use.typekit.net/af/19bbb3/00000000000000007735a1be/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"), url("https://use.typekit.net/af/19bbb3/00000000000000007735a1be/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"), url("https://use.typekit.net/af/19bbb3/00000000000000007735a1be/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
-    font-display: swap;
-    font-style: italic;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: "soleil";
-    src: url("https://use.typekit.net/af/4b2283/00000000000000007735a1c1/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i8&v=3") format("woff2"), url("https://use.typekit.net/af/4b2283/00000000000000007735a1c1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i8&v=3") format("woff"), url("https://use.typekit.net/af/4b2283/00000000000000007735a1c1/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i8&v=3") format("opentype");
-    font-display: swap;
-    font-style: italic;
-    font-weight: 800;
 }
