@@ -233,7 +233,7 @@ p, text, li, ol, ul {
 } 
 
 code, pre {
-    font-family: Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-family: Monaco, Consolas, ui-monospace, SFMono-Regular, Menlo, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /* Hiding scrollbar  */
