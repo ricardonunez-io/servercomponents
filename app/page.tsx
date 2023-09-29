@@ -46,7 +46,7 @@ export default function Home() {
 							href="/"
 							className="flex items-center max-w-max gap-y-4 gap-x-4 group hover:opacity-80 transition-opacity no-underline"
 						>
-							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12 pb-4 text-sky-500 dark:text-sky-400" />
+							<ReactLogo className="w-9 sm:w-10 md:w-11 lg:w-12 pb-4 text-sky-600 dark:text-sky-400" />
 							<h1 className="hidden md:flex -mt-1">
 								Server Components
 							</h1>
@@ -61,7 +61,7 @@ export default function Home() {
 							understand and implement. From a non-expert.
 						</p>
 						<div className="max-w-max">
-							<GithubLink/>
+							<GithubLink />
 						</div>
 						<div className="grid mt-12">
 							<Browser />
@@ -73,7 +73,7 @@ export default function Home() {
 						<div
 							className="flex flex-col rounded-xl hover:cursor-pointer border-2 border-gray-200 dark:border-gray-600 pt-6 pb-2 hover:bg-sky-200/50 hover:border-sky-200 dark:hover:bg-sky-800/50 dark:hover:border-sky-800 transition-all mb-8 md:mb-0 xl:my-0"
 						>
-							<div className="font-bold text-xl md:text-2xl text-sky-500 dark:text-sky-400 px-6 lg:px-8">
+							<div className="font-bold text-xl md:text-2xl text-sky-600 dark:text-sky-400 px-6 lg:px-8">
 								Credits
 							</div>
 							<div className="px-6 lg:px-8 text-gray-500 dark:text-gray-400 text-lg md:text-xl">

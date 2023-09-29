@@ -7,9 +7,9 @@ export default function Footer() {
 			<div>
 				Made by {" "}
 				<a href="https://twitter.com/ricardonunez_io"
-				   className="hover:underline text-sky-500 dark:text-sky-400"
-				   target="_blank"
-				   rel="noopener noreferrer"
+					className="hover:underline text-sky-600 dark:text-sky-400"
+					target="_blank"
+					rel="noopener noreferrer"
 				>
 					Ricardo Nunez
 				</a>
