@@ -23,7 +23,7 @@ We went into it a bit in the [last post](/what-are-react-server-components), but
 
 One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like [<AngularLogo width={25} /> Angular](https://angular.io), and that is unidirectional (one way) data flows.
 
-This unidirectional data flow means that data is passed only way in your application (down your component tree), so if there's an update in data, React will perform reconciliation across your entire tree and re-render all the components that've had their props/data changed as well as their children.
+This unidirectional data flow means that data is passed only one way in your application (down your component tree), so if there's an update in data, React will perform reconciliation across your entire tree and re-render all the components that've had their props/data changed as well as their children.
 
 With RSCs, we're now adding the server to the one-way data flow, meaning that changes that happen on the server-side (i.e. new data is available in the database), we can perform the same process of reconciliation against the entire component tree, and if there are any server components with updated data, they can update the client's HTML without any additional work to sync state.
 
