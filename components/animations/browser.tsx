@@ -1,3 +1,4 @@
+// million-ignore
 "use client";
 
 import MenuIcon from "../menu-icon";
