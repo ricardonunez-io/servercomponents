@@ -23,7 +23,7 @@ How do we fix this issue? Simply moving your context further down the component 
 Now that we know why we need to start at the root, we can look into what that looks like. Suppose we have our root component that's a very simply wrapper around our app with nothing but a div that holds the children. No context providers, state stores, etc. 
 
 ```jsx
-export default function App(React.children) {
+export default function App(children: React.children) {
 	return (
 		<html lang="en">
 			<body className="body-styles">

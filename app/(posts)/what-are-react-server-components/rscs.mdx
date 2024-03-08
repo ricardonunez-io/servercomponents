@@ -140,7 +140,7 @@ Because they can't have state and can't access browser APIs, state can't be deri
 
 If you're familiar with traditional server-side frameworks like <RailsIcon width={34}/> Rails or those in <PHPLogo width={40} /> PHP, this might seem like a familiar concept, and you might be wondering why server components are addressing a solved problem.
 
-However, the key difference here is that data changes don't trigger a reload of the entire page, and this is one of they key improvements over `getServerSideProps` and Remix `loaders`.
+However, the key difference here is that data changes don't trigger a reload of the entire page, and this is one of the key improvements over `getServerSideProps` and Remix `loaders`.
 
 Instead of calling your entire route (i.e. your entire page re-fetching `getServerSideProps` or `/your-example-path/index.php` path being hit again) to fetch and replace stale data, React Server Components' architecture allows your application to re-execute your component tree and perform its [reconciliation](https://legacy.reactjs.org/docs/reconciliation.html) process to update only the components and DOM nodes that have changed after a mutation for example, or after new data is available.
 
