@@ -292,7 +292,7 @@ text,
 li,
 ol,
 ul {
-    font-family: Cambria, ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 code,
