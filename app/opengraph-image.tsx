@@ -1,4 +1,4 @@
-import { ImageResponse } from 'next/og';
+import { ImageResponse } from '@vercel/og';
 
 export const runtime = 'edge';
 
@@ -10,11 +10,11 @@ const boldFont = fetch(new URL("https://use.typekit.net/af/a9ccd8/00000000000000
 	(res) => res.arrayBuffer(),
 );
 
-export const alt = "ServerComponents.dev | What are RSCs"
+export const alt = "ServerComponents.dev | What are RSCs";
 export const size = {
 	width: 1200,
 	height: 600,
-}
+};
 export const contentType = 'image/png';
 
 export default async function Image() {

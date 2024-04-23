@@ -8,6 +8,10 @@ module.exports = {
 		"./public/**/*.{js,ts,jsx,tsx,svg}",
 	],
 	theme: {
+		fontFamily: {
+			sans: ["var(--font-inter)", { fontFeatureSettings: '"cv01", "cv03", "cv04", "cv05", "cv06"' }],
+			mono: ["var(--font-jetbrains_mono)"],
+		},
 		extend: {
 			screens: {
 				xs: "400px",

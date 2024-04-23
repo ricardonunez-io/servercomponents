@@ -46,10 +46,12 @@ export default function Browser() {
 						animate={{ opacity: 1 }}
 						transition={{ delay: 4, duration: 2 }}
 					>
-						<code className="text-sky-500 dark:text-sky-400">
-							Server
-						</code>
-						<code className="text-pink-500">Client</code>
+						<pre>
+							<code className="text-sky-500 dark:text-sky-400">Server</code>
+						</pre>
+						<pre>
+							<code className="text-pink-500">Client</code>
+						</pre>
 					</m.div>
 				</div>
 				<div className="mt-2 -mx-3 bg-none h-fit rounded-t-sm rounded-b-[10px] p-4 px-8 overflow-hidden">

@@ -46,7 +46,7 @@ function PlayButton() {
 	);
 }
 
-export default function WaterfallExampleAnimation({ caption }: { caption: string }) {
+export default function WaterfallExampleAnimation({ caption }: { caption: string; }) {
 	const [reqScope, reqAnimate] = useAnimate();
 	const [query1Scope, query1Animate] = useAnimate();
 	const [query2Scope, query2Animate] = useAnimate();
@@ -112,7 +112,7 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 		await resAnimate(
 			resScope.current,
 			{ translateY: "-50%" }
-		)
+		);
 		await resAnimate(
 			resScope.current,
 			{ opacity: 1 },
@@ -122,7 +122,7 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 			resScope.current,
 			{ translateX: "110%" },
 			{ duration: 3 }
-		)
+		);
 	}
 
 	async function resetAnimation() {
@@ -193,7 +193,7 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 			<div className="grid grid-cols-8 md:grid-cols-11 gap-x-2">
 				<div className="flex flex-col justify-center col-span-3 md:col-span-4">
 					<div className="dark:bg-stone-950 bg-gray-50 border-2 border-yellow-400 dark:border-yellow-600 h-full w-full rounded-xl grid place-items-center relative z-40">
-						<svg width="90%" height="80%" className="text-gray-500 dark:text-gray-400 relative" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="90%" height="80%" className="text-gray-500 dark:text-gray-300 relative" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fillRule="evenodd" clipRule="evenodd"
 								d="M5.59091 0.939489C5.59107 0.939507 5.59024 0.941132 5.58795 0.94431C5.58961 0.94106 5.59075 0.939471 5.59091 0.939489ZM5.49057 1.03226C5.38828 0.958083 5.22749 0.875656 5.00358 0.798612C4.50875 0.628347 3.80024 0.516129 3 0.516129C2.19976 0.516129 1.49125 0.628347 0.996417 0.798612C0.772506 0.875657 0.611722 0.958081 0.509428 1.03226C0.611722 1.10643 0.772506 1.18886 0.996417 1.2659C1.49125 1.43617 2.19976 1.54839 3 1.54839C3.80024 1.54839 4.50875 1.43617 5.00358 1.2659C5.22749 1.18886 5.38828 1.10644 5.49057 1.03226ZM0.40909 0.939489C0.409245 0.939471 0.410387 0.94106 0.412046 0.94431C0.409763 0.941132 0.408934 0.939507 0.40909 0.939489ZM0.40909 1.12503C0.408934 1.12501 0.409763 1.12338 0.412046 1.12021C0.410387 1.12346 0.409245 1.12505 0.40909 1.12503ZM5.58795 1.12021C5.59024 1.12338 5.59107 1.12501 5.59091 1.12503C5.59075 1.12505 5.58961 1.12346 5.58795 1.12021ZM3 2.06452C4.65685 2.06452 6 1.60236 6 1.03226C6 0.462158 4.65685 0 3 0C1.34315 0 0 0.462158 0 1.03226C0 1.60236 1.34315 2.06452 3 2.06452Z"
 								fill="currentColor" />
@@ -266,7 +266,7 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 						</svg>
 					</div>
 				</div>
-				<div className="flex flex-col justify-center col-span-2 md:col-span-3 text-gray-500 dark:text-gray-400 relative z-0">
+				<div className="flex flex-col justify-center col-span-2 md:col-span-3 text-gray-500 dark:text-gray-300 relative z-0">
 					<svg className="relative" width="100%" height="100%" viewBox="0 0 30 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M0.823223 1.82322C0.725592 1.92085 0.725592 2.07915 0.823223 2.17678L2.41421 3.76777C2.51184 3.8654 2.67014 3.8654 2.76777 3.76777C2.8654 3.67014 2.8654 3.51184 2.76777 3.41421L1.35355 2L2.76777 0.585786C2.8654 0.488155 2.8654 0.329864 2.76777 0.232233C2.67014 0.134602 2.51184 0.134602 2.41421 0.232233L0.823223 1.82322ZM29.1768 10.1768C29.2744 10.0791 29.2744 9.92085 29.1768 9.82322L27.5858 8.23223C27.4882 8.1346 27.3299 8.1346 27.2322 8.23223C27.1346 8.32986 27.1346 8.48816 27.2322 8.58579L28.6464 10L27.2322 11.4142C27.1346 11.5118 27.1346 11.6701 27.2322 11.7678C27.3299 11.8654 27.4882 11.8654 27.5858 11.7678L29.1768 10.1768ZM29 1.75H1V2.25H29V1.75ZM1 10.25H29V9.75H1V10.25Z"
@@ -314,5 +314,5 @@ export default function WaterfallExampleAnimation({ caption }: { caption: string
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
