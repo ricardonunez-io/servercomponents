@@ -267,7 +267,7 @@ code {
 }
 
 code:not(pre > code) {
-    @apply bg-slate-500/25 rounded-md px-2 inline-block;
+    @apply bg-slate-400/25 dark:bg-slate-500/25 rounded-md px-2 inline-block;
 }
 
 /* Code-block styling for highlighted classes + dark/light themes */
