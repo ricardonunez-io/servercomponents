@@ -68,7 +68,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-8 *:max-h-[25rem]">
+        <div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-8">
           {topics.map((topic) => (
             <Card
               key={topic.title}
