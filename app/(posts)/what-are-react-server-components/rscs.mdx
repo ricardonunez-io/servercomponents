@@ -13,17 +13,17 @@ import DiffExample from "@/components/animations/diff-example";
 
 # What Are React Server Components (RSCs) and How Are They Different?
 
-React server components are React components that run *only* on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
+React server components are React components that run _only_ on the server, a different paradigm from the mental model we've grown accustomed to where React simply runs on the client (in the browser).
 
 With this new paradigm, the main difference comes from the output of the component and where the component runs, not necessarily the way you build (at least not so much).
 
 There's still a shift in the way you think about building React apps, but it's not as drastic as you might think, and the goal of this website is to explain what changed, why things changed, and how to think about building React apps with this new paradigm.
 
-This site *is* completely open sourced, so if you're interested in adding anything, changing anything, correcting any mistakes, or just want to see how it works, you can check out the [repo on GitHub](https://github.com/ricardonunez-io/servercomponents).
+This site _is_ completely open sourced, so if you're interested in adding anything, changing anything, correcting any mistakes, or just want to see how it works, you can check out the [repo on GitHub](https://github.com/ricardonunez-io/servercomponents).
 
 ## Server Side Rendering
 
-Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [<NextJSLogo width={28} /> Next.js](https://nextjs.org) or [<RemixLogo width={20} /> Remix](https://remix.run)), which is when you pre-render your React components on the *server*, and then *hydrate it* on the client.
+Running React components on the server might seem familiar if you've heard of "server-side rendering" or SSR (a la [<NextJSLogo width={21} /> Next.js](https://nextjs.org) or [<RemixLogo width={15} /> Remix](https://remix.run)), which is when you pre-render your React components on the _server_, and then _hydrate it_ on the client.
 
 What pre-rendering means is that we're essentially rendering your React component tree (pre-animations, pre-hooks, etc.) as HTML and sending it to the browser, using React's `renderToString(){:js}` method.
 
@@ -32,7 +32,7 @@ What pre-rendering means is that we're essentially rendering your React componen
 You can think of that HTML string as a screenshot of the very first frame you see when a page loads before any animations, state changes, effects, etc. happen. For example:
 
 ```js
-`<html><head><title>My App</></head><body><div id="root"><div class="App"><h1>Hello World!</></div></div></body></html>`
+`<html><head><title>My App</></head><body><div id="root"><div class="App"><h1>Hello World!</></div></div></body></html>`;
 ```
 
 Here's the same thing, but formatted for readability:
@@ -49,25 +49,25 @@ Here's the same thing, but formatted for readability:
       </div>
     </div>
   </body>
-</html>`
+</html>`;
 ```
 
-This string of HTML is then sent to the browser to render, and then *hydrated* by React once the browser loads React and all the necessary Javascript.
+This string of HTML is then sent to the browser to render, and then _hydrated_ by React once the browser loads React and all the necessary Javascript.
 
-Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as *running* a React component on the server, because there's still the step of hydration.
+Now, while frameworks like Next and Remix are widely known for their capabilities in server rendering your React app, it's not quite the same as _running_ a React component on the server, because there's still the step of hydration.
 
 ### Hydration
 
-"Hydration" essentially means re-rendering all of that HTML, *plus* the necessary JS in the user's *browser* so that the page can become interactive.
+"Hydration" essentially means re-rendering all of that HTML, _plus_ the necessary JS in the user's _browser_ so that the page can become interactive.
 
 So even though SSR means that your user sees your content on their screen, it doesn't mean they can use the page yet.
 
 React still has to do a lot of work in terms of binding your React components from the virtual DOM to the actual DOM, setting up event listeners/handlers, etc.
 
 <HydrationAnimation
-	caption={"↑ React needs to bind these things to your application behind the scenes before anything on the page can be interacted with (i.e. before you can navigate, click a button, etc.), even if the HTML is visible on the page."}/>
+caption={"React needs to bind these things to your application behind the scenes before anything on the page can be interacted with (i.e. before you can navigate, click a button, etc.), even if the HTML is visible on the page."}/>
 
-Even if you have a completely static page with no hooks, state, effects, click handlers, etc., React would *still* need to hydrate the page.
+Even if you have a completely static page with no hooks, state, effects, click handlers, etc., React would _still_ need to hydrate the page.
 
 So the challenge SSR solved wasn't necessarily running React on servers to get rid of hydration, but rather giving the user content to look at while React loads up all the components.
 
@@ -83,7 +83,7 @@ For example, if we wanted to render a component in JSX that only contained a div
 
 ```jsx
 export default function HelloWorld() {
-  return <div>Hello World</div>
+  return <div>Hello World</div>;
 }
 ```
 
@@ -112,21 +112,21 @@ The difference, then, between React Server Components and SSR is that the proces
 
 3. Creating React elements (which, again, are just JSON representations of the DOM and your component tree) from that JSX in the browser with `React.createElement(){:js}` calls
 
-4. Rendering those elements to the DOM to finish *hydrating* the HTML on the client
+4. Rendering those elements to the DOM to finish _hydrating_ the HTML on the client
 
 Instead, with server components, what you're sending to the browser are just React components that have already been rendered as React elements by the server.
 
 That is to say the browser is getting the serialized JSON output from your JSX directly from the server, instead of having to transpile the JSX itself client-side.
 
-> That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), had a great Tweet to explain this mental model as simply as possible:
+> That's certainly a lot to keep track of, but Ryan Florence, one of the creators of [<ReactRouterLogo width={20}/> React Router](https://reactrouter.com) and [<RemixLogo width={15} /> Remix](https://remix.run), had a great Tweet to explain this mental model as simply as possible:
 >
 > <Tweet id="1661717887319670784"/>
 >
-> Also, Dan Abramov's (from the React core team at <MetaLogo width={30}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
+> Also, Dan Abramov's (from the React core team at <MetaLogo width={20}/> Meta) discussion on GitHub, ["RSC from Scratch. Pt. 1: Server Components"](https://github.com/reactwg/server-components/discussions/5), goes a lot more in depth on what it'd look like to recreate server components from the ground up, and I'd highly recommend reading that if you want to dive deeper into the technical details to clarify your own mental model.
 
 ### Reconciliation in Server Components
 
-It's worth noting that server components *can* be seen as somewhat static once they're loaded, because they can't and won't hydrate.
+It's worth noting that server components _can_ be seen as somewhat static once they're loaded, because they can't and won't hydrate.
 
 This is why if you've seen or played with any applications that use [Next.js 13's app directory](https://nextjs.org/docs/app), you might've seen the error message pop up that a server component can't support hooks that require a browser, i.e. `useState(){:js}` or `useEffect(){:js}`.
 
@@ -138,7 +138,7 @@ The reason why is that server components:
 
 Because they can't have state and can't access browser APIs, state can't be derived in server components, and effects do not work, because the components are shipped as elements already that can't be hydrated, and don't know when they are mounted to the DOM, updated, etc.
 
-If you're familiar with traditional server-side frameworks like <RailsIcon width={34}/> Rails or those in <PHPLogo width={40} /> PHP, this might seem like a familiar concept, and you might be wondering why server components are addressing a solved problem.
+If you're familiar with traditional server-side frameworks like <RailsIcon width={27}/> Rails or those in <PHPLogo width={30} /> PHP, this might seem like a familiar concept, and you might be wondering why server components are addressing a solved problem.
 
 However, the key difference here is that data changes don't trigger a reload of the entire page, and this is one of the key improvements over `getServerSideProps` and Remix `loaders`.
 
@@ -166,4 +166,4 @@ Well, it's still there, but now, "regular" React components (i.e. React pre-Serv
 
 Only the name changed, though, but they're exactly the same and nothing at all has changed about them in terms of functionality.
 
-<BlogFooter previousPost={"Credits"} previousHref={"/credits"} nextPost={"The Problems React Server Components Solve"} nextHref={"/the-problems-rscs-solve"} />
+<BlogFooter previousPost={"Home Page"} previousHref={"/"} nextPost={"The Problems React Server Components Solve"} nextHref={"/the-problems-rscs-solve"} />

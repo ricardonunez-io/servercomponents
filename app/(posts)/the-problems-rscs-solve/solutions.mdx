@@ -21,7 +21,7 @@ We went into it a bit in the [last post](/what-are-react-server-components), but
 
 ## Data Fetching
 
-One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like [<AngularLogo width={25} /> Angular](https://angular.io), and that is unidirectional (one way) data flows.
+One of the biggest problems that RSCs solve has a lot to do with one of the novel ideas that led to React "winning" in the early framework wars, especially against frameworks like [<AngularLogo width={18} /> Angular](https://angular.io), and that is unidirectional (one way) data flows.
 
 This unidirectional data flow means that data is passed only one way in your application (down your component tree), so if there's an update in data, React will perform reconciliation across your entire tree and re-render all the components that've had their props/data changed as well as their children.
 
@@ -29,7 +29,7 @@ With RSCs, we're now adding the server to the one-way data flow, meaning that ch
 
 To better understand, though, it might be useful to consider a classical React data-fetching example.
 
-Let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. *(It's a very simple example, but it gets the point across)*
+Let's say you have a root component like the shell of a social media app and inside that shell, you have typical social media things like a feed of posts and a profile button. _(It's a very simple example, but it gets the point across)_
 
 Now, let's say you want to fetch your profile data, your feed data, and your sidebar data. In a typical React app, you would have to do something like this:
 
@@ -44,15 +44,15 @@ export default function Shell() {
 
   useEffect(() => {
     fetch("/api/profile")
-    .then((res) => res.json())
-    .then((data) => setProfile(data));
+      .then((res) => res.json())
+      .then((data) => setProfile(data));
   }, []);
 
   useEffect(() => {
     if (profile) {
       fetch(`/api/feed/${profile.id}`)
-      .then((res) => res.json())
-      .then((data) => setFeed(data));
+        .then((res) => res.json())
+        .then((data) => setFeed(data));
     }
   }, [profile]);
 
@@ -73,13 +73,13 @@ Now, this is fine, but the big problem with this approach and what many develope
 
 Also, worth noting is that we just introduced a larger than necessary waterfall into the application.
 
-That is, we first have to wait for the component to mount to trigger the effects, then we have to wait for the *profile* to be fetched before we can fetch the *feed*, and this back and forth between client and server:
+That is, we first have to wait for the component to mount to trigger the effects, then we have to wait for the _profile_ to be fetched before we can fetch the _feed_, and this back and forth between client and server:
 
 <ClientWaterfallDiagram/>
 
 means that the further away a client is from the server, the longer they're looking at a loading spinner because requests are bouncing back and forth between your user's browser, your server, and whatever your service (API, database access layer, etc.) is hosted on.
 
-[<RemixLogo width={20} /> Remix's website](https://remix.run) includes a great visualization of what this waterfall might look like in the real world:
+[<RemixLogo width={15} /> Remix's website](https://remix.run) includes a great visualization of what this waterfall might look like in the real world:
 
 <NetworkWaterfallExample />
 
@@ -102,25 +102,25 @@ export default function Shell() {
 
   useEffect(() => {
     fetch("/api/profile")
-    .then((res) => res.json())
-    .then((data) => setProfile(data));
+      .then((res) => res.json())
+      .then((data) => setProfile(data));
   }, []);
 
-  useEffect (() => {
+  useEffect(() => {
     if (profile) {
       Promise.all([
-	    fetch(`/api/feed/${profile.id}`),
+        fetch(`/api/feed/${profile.id}`),
         fetch(`/api/likes/${profile.id}`),
         fetch(`/api/comments/${profile.id}`),
-        fetch(`/api/friends/${profile.id}`)
+        fetch(`/api/friends/${profile.id}`),
       ])
-      .then((res) => Promise.all(res.map((r) => r.json())))
-      .then(([feed, likes, comments, friends]) => {
-	    setFeed(feed);
-        setLikes(likes);
-        setComments(comments);
-        setFriends(friends);
-      });
+        .then((res) => Promise.all(res.map((r) => r.json())))
+        .then(([feed, likes, comments, friends]) => {
+          setFeed(feed);
+          setLikes(likes);
+          setComments(comments);
+          setFriends(friends);
+        });
     }
   }, [profile]);
 
@@ -128,11 +128,7 @@ export default function Shell() {
     <div>
       <Profile profile={profile} />
       <Feed feed={feed} />
-      <Activity
-        likes={likes}
-        comments={comments}
-        friends={friends}
-      />
+      <Activity likes={likes} comments={comments} friends={friends} />
     </div>
   );
 }
@@ -146,7 +142,7 @@ The thing React is pushing towards and what traditional server-side frameworks h
 
 Something like a toggle button that remembers the theme is an example of a good use-case for using state in React and having that be a "client component", or a regular React component pre-RSCs.
 
-It's stateful because the user did something to change the *state* of the UI on their side, so that UI should have its own memory and keep track of that state.
+It's stateful because the user did something to change the _state_ of the UI on their side, so that UI should have its own memory and keep track of that state.
 
 However, in our example above, the data-fetching logic all being kept in effects within the shell component would be considered a good use-case for abstraction away into their own respective server components.
 
@@ -167,7 +163,7 @@ export default function Shell() {
       <Feed />
       <Activity />
     </div>
-  )
+  );
 }
 ```
 
@@ -178,12 +174,12 @@ And each component will look more or less like this at their core:
 export async function Profile() {
   const profileData = await fetch("/api/profile");
   return (
-	<div className="flex">
+    <div className="flex">
       <div>{profileData.image}</div>
       <div>{profileData.name}</div>
       <div>{profileData.username}</div>
-	</div>
-	)
+    </div>
+  );
 }
 ```
 
@@ -195,18 +191,19 @@ export async function Feed() {
   const profileData = await fetch("/api/profile");
   const feedData = await fetch(`/api/feed/${profileData.id}`);
   return (
-	<div className="flex flex-col">
-      {feedData.map(post => (
-		<div>
+    <div className="flex flex-col">
+      {feedData.map((post) => (
+        <div>
           <p>{post.username}</p>
           <h3>{post.title}</h3>
           <p>{post.content}</p>
         </div>
       ))}
-	</div>
-  )
+    </div>
+  );
 }
 ```
+
 ```jsx
 // etc. etc...
 ```
@@ -221,7 +218,7 @@ You might've noticed in those two components with data-fetches, the exported fun
 
 This is a new feature of RSCs, but it might seem a bit strange that it's considered "new". The browser supports async fetch calls, and so does Node, so why can't client components make async fetch calls?
 
-While you technically *can* use `async await{:js}` natively in the browser, there's a very specific reason why that doesn't exist in React "client components".
+While you technically _can_ use `async await{:js}` natively in the browser, there's a very specific reason why that doesn't exist in React "client components".
 
 Before React 18, when trying to use `async await{:js}` in components, the promises were null until resolved, meaning there would've been nothing to show in the UI which leads to a poor user experience.
 
@@ -261,7 +258,7 @@ Great, so we can do data-fetching within components themselves now without using
 
 Well the issue with those solutions is the way they handle requests.
 
-> [Theo (@t3dotgg)](https://twitter.com/t3dotgg) from [<PingLogo width={40} /> Ping.gg](https://ping.gg) has a great [YouTube video](https://youtu.be/d6lKEV_3kxQ?t=759) explaining the difference between the request/response model that you get when using `getServerSideProps` vs. `loaders`.
+> [Theo (@t3dotgg)](https://twitter.com/t3dotgg) from [<PingLogo width={30} /> Ping.gg](https://ping.gg) has a great [YouTube video](https://youtu.be/d6lKEV_3kxQ?t=759) explaining the difference between the request/response model that you get when using `getServerSideProps` vs. `loaders`.
 >
 > The TL;DR is that Remix's request flow of
 >
@@ -279,7 +276,7 @@ What this means practically is that:
 
 1. There isn't a framework-agnostic way to write your business logic in a componentized way in React, as in you can't `import DatabaseQueryComponent from "./business-logic"{:jsx}`.
 
-2. The solutions that do exist in frameworks either have to use route-based logic to get data into your application which can lead to logic duplication, or use nested-routing which *is* a great solution, but still doesn't support "componentizing" your logic.
+2. The solutions that do exist in frameworks either have to use route-based logic to get data into your application which can lead to logic duplication, or use nested-routing which _is_ a great solution, but still doesn't support "componentizing" your logic.
 
 One of the key components (no pun intended) of RSCs is the ability to "componentize" business logic so that it can be composed in different areas of your application without having to copy/paste only certain parts of logic from a specific route.
 
@@ -319,7 +316,7 @@ A great example here from Dan Abramov is having a Markdown parser.
 
 Let's say you have a simple blog that has code snippets similar to this site, where you want to import something like [`"shiki"`](https://shiki.matsu.io) to perform syntax highlighting.
 
-Ignoring solutions like [<MDXLogo width={35} /> MDX](https://mdxjs.com) or [Rehype](https://github.com/rehypejs/rehype) plugins which might typically parse everything at build time on Next.js, you'd typically have to import [`"shiki"`](https://shiki.matsu.io), ship it to the client, and have the client perform the parsing of the code blocks in order to highlight them accordingly before the first load, which could add seconds to load time and upwards of 200kb to the client-side bundle.
+Ignoring solutions like [<MDXLogo width={27} /> MDX](https://mdxjs.com) or [Rehype](https://github.com/rehypejs/rehype) plugins which might typically parse everything at build time on Next.js, you'd typically have to import [`"shiki"`](https://shiki.matsu.io), ship it to the client, and have the client perform the parsing of the code blocks in order to highlight them accordingly before the first load, which could add seconds to load time and upwards of 200kb to the client-side bundle.
 
 Now, we could use something like a Remix `loader` to parse the code blocks for us, but that would have to result in duplicated logic across multiple routes if we have code blocks on more than one page, which, for a simple blog, might not make the most sense from a developer-experience standpoint.
 

@@ -77,89 +77,92 @@
 blockquote>h3,
 blockquote>h4 {
     font-style: normal;
-    line-height: 2.5rem;
+    line-height: 2rem;
 }
 
 /* Markdown styling */
 h1 {
-    color: theme("colors.sky.600");
-    padding-bottom: 1rem;
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-    font-weight: bold;
+    color: theme("colors.neutral.900");
+    padding-bottom: 0.75rem;
+    font-size: 2rem;
+    line-height: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
 h2 {
-    font-size: 1.75rem;
-    line-height: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
 h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: bold;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
 h4 {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.5rem;
-    font-weight: 400;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    font-weight: 500;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
 h1,
 h2,
 h3 {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
 }
 
 h2,
 h3,
 h4 {
-    color: theme("colors.gray.900");
+    color: theme("colors.neutral.900");
 }
 
 p,
 text {
-    color: theme('colors.gray.500');
-    font-size: 1.125rem;
-    line-height: 2rem;
+    color: theme('colors.neutral.600');
+    font-size: 0.9375rem;
+    line-height: 1.625rem;
     font-weight: 400;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 pre,
 code {
-    font-size: 1.125rem;
+    font-size: 0.875rem;
     font-weight: 400;
-    line-height: 2rem;
+    line-height: 1.5rem;
 }
 
 ol {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     list-style-type: decimal;
     list-style-position: outside;
 }
 
 ul {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     list-style-type: disc;
     list-style-position: outside;
 }
 
 blockquote {
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    color: #6B7280;
+    color: theme('colors.neutral.600');
     font-style: italic;
-    border-left-width: 3px;
-    border-color: currentColor;
+    border-left-width: 2px;
+    border-color: theme('colors.neutral.200');
 }
 
 #home-page-link.no-underline,
@@ -170,20 +173,23 @@ blockquote {
 }
 
 @media (prefers-color-scheme: dark) {
-
     p,
     text {
-        color: theme('colors.gray.300');
+        color: theme('colors.neutral.400');
     }
 
     h1 {
-        color: theme("colors.sky.400");
+        color: theme("colors.white");
     }
 
     h2,
     h3,
     h4 {
-        color: theme('colors.gray.50');
+        color: theme('colors.neutral.100');
+    }
+
+    blockquote {
+        border-color: theme('colors.neutral.800');
     }
 }
 
@@ -205,28 +211,34 @@ h3::before {
 }
 
 a {
-    color: theme('colors.sky.600');
+    color: theme('colors.neutral.900');
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
+    font-weight: 500;
 }
 
 a:hover {
-    text-decoration-line: underline;
+    color: theme('colors.neutral.600');
+    text-decoration: none;
 }
 
 .tweet-body_root__f5XIs {
-    color: theme("colors.gray.900");
+    color: theme("colors.neutral.900");
     margin: 0;
 }
 
 @media (prefers-color-scheme: dark) {
     .tweet-body_root__f5XIs {
-        color: white;
+        color: theme('colors.neutral.100');
         margin: 0;
     }
 
     a {
-        color: theme('colors.sky.400')
+        color: theme('colors.neutral.200')
+    }
+
+    a:hover {
+        color: theme('colors.white');
     }
 }
 
@@ -250,7 +262,7 @@ blockquote {
 h1,
 h2,
 h3 {
-    letter-spacing: -0.5px;
+    letter-spacing: -0.025em;
 }
 
 /* Hiding scrollbar */
@@ -267,11 +279,10 @@ code {
 }
 
 code:not(pre > code) {
-    @apply bg-slate-400/25 dark:bg-slate-500/25 rounded-md px-2 inline-block;
+    @apply bg-neutral-100 dark:bg-neutral-800 rounded px-1.5 py-0.5 text-sm;
 }
 
 /* Code-block styling for highlighted classes + dark/light themes */
-
 .highlighted {
     width: 100%;
     display: inline;
@@ -281,7 +292,7 @@ code:not(pre > code) {
 
 @media (prefers-color-scheme: dark) {
     .highlighted {
-        background-color: #0f2f57;
+        background-color: theme('colors.neutral.800');
     }
 }
 

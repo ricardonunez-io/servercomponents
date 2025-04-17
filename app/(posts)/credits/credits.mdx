@@ -8,7 +8,7 @@ import BlogFooter from "@/components/blog-footer";
 
 # Credits
 
-[Dan Abramov's](https://twitter.com/dan_abramov) and [Joe Savona's](https://twitter.com/en_JS) (both on the React core team at <MetaLogo width={30}/> Meta) had two great episodes on the [Javascript Jabber podcast](https://topenddevs.com/podcasts/javascript-jabber) that were incredibly helpful in putting this site's content together.
+[Dan Abramov's](https://twitter.com/dan_abramov) and [Joe Savona's](https://twitter.com/en_JS) (both on the React core team at <MetaLogo width={20}/> Meta) had two great episodes on the [Javascript Jabber podcast](https://topenddevs.com/podcasts/javascript-jabber) that were incredibly helpful in putting this site's content together.
 
 From them, I took lots of examples, explanations, and information to be able to succinctly describe what React Server Components are, why they're an evolution of React, and their benefits.
 
@@ -33,22 +33,22 @@ If you're looking for a less technical overview, [Sam Selikoff](https://twitter.
 		loading="eager"
 		className="my-4"/>
 
-Ryan Florence, one of the core team members and creators of [<ReactRouterLogo width={30}/> React Router](https://reactrouter.com) and [<RemixLogo width={20} /> Remix](https://remix.run), also has a great Twitter thread to explain the mental model of React Server Components as simply as possible:
+Ryan Florence, one of the core team members and creators of [<ReactRouterLogo width={20}/> React Router](https://reactrouter.com) and [<RemixLogo width={15} /> Remix](https://remix.run), also has a great Twitter thread to explain the mental model of React Server Components as simply as possible:
 
 <Tweet id="1661717887319670784"/>
 
-[Kent C. Dodds](https://twitter.com/kentcdodds) (formerly on the <RemixLogo width={20} /> Remix team and now working on [EpicWeb.dev](https://epicweb.dev)) has a great, free intro to React course that teaches a lot about going from explicit `React.createElement(){:js}` calls to JSX and what that looks like under the hood, which is super helpful to understand and differentiate the mental model between server and client components.
+[Kent C. Dodds](https://twitter.com/kentcdodds) (formerly on the <RemixLogo width={15} /> Remix team and now working on [EpicWeb.dev](https://epicweb.dev)) has a great, free intro to React course that teaches a lot about going from explicit `React.createElement(){:js}` calls to JSX and what that looks like under the hood, which is super helpful to understand and differentiate the mental model between server and client components.
 
 It was also very helpful to learn about React components and elements and their architecture from a much more technical standpoint from Dan Abramov's [React Components, Elements, and Instances](https://medium.com/@dan_abramov/react-components-elements-and-instances-90800811f8ca) post on Medium from the early days of React pre-Hooks.
 
 The official React docs are some of the best maintained docs I've read through, especially the new updated ones, and the docs about [reconciliation](https://legacy.reactjs.org/docs/reconciliation.html) and [resetting state](https://react.dev/learn/preserving-and-resetting-state) were incredibly insightful. As were the [effects](https://react.dev/learn/synchronizing-with-effects) and [state](https://react.dev/learn/state-a-components-memory) docs, though those are typically information found in any React course/video for entry level devs.
 
-[Theo (@t3dotgg)](https://twitter.com/t3dotgg) from [<PingLogo width={40} /> Ping.gg](https://ping.gg) has two great videos that help explain the mental model behind [Remix and Next.js data flows](https://youtu.be/d6lKEV_3kxQ?t=759), as well as what [Server-Side Rendering does](https://www.youtube.com/watch?v=d2yNsZd5PMs) (in Next.js at least, but it's all about the same everywhere in terms of mental models).
+[Theo (@t3dotgg)](https://twitter.com/t3dotgg) from [<PingLogo width={30} /> Ping.gg](https://ping.gg) has two great videos that help explain the mental model behind [Remix and Next.js data flows](https://youtu.be/d6lKEV_3kxQ?t=759), as well as what [Server-Side Rendering does](https://www.youtube.com/watch?v=d2yNsZd5PMs) (in Next.js at least, but it's all about the same everywhere in terms of mental models).
 
 Both videos were foundational in understanding why Server Components aren't an abstraction away from SSR, nor are they solving problems that SSR or existing meta-frameworks solved already.
 
 [This livestream](https://www.youtube.com/watch?v=h7tur48JSaw) from Kent C. Dodds, Dan Abramov, and Joe Savona on Server Components and how their mental model differs from existing solutions is also a great watch if you'd like to dive deeper into the weeds, and although it is a bit "spicy" as a commenter put it, each perspective gave a great amount of insight into where the landscape is for data-fetching/rendering solutions in React today.
 
-Finally, [<NextJSLogo width={28}/> Next.js's docs for the new app router](https://nextjs.org/docs/app) were incredibly helpful in learning what it looks like to get up and running with React Server Components either from new project or from an incrementally adopted standpoint. The information there on how [fetches work in server components](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching), deduplication, the new ["server actions"](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions) feature, etc. were all well explained, and helped me migrate two (small) production apps from the pages router to the app router for work without any issues with stability, bugs, or data leaks from server to client.
+Finally, [<NextJSLogo width={21}/> Next.js's docs for the new app router](https://nextjs.org/docs/app) were incredibly helpful in learning what it looks like to get up and running with React Server Components either from new project or from an incrementally adopted standpoint. The information there on how [fetches work in server components](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching), deduplication, the new ["server actions"](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions) feature, etc. were all well explained, and helped me migrate two (small) production apps from the pages router to the app router for work without any issues with stability, bugs, or data leaks from server to client.
 
-<BlogFooter previousPost="Home Page" previousHref="/" nextPost="What are React Server Components?" nextHref="/what-are-react-server-components"  />
+<BlogFooter previousPost="Incremental Adoption" previousHref="/incremental-adoption" nextPost="Home Page" nextHref="/"  />
