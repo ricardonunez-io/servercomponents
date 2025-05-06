@@ -68,17 +68,19 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-8">
-          {topics.map((topic) => (
-            <Card
-              key={topic.title}
-              title={topic.title}
-              description={topic.description}
-              image={topic.image}
-              imageDescription={topic.title + " hero image"}
-              href={topic.href}
-            />
-          ))}
+        <div className="grid place-items-center">
+          <div className="py-8 px-8 md:px-12 lg:px-16 lg:py-12 md:grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 md:gap-8 max-w-screen-lg mx-auto h-fit">
+            {topics.map((topic) => (
+              <Card
+                key={topic.title}
+                title={topic.title}
+                description={topic.description}
+                image={topic.image}
+                imageDescription={topic.title + " hero image"}
+                href={topic.href}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>
