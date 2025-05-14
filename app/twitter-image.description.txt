@@ -1,0 +1,1 @@
+An outline of React Server Components, what they are, why they're here, and how to use them conceptually.

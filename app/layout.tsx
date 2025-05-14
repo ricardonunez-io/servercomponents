@@ -1,7 +1,8 @@
 import "./globals.css";
 import Footer from "@/components/footer";
 import type { ReactNode } from "react";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 
 const inter = Inter({
   display: "block",
@@ -19,10 +20,9 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-jetbrains_mono",
+const monoFont = localFont({
+  src: "../public/Mono.woff2",
+  variable: "--font-mono",
   fallback: [
     "ui-monospace",
     "SFMono-Regular",
@@ -48,7 +48,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetBrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${monoFont.variable}`}>
       {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <meta
